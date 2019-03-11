@@ -1,13 +1,14 @@
 {
   "name": "@csr/m_ui",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "./dist/m-ui.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit --watch",
-    "test": "vue-cli-service test:unit"
+    "test": "vue-cli-service test:unit",
+    "build-lib": "vue-cli-service build --target wc --name m-ui 'src/components/*.vue'"
   },
   "dependencies": {
     "vue": "^2.6.6",
