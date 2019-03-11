@@ -8,4 +8,4 @@ interface Options {
   isLoading?: boolean;
 }
 
-export { Options }
+export { Options };

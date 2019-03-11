@@ -1,13 +1,15 @@
 <template>
   <div id="app">
-    <div><MButton :options="{ iconName: 'loading' }">按钮</MButton></div>
-    <div><MButton :options="{ isLoading: isLoading}" @click="print">
-    <!-- <template v-slot:prefix>
-      <p>Here might be a page title</p>
-    </template> -->
+    <MButton
+      :options="{
+        type: 'solid',
+        isLoading: true,
+        shape: 'rounded',
+        iconPosition: 'right'
+      }"
+    >
       按钮
-    </MButton></div>
-    <div><MButton :options="{ iconName: 'loading', iconPosition: 'right'}">按钮</MButton></div>
+    </MButton>
   </div>
 </template>
 
@@ -15,11 +17,13 @@
 import { Component, Vue } from "vue-property-decorator";
 import HelloWorld from "./components/HelloWorld.vue";
 import MButton from "./components/MButton/index.vue";
+import MIcon from "./components/MIcon/index.vue";
 
 @Component({
   components: {
     HelloWorld,
-    MButton
+    MButton,
+    MIcon
   }
 })
 export default class App extends Vue {

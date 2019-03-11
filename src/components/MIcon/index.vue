@@ -1,6 +1,7 @@
 <template>
   <div class="m-icon" :data-isLoading="isLoading">
-    <svg class="icon-font" aria-hidden="true">
+    <slot />
+    <svg class="icon-font" aria-hidden="true" v-if="newIconName">
       <use :xlink:href="`#icon-${newIconName}`"></use>
     </svg>
   </div>
@@ -13,13 +14,13 @@ import "@/assets/iconfont/index.js";
 
 @Component
 export default class MIcon extends Vue {
-  @Prop() private iconName!: string;
-  @Prop() private isLoading!: string;
+  @Prop({ default: "" }) private iconName!: string;
+  @Prop() private isLoading!: boolean;
 
   // compouted
   get newIconName(): string {
-    if(this.isLoading) {
-      return 'loading';
+    if (this.isLoading) {
+      return "loading";
     }
     return this.iconName;
   }
@@ -37,8 +38,7 @@ export default class MIcon extends Vue {
 }
 .m-icon {
   &[data-isLoading="true"] {
-    animation: rotate .5s linear infinite;
+    animation: rotate 0.5s linear infinite;
   }
 }
 </style>
-

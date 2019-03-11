@@ -5,12 +5,14 @@
     :data-shape="buttonConfig.shape"
     :data-color="buttonConfig.color"
     :data-disable="buttonConfig.disable"
-    :data-position="hasIcon ? buttonConfig.iconPosition : ''"
-    @click="$emit('click')">
+    :data-position="buttonConfig.iconPosition"
+    @click="$emit('click')"
+  >
     <MIcon
       v-if="buttonConfig.iconName || buttonConfig.isLoading"
       :iconName="buttonConfig.iconName"
-      :isLoading="buttonConfig.isLoading"/>
+      :isLoading="buttonConfig.isLoading"
+    />
     <slot name="prefix" />
     <div class="content">
       <slot />
@@ -19,8 +21,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
-import { Options } from './MButton.d';
+import { Vue, Component, Prop } from "vue-property-decorator";
+import { Options } from "./MButton.d";
 import MIcon from "@/components/MIcon/index.vue";
 
 @Component({
@@ -32,42 +34,49 @@ export default class MButton extends Vue {
   @Prop({
     type: Object,
     default() {
-      return {}
+      return {};
     }
   })
   private options!: Options;
 
   // computed
-  get buttonConfig(): Options{
+  get buttonConfig(): Options {
     const defaultConfig: Options = {
-        type: 'hollow',
-        shape: 'default',
-        color: 'black',
-        disable: false,
-        iconName: '',
-        iconPosition: 'left',
-        isLoading: false
-      }
+      type: "hollow", // hollow | solid
+      shape: "default",
+      color: "black",
+      disable: false,
+      iconName: "",
+      iconPosition: "",
+      isLoading: false
+    };
     return Object.assign({}, defaultConfig, this.options);
-  }
-
-  get hasIcon(): boolean {
-    const { iconName, isLoading } = this.buttonConfig;
-    return Boolean(iconName || isLoading);
   }
 }
 </script>
 
 <style lang="scss" scoped>
 $buttonTheme: (
-  black: (color: #1d1b1b),
-  green: (color: #A5DE37),
-  blue: (color: #229ffd),
-  yellow: (color: #FEAE1B),
-  red: (color: #FF4351),
-  purple: (color: #7B72E9),
+  black: (
+    color: #1d1b1b
+  ),
+  green: (
+    color: #a5de37
+  ),
+  blue: (
+    color: #229ffd
+  ),
+  yellow: (
+    color: #feae1b
+  ),
+  red: (
+    color: #ff4351
+  ),
+  purple: (
+    color: #7b72e9
+  )
 );
-$buttonType: 'solid', 'hollow';
+$buttonType: "solid", "hollow";
 @mixin hollowButtonTheme($color) {
   border-color: $color;
   color: $color;
@@ -116,10 +125,10 @@ $buttonType: 'solid', 'hollow';
       @each $key, $value in $buttonTheme {
         &[data-color="#{$key}"] {
           $color: map-get($value, color);
-          @if $type == 'hollow' {
+          @if $type == "hollow" {
             @include hollowButtonTheme($color);
-          } @else if $type == 'solid' {
-            @include solidButtonTheme($color)
+          } @else if $type == "solid" {
+            @include solidButtonTheme($color);
           }
         }
       }
@@ -141,31 +150,30 @@ $buttonType: 'solid', 'hollow';
   &[data-shape="circle"] {
     border-radius: 50%;
   }
-  box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.3),
+    0 1px 2px rgba(0, 0, 0, 0.15);
   &:active {
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.2), 0px 1px 0px white;
   }
-  &[data-disable='true'] {
-    background: #EEE !important;
-    color: #CCC !important;
+  &[data-disable="true"] {
+    background: #eee !important;
+    color: #ccc !important;
     border-color: #ddd !important;
     text-shadow: 0 1px 1px white !important;
     box-shadow: none !important;
     cursor: default !important;
     pointer-events: none !important;
   }
-  &[data-position='left'] {
+  &[data-position="left"] {
     .content {
-      margin-left: .5em;
+      margin-left: 0.5em;
     }
   }
-  &[data-position='right'] {
+  &[data-position="right"] {
     .content {
-      margin-right: .5em;
+      margin-right: 0.5em;
       order: -1;
     }
   }
 }
 </style>
-
-
