@@ -10,6 +10,9 @@
     "test": "vue-cli-service test:unit",
     "build-lib": "vue-cli-service build --target wc --name m-ui 'src/components/*.vue'"
   },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "vue": "^2.6.6",
     "vue-class-component": "^6.0.0",
