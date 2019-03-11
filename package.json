@@ -1,14 +1,14 @@
 {
   "name": "@csr/m_ui",
-  "version": "0.0.3",
-  "main": "./dist/m-ui.js",
+  "version": "0.0.4",
+  "main": "./dist/index.umd.min.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit --watch",
     "test": "vue-cli-service test:unit",
-    "build-lib": "vue-cli-service build --target wc --name m-ui 'src/components/*.vue'"
+    "build-lib": "vue-cli-service build --target lib --name index 'src/components/index.js'"
   },
   "files": [
     "dist"
