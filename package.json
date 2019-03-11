@@ -1,6 +1,6 @@
 {
   "name": "@csr/m_ui",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "./dist/m-ui.js",
   "scripts": {
     "serve": "vue-cli-service serve",
