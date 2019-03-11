@@ -15,13 +15,11 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import HelloWorld from "./components/HelloWorld.vue";
 import MButton from "./components/MButton/index.vue";
 import MIcon from "./components/MIcon/index.vue";
 
 @Component({
   components: {
-    HelloWorld,
     MButton,
     MIcon
   }
