@@ -1,37 +1,22 @@
-# m_ui
+## Minimalist_UI - 一个使用Vue.js构建的UI库。
+[![Build Status](https://travis-ci.com/GreedyWhale/Minimalist_UI.svg?branch=master)](https://travis-ci.com/GreedyWhale/Minimalist_UI)
 
-## Project setup
-```
-yarn install
-```
+## 介绍
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+## 开始使用
+1. 安装
+    ```
+    npm install @csr/m_ui
+    yarn add @csr/m_ui
+    ```
 
-### Compiles and minifies for production
-```
-yarn run build
-```
 
-### Run your tests
-```
-yarn run test
-```
+## 文档
 
-### Lints and fixes files
-```
-yarn run lint
-```
+## 提问
 
-### Run your unit tests
-```
-yarn run test:unit
-```
+## 变更记录
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 联系方式
 
-# Minimalist_UI
-一个使用Vue.js构建的UI库
+## 贡献代码
