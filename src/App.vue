@@ -1,15 +1,10 @@
 <template>
   <div id="app">
-    <MButton
-      :options="{
-        type: 'solid',
-        isLoading: true,
-        shape: 'rounded',
-        iconPosition: 'right'
-      }"
-    >
-      按钮
-    </MButton>
+    <MButtonGroup>
+      <MButton :options="{ color: 'green' }">按钮</MButton>
+      <MButton :options="{ type: 'solid', color: 'green' }">按钮</MButton>
+      <MButton :options="{ type: 'solid', color: 'green' }">按钮</MButton>
+    </MButtonGroup>
   </div>
 </template>
 
@@ -17,11 +12,13 @@
 import { Component, Vue } from "vue-property-decorator";
 import MButton from "./components/MButton/index.vue";
 import MIcon from "./components/MIcon/index.vue";
+import MButtonGroup from "./components/MButtonGroup/index.vue";
 
 @Component({
   components: {
     MButton,
-    MIcon
+    MIcon,
+    MButtonGroup
   }
 })
 export default class App extends Vue {
