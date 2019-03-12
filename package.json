@@ -1,6 +1,6 @@
 {
   "name": "@csr/m_ui",
-  "version": "0.0.93",
+  "version": "0.0.94",
   "main": "./dist/index.umd.min.js",
   "scripts": {
     "serve": "vue-cli-service serve",
