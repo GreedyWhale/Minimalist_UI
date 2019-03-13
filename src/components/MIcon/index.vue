@@ -12,7 +12,9 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import "@/assets/iconfont/index.css";
 import "@/assets/iconfont/index.js";
 
-@Component
+@Component({
+  name: 'MIcon'
+})
 export default class MIcon extends Vue {
   @Prop({ default: "" }) private iconName!: string;
   @Prop() private isLoading!: boolean;
@@ -37,6 +39,11 @@ export default class MIcon extends Vue {
   }
 }
 .m-icon {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: none;
   &[data-isLoading="true"] {
     animation: rotate 0.5s linear infinite;
   }

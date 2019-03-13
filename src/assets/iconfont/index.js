@@ -1,64 +1,37 @@
-!(function(s) {
-  var e,
-    d =
-      '<svg><symbol id="icon-loading" viewBox="0 0 1024 1024"><path d="M980.752 313.697c-25.789-60.972-62.702-115.725-109.713-162.736-47.012-47.011-101.764-83.924-162.736-109.713C645.161 14.542 578.106 1 509 1c-2.242 0-4.48 0.015-6.715 0.043-16.567 0.211-29.826 13.812-29.615 30.38 0.209 16.438 13.599 29.618 29.99 29.618l0.39-0.002c1.98-0.026 3.963-0.039 5.95-0.039 61.033 0 120.224 11.947 175.93 35.508 53.82 22.764 102.162 55.359 143.683 96.879s74.115 89.862 96.88 143.683C949.054 392.776 961 451.967 961 513c0 16.568 13.432 30 30 30s30-13.432 30-30c0-69.106-13.541-136.162-40.248-199.303z"  ></path></symbol></svg>',
-    t = (e = document.getElementsByTagName("script"))[e.length - 1];
-  if (t && t.getAttribute) {
-    t = t.getAttribute("data-injectcss");
-  }
+! function (s) {
+  var e, d = '<svg><symbol id="icon-close" viewBox="0 0 1024 1024"><path d="M512 1024C229.701818 1024 0 794.298182 0 512S229.701818 0 512 0c282.321455 0 512 229.701818 512 512S794.344727 1024 512 1024zM512 44.520727C254.231273 44.520727 44.544 254.208 44.544 512c0 257.768727 209.710545 467.479273 467.479273 467.479273 257.792 0 467.479273-209.733818 467.479273-467.479273C979.502545 254.208 769.792 44.520727 512 44.520727z"  ></path><path d="M666.693818 692.177455c-5.701818 0-11.403636-2.164364-15.755636-6.493091L342.690909 377.390545c-8.704-8.704-8.704-22.784 0-31.488 8.704-8.704 22.784-8.704 31.488 0L682.426182 654.196364c8.704 8.680727 8.704 22.784 0 31.488C678.097455 690.013091 672.418909 692.177455 666.693818 692.177455z"  ></path><path d="M354.048 692.200727c-5.701818 0-11.380364-2.187636-15.732364-6.493091-8.704-8.704-8.704-22.784 0-31.488L654.196364 338.338909c8.704-8.704 22.784-8.704 31.488 0 8.680727 8.704 8.680727 22.784 0 31.488L369.803636 685.707636C365.451636 690.013091 359.749818 692.200727 354.048 692.200727z"  ></path></symbol><symbol id="icon-search" viewBox="0 0 1024 1024"><path d="M905.539005 957.941492 640.317481 692.718945c-65.136509 52.734038-139.584082 79.100546-223.342718 79.100546-97.714486 0-181.076078-34.509978-250.093988-103.528911C97.863888 599.321788 63.349817 515.90596 63.349817 418.194544c0-97.712439 34.514071-181.078125 103.531981-250.097058 69.01791-68.970838 152.378479-103.528911 250.093988-103.528911s181.076078 34.55705 250.093988 103.528911c69.028143 69.018933 103.531981 152.383596 103.531981 250.097058 0 83.753519-26.364461 158.201092-79.102592 223.342718l265.221524 265.218454L905.539005 957.941492zM193.633069 641.537262c62.039985 62.039985 136.486534 93.059466 223.342718 93.059466s161.302733-31.019481 223.342718-93.059466c62.039985-61.990866 93.059466-136.438439 93.059466-223.342718 0-86.85516-31.019481-161.302733-93.059466-223.342718-62.039985-61.990866-136.486534-93.059466-223.342718-93.059466s-161.302733 31.068599-223.342718 93.059466c-62.039985 62.039985-93.059466 136.486534-93.059466 223.342718C100.573603 505.098823 131.593084 579.546396 193.633069 641.537262z"  ></path></symbol><symbol id="icon-loading" viewBox="0 0 1024 1024"><path d="M980.752 313.697c-25.789-60.972-62.702-115.725-109.713-162.736-47.012-47.011-101.764-83.924-162.736-109.713C645.161 14.542 578.106 1 509 1c-2.242 0-4.48 0.015-6.715 0.043-16.567 0.211-29.826 13.812-29.615 30.38 0.209 16.438 13.599 29.618 29.99 29.618l0.39-0.002c1.98-0.026 3.963-0.039 5.95-0.039 61.033 0 120.224 11.947 175.93 35.508 53.82 22.764 102.162 55.359 143.683 96.879s74.115 89.862 96.88 143.683C949.054 392.776 961 451.967 961 513c0 16.568 13.432 30 30 30s30-13.432 30-30c0-69.106-13.541-136.162-40.248-199.303z"  ></path></symbol></svg>',
+    t = (e = document.getElementsByTagName("script"))[e.length - 1].getAttribute("data-injectcss");
   if (t && !s.__iconfont__svg__cssinject__) {
     s.__iconfont__svg__cssinject__ = !0;
     try {
-      document.write(
-        "<style>.svgfont {display: inline-block;width: 1em;height: 1em;fill: currentColor;vertical-align: -0.1em;font-size:16px;}</style>"
-      );
+      document.write("<style>.svgfont {display: inline-block;width: 1em;height: 1em;fill: currentColor;vertical-align: -0.1em;font-size:16px;}</style>")
     } catch (e) {
-      console && console.log(e);
+      console && console.log(e)
     }
-  }
-  !(function(e) {
+  }! function (e) {
     if (document.addEventListener)
-      if (~["complete", "loaded", "interactive"].indexOf(document.readyState))
-        setTimeout(e, 0);
+      if (~["complete", "loaded", "interactive"].indexOf(document.readyState)) setTimeout(e, 0);
       else {
-        var t = function() {
-          document.removeEventListener("DOMContentLoaded", t, !1), e();
+        var t = function () {
+          document.removeEventListener("DOMContentLoaded", t, !1), e()
         };
-        document.addEventListener("DOMContentLoaded", t, !1);
+        document.addEventListener("DOMContentLoaded", t, !1)
       }
-    else
-      document.attachEvent &&
-        ((n = e),
-        (o = s.document),
-        (i = !1),
-        (c = function() {
-          i || ((i = !0), n());
-        }),
-        (d = function() {
-          try {
-            o.documentElement.doScroll("left");
-          } catch (e) {
-            return void setTimeout(d, 50);
-          }
-          c();
-        })(),
-        (o.onreadystatechange = function() {
-          "complete" == o.readyState && ((o.onreadystatechange = null), c());
-        }));
-    var n, o, i, c, d;
-  })(function() {
-    var e, t, n, o, i, c;
-    ((e = document.createElement("div")).innerHTML = d),
-      (d = null),
-      (t = e.getElementsByTagName("svg")[0]) &&
-        (t.setAttribute("aria-hidden", "true"),
-        (t.style.position = "absolute"),
-        (t.style.width = 0),
-        (t.style.height = 0),
-        (t.style.overflow = "hidden"),
-        (n = t),
-        (o = document.body).firstChild
-          ? ((i = n), (c = o.firstChild).parentNode.insertBefore(i, c))
-          : o.appendChild(n));
-  });
-})(window);
+    else document.attachEvent && (n = e, o = s.document, c = !1, i = function () {
+      c || (c = !0, n())
+    }, (d = function () {
+      try {
+        o.documentElement.doScroll("left")
+      } catch (e) {
+        return void setTimeout(d, 50)
+      }
+      i()
+    })(), o.onreadystatechange = function () {
+      "complete" == o.readyState && (o.onreadystatechange = null, i())
+    });
+    var n, o, c, i, d
+  }(function () {
+    var e, t, n, o, c, i;
+    (e = document.createElement("div")).innerHTML = d, d = null, (t = e.getElementsByTagName("svg")[0]) && (t.setAttribute("aria-hidden", "true"), t.style.position = "absolute", t.style.width = 0, t.style.height = 0, t.style.overflow = "hidden", n = t, (o = document.body).firstChild ? (c = n, (i = o.firstChild).parentNode.insertBefore(c, i)) : o.appendChild(n))
+  })
+}(window);

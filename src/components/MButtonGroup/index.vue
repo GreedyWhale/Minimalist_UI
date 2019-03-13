@@ -7,7 +7,9 @@
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
 
-@Component
+@Component({
+  name: 'MButtonGroup'
+})
 export default class MButtonGroup extends Vue {
   mounted(): void {
     const childrenElem: any[] = [].slice.call(this.$el.children);

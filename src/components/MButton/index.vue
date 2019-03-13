@@ -5,7 +5,7 @@
     :data-shape="buttonConfig.shape"
     :data-color="buttonConfig.color"
     :data-disable="buttonConfig.disable"
-    :data-position="buttonConfig.iconPosition"
+    :data-position="hasIcon ? buttonConfig.iconPosition : ''"
     @click="$emit('click')"
   >
     <MIcon
@@ -26,6 +26,7 @@ import { Options } from "./MButton.d";
 import MIcon from "@/components/MIcon/index.vue";
 
 @Component({
+  name: 'MButton',
   components: {
     MIcon
   }
@@ -47,10 +48,14 @@ export default class MButton extends Vue {
       color: "black",
       disable: false,
       iconName: "",
-      iconPosition: "",
+      iconPosition: "left",
       isLoading: false
     };
     return Object.assign({}, defaultConfig, this.options);
+  }
+
+  get hasIcon(): boolean {
+    return <boolean>((this.options.iconName !== '') || this.options.isLoading)
   }
 }
 </script>
