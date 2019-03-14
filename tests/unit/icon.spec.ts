@@ -3,10 +3,10 @@ import { shallowMount } from "@vue/test-utils";
 import MIcon from "@/components/MIcon/index.vue";
 
 describe("MIcon.vue", () => {
-  it("MIcon组件接受iconName", () => {
+  it("MIcon组件接受icon", () => {
     const wrapper = shallowMount(MIcon, {
       propsData: {
-        iconName: "loading"
+        icon: "loading"
       }
     });
     const element = wrapper.find("use");

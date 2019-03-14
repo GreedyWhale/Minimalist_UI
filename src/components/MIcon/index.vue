@@ -13,10 +13,10 @@ import "@/assets/iconfont/index.css";
 import "@/assets/iconfont/index.js";
 
 @Component({
-  name: 'MIcon'
+  name: "MIcon"
 })
 export default class MIcon extends Vue {
-  @Prop({ default: "" }) private iconName!: string;
+  @Prop({ default: "" }) private icon!: string;
   @Prop() private isLoading!: boolean;
 
   // compouted
@@ -24,7 +24,7 @@ export default class MIcon extends Vue {
     if (this.isLoading) {
       return "loading";
     }
-    return this.iconName;
+    return this.icon;
   }
 }
 </script>

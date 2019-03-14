@@ -8,7 +8,8 @@
     :data-prefix-button="showPrefixButton"
     :data-suffix-content="showSuffixContent"
     :data-prefix-content="showPrefixContent"
-    :data-clear-icon="clearable">
+    :data-clearable="clearable"
+  >
     <div class="m-input__and-icon">
       <!-- 输入框 -->
       <input
@@ -22,50 +23,69 @@
         @change="$emit('change', $event)"
         @blur="$emit('blur', $event)"
         @focus="$emit('focus', $event)"
-        @keyup.enter="onEnter">
+        @keyup.enter="onEnter"
+      />
       <!-- 前后缀icon -->
       <div
         v-if="showSuffixIcon"
         class="m-suffix__icon m-input__icon"
-        @click="$emit('click-icon', { event: $event, value: currentValue })">
-        <slot name="suffixIcon"><MIcon :iconName="suffixIcon" v-if="suffixIcon"/></slot>
+        @click="$emit('click-icon', { event: $event, value: currentValue })"
+      >
+        <slot name="suffixIcon">
+          <MIcon :icon="suffixIcon" v-if="suffixIcon" />
+        </slot>
       </div>
       <div
         class="m-prefix__icon m-input__icon"
         v-if="showPrefixIcon"
-        @click="$emit('click-icon', { event: $event, value: currentValue })">
-        <slot name="prefixIcon"><MIcon :iconName="prefixIcon" v-if="prefixIcon" /></slot>
+        @click="$emit('click-icon', { event: $event, value: currentValue })"
+      >
+        <slot name="prefixIcon">
+          <MIcon :icon="prefixIcon" v-if="prefixIcon" />
+        </slot>
       </div>
       <div class="m-input__clear-icon" v-if="showClearIcon" @click="clearValue">
-        <MIcon iconName="close" />
+        <MIcon icon="close" />
       </div>
     </div>
     <!-- 前后缀按钮 -->
-    <div class="m-button__wrap" v-if="showSuffixButton">
+    <div class="m-button__wrap m-button__wrap-suffix" v-if="showSuffixButton">
       <MButton
         :options="{
           type: 'solid',
           color: 'blue',
-          iconName: suffixButtonIcon,
-          shape: 'rounded' }">
+          icon: suffixButtonIcon,
+          shape: 'rounded'
+        }"
+        @click="$emit('click-button', {event: $event, value: currentValue})"
+      >
         {{ suffixButtonText }}
       </MButton>
     </div>
-    <div class="m-button__wrap m-button__wrap-Prefix" v-if="showPrefixButton">
+    <div class="m-button__wrap m-button__wrap-prefix" v-if="showPrefixButton">
       <MButton
         :options="{
           type: 'solid',
           color: 'blue',
-          iconName: prefixButtonIcon,
-          shape: 'rounded' }">
+          icon: prefixButtonIcon,
+          shape: 'rounded'
+        }"
+        @click="$emit('click-button', {event: $event, value: currentValue})"
+      >
         {{ prefixButtonText }}
       </MButton>
     </div>
     <!-- 前后缀内容 -->
-    <div class="m-input__content-wrap m-input__suffix-content" v-if="showSuffixContent">
+    <div
+      class="m-input__content-wrap m-input__suffix-content"
+      v-if="showSuffixContent"
+    >
       <slot name="suffixContent"></slot>
     </div>
-    <div class="m-input__content-wrap m-input__prefix-content" v-if="showPrefixContent">
+    <div
+      class="m-input__content-wrap m-input__prefix-content"
+      v-if="showPrefixContent"
+    >
       <slot name="prefixContent"></slot>
     </div>
   </div>
@@ -76,65 +96,68 @@ import { Vue, Component, Prop, Model } from "vue-property-decorator";
 import MIcon from "@/components/MIcon/index.vue";
 import MButton from "@/components/MButton/index.vue";
 @Component({
-  name: 'MInput',
+  name: "MInput",
   components: {
     MIcon,
     MButton
   }
 })
 export default class MInput extends Vue {
-  @Prop({ default: 'text' }) private type!: string;
-  @Prop({ default: '' }) private placeholder!: string;
+  @Prop({ default: "text" }) private type!: string;
+  @Prop({ default: "" }) private placeholder!: string;
   @Prop() private maxlength!: string | number;
   @Prop({ default: false }) private disabled!: boolean;
   @Prop({ default: false }) private clearable!: boolean | string;
-  @Prop({ default: '' }) private suffixIcon!: string;
-  @Prop({ default: '' }) private prefixIcon!: string;
-  @Prop({ default: '' }) private suffixButtonText!: string;
-  @Prop({ default: '' }) private suffixButtonIcon!: string;
-  @Prop({ default: '' }) private prefixButtonText!: string;
-  @Prop({ default: '' }) private prefixButtonIcon!: string;
+  @Prop({ default: "" }) private suffixIcon!: string;
+  @Prop({ default: "" }) private prefixIcon!: string;
+  @Prop({ default: "" }) private suffixButtonText!: string;
+  @Prop({ default: "" }) private suffixButtonIcon!: string;
+  @Prop({ default: "" }) private prefixButtonText!: string;
+  @Prop({ default: "" }) private prefixButtonIcon!: string;
 
-  @Model('input', { type: String }) value!: string;
+  @Model("input", { type: String }) value!: string;
 
   // data
-  currentValue: string = this.value || '';
+  currentValue: string = this.value || "";
   inputFocused: boolean = false;
   // methods
   setCurrentValue(value: string): void {
-    if(this.currentValue === value) return;
+    if (this.currentValue === value) return;
     this.currentValue = value;
   }
   onInput(event: any): void {
-    const { target: { value } } = event;
+    const {
+      target: { value }
+    } = event;
     this.setCurrentValue(value);
-    this.$emit('input', value);
+    this.$emit("input", value);
   }
   onEnter(): void {
-    this.$emit('on-enter', this.currentValue)
+    this.$emit("on-enter", this.currentValue);
   }
   clearValue(): void {
     const event = {
       target: {
-        value: ''
+        value: ""
       }
-    }
-    this.currentValue = '';
-    this.$emit('input', '');
-    this.$emit('change', event);
+    };
+    this.currentValue = "";
+    this.$emit("input", "");
+    this.$emit("change", event);
+    this.$emit("clear");
   }
   // computed
   get showSuffixIcon(): boolean {
-    return (this.suffixIcon !== '') || (this.$slots.suffixIcon !== undefined)
+    return this.suffixIcon !== "" || this.$slots.suffixIcon !== undefined;
   }
   get showPrefixIcon(): boolean {
-    return (this.prefixIcon !== '') || (this.$slots.prefixIcon !== undefined)
+    return this.prefixIcon !== "" || this.$slots.prefixIcon !== undefined;
   }
   get showSuffixButton(): boolean {
-    return (this.suffixButtonText !== '') || (this.suffixButtonIcon !== '')
+    return this.suffixButtonText !== "" || this.suffixButtonIcon !== "";
   }
   get showPrefixButton(): boolean {
-    return (this.prefixButtonText !== '') || (this.prefixButtonIcon !== '')
+    return this.prefixButtonText !== "" || this.prefixButtonIcon !== "";
   }
   get showSuffixContent(): boolean {
     return this.$slots.suffixContent !== undefined;
@@ -143,7 +166,8 @@ export default class MInput extends Vue {
     return this.$slots.prefixContent !== undefined;
   }
   get showClearIcon(): boolean {
-    const clearable: boolean = this.clearable === '' ? true : Boolean(this.clearable);
+    const clearable: boolean =
+      this.clearable === "" ? true : Boolean(this.clearable);
     return clearable && Boolean(this.currentValue);
   }
 }
@@ -186,7 +210,7 @@ $gray: #bbb;
     }
     &:focus {
       border-color: $blue;
-      box-shadow: 0 0 2px 1px rgba(66, 170, 254, .7);
+      box-shadow: 0 0 2px 1px rgba(66, 170, 254, 0.7);
     }
     &::-webkit-inner-spin-button,
     &::-webkit-outer-spin-button {
@@ -223,7 +247,7 @@ $gray: #bbb;
       height: 100%;
     }
   }
-  .m-button__wrap-Prefix {
+  .m-button__wrap-prefix {
     order: -1;
   }
   .m-input__content-wrap {
@@ -254,7 +278,7 @@ $gray: #bbb;
     }
   }
   &[data-suffix-icon="true"],
-  &[data-clear-icon="true"] {
+  &[data-clearable="true"] {
     .m-input {
       padding-right: 2em;
     }
@@ -298,4 +322,3 @@ $gray: #bbb;
   }
 }
 </style>
-

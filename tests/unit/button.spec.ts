@@ -36,7 +36,7 @@ describe("MButton,vue", () => {
   it("MButton组件可以设置icon", () => {
     const wrapper = mount(MButton, {
       propsData: {
-        options: { iconName: "loading" }
+        options: { icon: "loading" }
       },
       stubs: {
         icon: MIcon

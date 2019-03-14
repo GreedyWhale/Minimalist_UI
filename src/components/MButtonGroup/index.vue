@@ -8,7 +8,7 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 
 @Component({
-  name: 'MButtonGroup'
+  name: "MButtonGroup"
 })
 export default class MButtonGroup extends Vue {
   mounted(): void {

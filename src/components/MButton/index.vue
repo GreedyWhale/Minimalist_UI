@@ -9,8 +9,8 @@
     @click="$emit('click')"
   >
     <MIcon
-      v-if="buttonConfig.iconName || buttonConfig.isLoading"
-      :iconName="buttonConfig.iconName"
+      v-if="buttonConfig.icon || buttonConfig.isLoading"
+      :icon="buttonConfig.icon"
       :isLoading="buttonConfig.isLoading"
     />
     <slot name="prefix" />
@@ -47,7 +47,7 @@ export default class MButton extends Vue {
       shape: "default",
       color: "black",
       disable: false,
-      iconName: "",
+      icon: "",
       iconPosition: "left",
       isLoading: false
     };
@@ -55,7 +55,7 @@ export default class MButton extends Vue {
   }
 
   get hasIcon(): boolean {
-    return <boolean>((this.options.iconName !== '') || this.options.isLoading)
+    return <boolean>((this.options.icon !== '') || this.options.isLoading)
   }
 }
 </script>

@@ -3,7 +3,7 @@ interface Options {
   shape?: string;
   color?: string;
   disable?: boolean;
-  iconName?: string;
+  icon?: string;
   iconPosition?: string;
   isLoading?: boolean;
 }

@@ -1,26 +1,31 @@
 <template>
   <div id="app">
     <MInput
-      v-model="msg" :placeholder="`啦啦啦`" @on-enter="print" suffix-icon="search"
-      prefix-icon="search"/>
+      v-model="msg"
+      :placeholder="`啦啦啦`"
+      @on-enter="print"
+      suffix-icon="search"
+      prefix-icon="search"
+    />
     <MInput
-      v-model="msg" :placeholder="`啦啦啦`" @on-enter="print" @click-suffix-icon="print">
+      v-model="msg"
+      :placeholder="`啦啦啦`"
+      @on-enter="print"
+      @click-suffix-icon="print"
+    >
       <template v-slot:suffixIcon>
         123
       </template>
     </MInput>
-    <MInput
-      prefix-button-text="搜索"
-      clearable
-      v-model="msg"
-      >
+    <MInput prefix-button-text="搜索" clearable v-model="msg">
       <template v-slot:suffixContent>
         asdadasd
       </template>
       <template v-slot:prefixContent>
         asdadasd
       </template>
-      </MInput>
+    </MInput>
+    <MIcon icon="loading" />
   </div>
 </template>
 
@@ -40,12 +45,11 @@ import MInput from "./components/MInput/index.vue";
   }
 })
 export default class App extends Vue {
-  msg: string = 'asdada'
+  msg: string = "asdada";
 
   print(event: any): void {
-    console.log(event, 1)
+    console.log(event, 1);
   }
-
 }
 </script>
 
