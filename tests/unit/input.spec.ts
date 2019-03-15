@@ -121,4 +121,17 @@ describe("input.vue", () => {
     expect(enterHandler.called).to.be.true;
     expect(clickClearIconHandler.called).to.be.true;
   });
+  it("MInput组件接受promptMsg，promptMsgPosition，isErrorMsg", () => {
+    const wrapper = shallowMount(MInput, {
+      propsData: {
+        promptMsg: "测试",
+        promptMsgPosition: "down",
+        isErrorMsg: true
+      }
+    });
+    const msgElem = wrapper.find(".m-input__prompt");
+    expect(msgElem.text()).to.equal("测试");
+    expect(msgElem.attributes("data-error")).to.equal("true");
+    expect(wrapper.attributes("data-layout")).to.equal("down");
+  });
 });

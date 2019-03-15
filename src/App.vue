@@ -1,11 +1,16 @@
 <template>
   <div id="app">
     <div>
-      <m-row align="space-around">
-        <m-col span="6">1</m-col>
-        <m-col span="6">2</m-col>
-        <m-col span="6">1</m-col>
-      </m-row>
+      <m-input
+        placeholder="测试"
+        prompt-msg="姓名超过100个字"
+        prompt-msg-position="down"
+        :is-error-msg="true"
+        suffix-button-text="按钮"
+        suffix-button-icon="loading"
+        prefix-icon="search"
+        clearable
+      ></m-input>
     </div>
   </div>
 </template>
@@ -46,8 +51,5 @@ export default class App extends Vue {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-  > div {
-    border: 1px solid gold;
-  }
 }
 </style>

@@ -29,10 +29,10 @@ describe("row.vue & col.vue", () => {
   it("MRow组件接受align", () => {
     const wrapper = mount(MRow, {
       propsData: {
-        align: 'space-around'
+        align: "space-around"
       }
-    })
-    expect(wrapper.classes('align-space-around')).to.be.true;
+    });
+    expect(wrapper.classes("align-space-around")).to.be.true;
   });
   it("MCol组件接受span, offset, sm，md，lg，xl，xxl", () => {
     const wrapper = mount(MCol, {
@@ -40,28 +40,28 @@ describe("row.vue & col.vue", () => {
         span: 20,
         offset: 4,
         sm: { span: 12, offset: 12 },
-        md: { span: 15 , offset: 9 },
+        md: { span: 15, offset: 9 },
         lg: { span: 17, offset: 7 },
         xl: { span: 10, offset: 14 },
-        xxl: { span: 1, offset: 23 },
+        xxl: { span: 1, offset: 23 }
       }
-    })
+    });
     const classes = [
-      'm-col__20',
-      'm-col__offset-4',
-      'm-col__sm12',
-      'm-col__offset-sm12',
-      'm-col__md15',
-      'm-col__offset-md9',
-      'm-col__lg17',
-      'm-col__offset-lg7',
-      'm-col__xl10',
-      'm-col__offset-xl14',
-      'm-col__xxl1',
-      'm-col__offset-xxl23',
-    ]
+      "m-col__20",
+      "m-col__offset-4",
+      "m-col__sm12",
+      "m-col__offset-sm12",
+      "m-col__md15",
+      "m-col__offset-md9",
+      "m-col__lg17",
+      "m-col__offset-lg7",
+      "m-col__xl10",
+      "m-col__offset-xl14",
+      "m-col__xxl1",
+      "m-col__offset-xxl23"
+    ];
     classes.forEach(value => {
       expect(wrapper.classes(value)).to.be.true;
-    })
-  })
+    });
+  });
 });

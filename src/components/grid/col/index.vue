@@ -1,6 +1,6 @@
 <template>
   <div :class="classList" :style="colStyle">
-    <div style="border: 1px solid red;">
+    <div>
       <slot></slot>
     </div>
   </div>

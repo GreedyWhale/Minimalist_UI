@@ -1,92 +1,107 @@
 <template>
-  <div
-    class="m-input__wrapper"
-    :data-disabled="disabled"
-    :data-suffix-icon="showSuffixIcon"
-    :data-prefix-icon="showPrefixIcon"
-    :data-suffix-button="showSuffixButton"
-    :data-prefix-button="showPrefixButton"
-    :data-suffix-content="showSuffixContent"
-    :data-prefix-content="showPrefixContent"
-    :data-clearable="clearable"
-  >
-    <div class="m-input__and-icon">
-      <!-- 输入框 -->
-      <input
-        class="m-input"
-        :type="type"
-        :placeholder="placeholder"
-        :maxlength="maxlength"
-        :disabled="disabled"
-        :value="currentValue"
-        @input="onInput($event)"
-        @change="$emit('change', $event)"
-        @blur="$emit('blur', $event)"
-        @focus="$emit('focus', $event)"
-        @keyup.enter="onEnter"
-      />
-      <!-- 前后缀icon -->
-      <div
-        v-if="showSuffixIcon"
-        class="m-suffix__icon m-input__icon"
-        @click="$emit('click-icon', { event: $event, value: currentValue })"
-      >
-        <slot name="suffixIcon">
-          <m-icon :icon="suffixIcon" v-if="suffixIcon" />
-        </slot>
-      </div>
-      <div
-        class="m-prefix__icon m-input__icon"
-        v-if="showPrefixIcon"
-        @click="$emit('click-icon', { event: $event, value: currentValue })"
-      >
-        <slot name="prefixIcon">
-          <m-icon :icon="prefixIcon" v-if="prefixIcon" />
-        </slot>
-      </div>
-      <div class="m-input__clear-icon" v-if="showClearIcon" @click="clearValue">
-        <m-icon icon="close" />
-      </div>
-    </div>
-    <!-- 前后缀按钮 -->
-    <div class="m-button__wrap m-button__wrap-suffix" v-if="showSuffixButton">
-      <m-button
-        :options="{
-          type: 'solid',
-          color: 'blue',
-          icon: suffixButtonIcon,
-          shape: 'rounded'
-        }"
-        @click="$emit('click-button', { event: $event, value: currentValue })"
-      >
-        {{ suffixButtonText }}
-      </m-button>
-    </div>
-    <div class="m-button__wrap m-button__wrap-prefix" v-if="showPrefixButton">
-      <m-button
-        :options="{
-          type: 'solid',
-          color: 'blue',
-          icon: prefixButtonIcon,
-          shape: 'rounded'
-        }"
-        @click="$emit('click-button', { event: $event, value: currentValue })"
-      >
-        {{ prefixButtonText }}
-      </m-button>
-    </div>
-    <!-- 前后缀内容 -->
+  <div class="flex-inline__center container" :data-layout="promptMsgPosition">
     <div
-      class="m-input__content-wrap m-input__suffix-content"
-      v-if="showSuffixContent"
+      class="m-input__wrapper flex-inline__center"
+      :data-disabled="disabled"
+      :data-suffix-icon="showSuffixIcon"
+      :data-prefix-icon="showPrefixIcon"
+      :data-suffix-button="showSuffixButton"
+      :data-prefix-button="showPrefixButton"
+      :data-suffix-content="showSuffixContent"
+      :data-prefix-content="showPrefixContent"
+      :data-clearable="clearable"
     >
-      <slot name="suffixContent"></slot>
+      <div class="m-input__and-icon flex-inline__center">
+        <!-- 输入框 -->
+        <input
+          class="m-input"
+          :type="type"
+          :placeholder="placeholder"
+          :maxlength="maxlength"
+          :disabled="disabled"
+          :value="currentValue"
+          @input="onInput($event)"
+          @change="$emit('change', $event)"
+          @blur="$emit('blur', $event)"
+          @focus="$emit('focus', $event)"
+          @keyup.enter="onEnter"
+        />
+        <!-- 前后缀icon -->
+        <div
+          v-if="showSuffixIcon"
+          class="m-suffix__icon m-input__icon"
+          @click="$emit('click-icon', { event: $event, value: currentValue })"
+        >
+          <slot name="suffixIcon">
+            <m-icon :icon="suffixIcon" v-if="suffixIcon" />
+          </slot>
+        </div>
+        <div
+          class="m-prefix__icon m-input__icon"
+          v-if="showPrefixIcon"
+          @click="$emit('click-icon', { event: $event, value: currentValue })"
+        >
+          <slot name="prefixIcon">
+            <m-icon :icon="prefixIcon" v-if="prefixIcon" />
+          </slot>
+        </div>
+        <div
+          class="m-input__clear-icon"
+          v-if="showClearIcon"
+          @click="clearValue"
+        >
+          <m-icon icon="close" />
+        </div>
+      </div>
+      <!-- 前后缀按钮 -->
+      <div class="m-button__wrap m-button__wrap-suffix" v-if="showSuffixButton">
+        <m-button
+          :options="{
+            type: 'solid',
+            color: 'blue',
+            icon: suffixButtonIcon,
+            shape: 'rounded'
+          }"
+          @click="$emit('click-button', { event: $event, value: currentValue })"
+        >
+          {{ suffixButtonText }}
+        </m-button>
+      </div>
+      <div class="m-button__wrap m-button__wrap-prefix" v-if="showPrefixButton">
+        <m-button
+          :options="{
+            type: 'solid',
+            color: 'blue',
+            icon: prefixButtonIcon,
+            shape: 'rounded'
+          }"
+          @click="$emit('click-button', { event: $event, value: currentValue })"
+        >
+          {{ prefixButtonText }}
+        </m-button>
+      </div>
+      <!-- 前后缀内容 -->
+      <div
+        class="m-input__content-wrap m-input__suffix-content"
+        v-if="showSuffixContent"
+      >
+        <slot name="suffixContent"></slot>
+      </div>
+      <div
+        class="m-input__content-wrap m-input__prefix-content"
+        v-if="showPrefixContent"
+      >
+        <slot name="prefixContent"></slot>
+      </div>
     </div>
+    <!-- 提示信息 -->
     <div
-      class="m-input__content-wrap m-input__prefix-content"
-      v-if="showPrefixContent"
+      v-if="promptMsg"
+      class="m-input__prompt flex-inline__center"
+      :data-error="isErrorMsg"
     >
-      <slot name="prefixContent"></slot>
+      <m-icon icon="tips" />
+      <p>{{ promptMsg }}</p>
     </div>
   </div>
 </template>
@@ -108,6 +123,9 @@ export default class MInput extends Vue {
   @Prop() private maxlength!: string | number;
   @Prop({ default: false }) private disabled!: boolean;
   @Prop({ default: false }) private clearable!: boolean | string;
+  @Prop({ default: "" }) private promptMsg!: string;
+  @Prop({ default: "" }) private promptMsgPosition!: string;
+  @Prop({ default: false }) private isErrorMsg!: boolean;
   @Prop({ default: "" }) private suffixIcon!: string;
   @Prop({ default: "" }) private prefixIcon!: string;
   @Prop({ default: "" }) private suffixButtonText!: string;
@@ -177,8 +195,7 @@ export default class MInput extends Vue {
 @import "@/assets/scss/var.scss";
 $blue: #40a9ff;
 $gray: #bbb;
-.m-input__wrapper,
-.m-input__and-icon {
+.flex-inline__center {
   display: inline-flex;
   align-items: center;
 }
@@ -318,6 +335,27 @@ $gray: #bbb;
     }
     .m-input {
       border-left: none;
+    }
+  }
+}
+.m-input__prompt {
+  font-size: 14px;
+  margin-left: 10px;
+  color: rgb(3, 172, 3);
+  > p {
+    margin: 0 0 0 5px;
+  }
+  &[data-error="true"] {
+    color: rgb(224, 55, 55);
+  }
+}
+.container {
+  &[data-layout="down"] {
+    flex-direction: column;
+    align-items: flex-start;
+    .m-input__prompt {
+      margin-left: 0;
+      margin-top: 10px;
     }
   }
 }
