@@ -1,31 +1,12 @@
 <template>
   <div id="app">
-    <MInput
-      v-model="msg"
-      :placeholder="`啦啦啦`"
-      @on-enter="print"
-      suffix-icon="search"
-      prefix-icon="search"
-    />
-    <MInput
-      v-model="msg"
-      :placeholder="`啦啦啦`"
-      @on-enter="print"
-      @click-suffix-icon="print"
-    >
-      <template v-slot:suffixIcon>
-        123
-      </template>
-    </MInput>
-    <MInput prefix-button-text="搜索" clearable v-model="msg">
-      <template v-slot:suffixContent>
-        asdadasd
-      </template>
-      <template v-slot:prefixContent>
-        asdadasd
-      </template>
-    </MInput>
-    <MIcon icon="loading" />
+    <div>
+      <m-row align="space-around">
+        <m-col span="6">1</m-col>
+        <m-col span="6">2</m-col>
+        <m-col span="6">1</m-col>
+      </m-row>
+    </div>
   </div>
 </template>
 
@@ -35,13 +16,17 @@ import MButton from "./components/MButton/index.vue";
 import MIcon from "./components/MIcon/index.vue";
 import MButtonGroup from "./components/MButtonGroup/index.vue";
 import MInput from "./components/MInput/index.vue";
+import MRow from "./components/MRow/index.vue";
+import MCol from "./components/MCol/index.vue";
 
 @Component({
   components: {
     MButton,
     MIcon,
     MButtonGroup,
-    MInput
+    MInput,
+    MRow,
+    MCol
   }
 })
 export default class App extends Vue {
@@ -62,8 +47,7 @@ export default class App extends Vue {
   color: #2c3e50;
   margin-top: 60px;
   > div {
-    display: inline-flex;
-    margin: 10px;
+    border: 1px solid gold;
   }
 }
 </style>

@@ -8,7 +8,7 @@
     :data-position="hasIcon ? buttonConfig.iconPosition : ''"
     @click="$emit('click')"
   >
-    <MIcon
+    <m-icon
       v-if="buttonConfig.icon || buttonConfig.isLoading"
       :icon="buttonConfig.icon"
       :isLoading="buttonConfig.isLoading"
@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import { Options } from "./MButton.d";
+import { ButtonConfig } from "./MButton.d";
 import MIcon from "@/components/MIcon/index.vue";
 
 @Component({
@@ -38,11 +38,11 @@ export default class MButton extends Vue {
       return {};
     }
   })
-  private options!: Options;
+  private options!: Object;
 
   // computed
-  get buttonConfig(): Options {
-    const defaultConfig: Options = {
+  get buttonConfig(): ButtonConfig {
+    const defaultConfig: ButtonConfig = {
       type: "hollow", // hollow | solid
       shape: "default",
       color: "black",
@@ -55,7 +55,7 @@ export default class MButton extends Vue {
   }
 
   get hasIcon(): boolean {
-    return <boolean>((this.options.icon !== '') || this.options.isLoading)
+    return Boolean(this.buttonConfig.icon) || this.buttonConfig.isLoading
   }
 }
 </script>

@@ -32,7 +32,7 @@
         @click="$emit('click-icon', { event: $event, value: currentValue })"
       >
         <slot name="suffixIcon">
-          <MIcon :icon="suffixIcon" v-if="suffixIcon" />
+          <m-icon :icon="suffixIcon" v-if="suffixIcon" />
         </slot>
       </div>
       <div
@@ -41,16 +41,16 @@
         @click="$emit('click-icon', { event: $event, value: currentValue })"
       >
         <slot name="prefixIcon">
-          <MIcon :icon="prefixIcon" v-if="prefixIcon" />
+          <m-icon :icon="prefixIcon" v-if="prefixIcon" />
         </slot>
       </div>
       <div class="m-input__clear-icon" v-if="showClearIcon" @click="clearValue">
-        <MIcon icon="close" />
+        <m-icon icon="close" />
       </div>
     </div>
     <!-- 前后缀按钮 -->
     <div class="m-button__wrap m-button__wrap-suffix" v-if="showSuffixButton">
-      <MButton
+      <m-button
         :options="{
           type: 'solid',
           color: 'blue',
@@ -60,10 +60,10 @@
         @click="$emit('click-button', {event: $event, value: currentValue})"
       >
         {{ suffixButtonText }}
-      </MButton>
+      </m-button>
     </div>
     <div class="m-button__wrap m-button__wrap-prefix" v-if="showPrefixButton">
-      <MButton
+      <m-button
         :options="{
           type: 'solid',
           color: 'blue',
@@ -73,7 +73,7 @@
         @click="$emit('click-button', {event: $event, value: currentValue})"
       >
         {{ prefixButtonText }}
-      </MButton>
+      </m-button>
     </div>
     <!-- 前后缀内容 -->
     <div
