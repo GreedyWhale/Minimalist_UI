@@ -1,6 +1,6 @@
 interface PropSize {
-  span?: number | string,
-  offset?: number | string,
+  span?: number | string;
+  offset?: number | string;
 }
 
-export { PropSize }
+export { PropSize };

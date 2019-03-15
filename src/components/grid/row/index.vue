@@ -15,25 +15,25 @@ export default class MRow extends Vue {
 
   // computed
   get rowStyle(): Object {
-    if(this.gutter) {
+    if (this.gutter) {
       return {
-        marginLeft: -this.gutter / 2 + 'px',
-        marginRight: -this.gutter / 2 + 'px',
-      }
+        marginLeft: -this.gutter / 2 + "px",
+        marginRight: -this.gutter / 2 + "px"
+      };
     }
-    return {}
+    return {};
   }
   get rowClass(): any[] {
-    const classes: any[] = ['m-row'];
-    if(this.align) {
-      classes.push(`align-${this.align}`)
+    const classes: any[] = ["m-row"];
+    if (this.align) {
+      classes.push(`align-${this.align}`);
     }
     return classes;
   }
-  mounted () {
+  mounted() {
     this.$children.forEach((vm: CustomVm) => {
-      vm.gutter = this.gutter
-    })
+      vm.gutter = this.gutter;
+    });
   }
 }
 </script>
@@ -63,4 +63,3 @@ export default class MRow extends Vue {
   }
 }
 </style>
-

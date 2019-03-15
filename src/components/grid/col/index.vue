@@ -23,36 +23,36 @@ export default class MCol extends Vue {
   gutter: number = 0;
   // computed
   get classList(): any[] {
-    const classes = ['m-col']
+    const classes = ["m-col"];
     this.span && classes.push(`m-col__${this.span}`);
     this.offset && classes.push(`m-col__offset-${this.offset}`);
     return [
-      'm-col',
-      ...this.createClassList({ span: this.span, offset: this.offset}),
-      ...this.createClassList(this.sm, 'sm'),
-      ...this.createClassList(this.md, 'md'),
-      ...this.createClassList(this.lg, 'lg'),
-      ...this.createClassList(this.xl, 'xl'),
-      ...this.createClassList(this.xxl, 'xl'),
+      "m-col",
+      ...this.createClassList({ span: this.span, offset: this.offset }),
+      ...this.createClassList(this.sm, "sm"),
+      ...this.createClassList(this.md, "md"),
+      ...this.createClassList(this.lg, "lg"),
+      ...this.createClassList(this.xl, "xl"),
+      ...this.createClassList(this.xxl, "xxl")
     ];
   }
   get colStyle(): Object {
     return {
-      paddingLeft: this.gutter / 2 + 'px',
-      paddingRight: this.gutter / 2 + 'px',
-    }
+      paddingLeft: this.gutter / 2 + "px",
+      paddingRight: this.gutter / 2 + "px"
+    };
   }
   // methods
-  createClassList(obj: PropSize, suffix: string = ''): any[] {
+  createClassList(obj: PropSize, suffix: string = ""): any[] {
     const classes: any[] = [];
-    if(!obj) {
+    if (!obj) {
       return classes;
     }
-    if(obj.span) {
-      classes.push(`m-col__${suffix}${obj.span}`)
+    if (obj.span) {
+      classes.push(`m-col__${suffix}${obj.span}`);
     }
-    if(obj.offset) {
-      classes.push(`m-col__offset-${suffix}${obj.offset}`)
+    if (obj.offset) {
+      classes.push(`m-col__offset-${suffix}${obj.offset}`);
     }
     return classes;
   }
@@ -63,23 +63,23 @@ export default class MCol extends Vue {
 $screenSizes: (
   sm: (
     size: 576px,
-    suffix: 'sm'
+    suffix: "sm"
   ),
   md: (
     size: 768px,
-    suffix: 'md'
+    suffix: "md"
   ),
   lg: (
     size: 992px,
-    suffix: 'lg'
+    suffix: "lg"
   ),
   xl: (
     size: 1200px,
-    suffix: 'xl'
+    suffix: "xl"
   ),
   xxl: (
     size: 1600px,
-    suffix: 'xxl'
+    suffix: "xxl"
   )
 );
 @mixin setColClass($screenSizeItem) {
@@ -113,8 +113,7 @@ $screenSizes: (
     }
   }
   @each $key, $value in $screenSizes {
-    @include setColClass($value)
+    @include setColClass($value);
   }
 }
 </style>
-

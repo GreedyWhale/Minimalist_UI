@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { shallowMount } from "@vue/test-utils";
 import MIcon from "@/components/icon/index.vue";
 
-describe("MIcon.vue", () => {
+describe("icon.vue", () => {
   it("MIcon组件接受icon", () => {
     const wrapper = shallowMount(MIcon, {
       propsData: {

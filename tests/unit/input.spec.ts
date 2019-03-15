@@ -5,7 +5,7 @@ import MInput from "@/components/input/index.vue";
 import MIcon from "@/components/icon/index.vue";
 import MButton from "@/components/button/index.vue";
 
-describe("MInput.vue", () => {
+describe("input.vue", () => {
   it("MInput组件可以设置type，placeholder，maxlength，disabled，clearable", () => {
     const wrapper = shallowMount(MInput, {
       propsData: {
@@ -94,24 +94,24 @@ describe("MInput.vue", () => {
         MInput
       }
     });
-    wrapper.setData({ currentValue: 123 })
+    wrapper.setData({ currentValue: 123 });
     const vm = wrapper.vm;
-    vm.$on('input', inputHandler);
-    vm.$on('blur', blurHandler);
-    vm.$on('change', changeHandler);
-    vm.$on('focus', focusHandler);
-    vm.$on('on-enter', enterHandler);
-    vm.$on('clear', clickClearIconHandler);
-    vm.$on('click-button', clickButtonHandler);
-    vm.$on('click-icon', clickIconHandler);
-    wrapper.find('input').trigger('input');
-    wrapper.find('input').trigger('blur');
-    wrapper.find('input').trigger('change');
-    wrapper.find('input').trigger('focus');
-    wrapper.find('input').trigger('keyup.enter');
-    wrapper.find('.m-input__clear-icon').trigger('click');
-    wrapper.find('.m-button__wrap-suffix .m-button').trigger('click');
-    wrapper.find('.m-suffix__icon').trigger('click');
+    vm.$on("input", inputHandler);
+    vm.$on("blur", blurHandler);
+    vm.$on("change", changeHandler);
+    vm.$on("focus", focusHandler);
+    vm.$on("on-enter", enterHandler);
+    vm.$on("clear", clickClearIconHandler);
+    vm.$on("click-button", clickButtonHandler);
+    vm.$on("click-icon", clickIconHandler);
+    wrapper.find("input").trigger("input");
+    wrapper.find("input").trigger("blur");
+    wrapper.find("input").trigger("change");
+    wrapper.find("input").trigger("focus");
+    wrapper.find("input").trigger("keyup.enter");
+    wrapper.find(".m-input__clear-icon").trigger("click");
+    wrapper.find(".m-button__wrap-suffix .m-button").trigger("click");
+    wrapper.find(".m-suffix__icon").trigger("click");
     expect(clickIconHandler.called).to.be.true;
     expect(clickButtonHandler.called).to.be.true;
     expect(inputHandler.called).to.be.true;
@@ -120,5 +120,5 @@ describe("MInput.vue", () => {
     expect(changeHandler.called).to.be.true;
     expect(enterHandler.called).to.be.true;
     expect(clickClearIconHandler.called).to.be.true;
-  })
+  });
 });

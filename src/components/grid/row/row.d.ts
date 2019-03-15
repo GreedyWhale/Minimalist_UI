@@ -1,7 +1,5 @@
 interface CustomVm {
-  [key: string]: any
+  [key: string]: any;
 }
 
-export {
-  CustomVm
-}
+export { CustomVm };

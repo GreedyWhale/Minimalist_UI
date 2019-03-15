@@ -4,7 +4,7 @@ import sinon from "sinon";
 import MButton from "@/components/button/index.vue";
 import MIcon from "@/components/icon/index.vue";
 
-describe("MButton,vue", () => {
+describe("button,vue", () => {
   it("MButton组件存在", () => {
     const wrapper = shallowMount(MButton, {
       slots: {

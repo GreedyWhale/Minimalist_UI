@@ -26,7 +26,7 @@ import { ButtonConfig } from "./button.d";
 import MIcon from "@/components/icon/index.vue";
 
 @Component({
-  name: 'MButton',
+  name: "MButton",
   components: {
     MIcon
   }
@@ -55,7 +55,7 @@ export default class MButton extends Vue {
   }
 
   get hasIcon(): boolean {
-    return Boolean(this.buttonConfig.icon) || this.buttonConfig.isLoading
+    return Boolean(this.buttonConfig.icon) || this.buttonConfig.isLoading;
   }
 }
 </script>

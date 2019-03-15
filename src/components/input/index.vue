@@ -57,7 +57,7 @@
           icon: suffixButtonIcon,
           shape: 'rounded'
         }"
-        @click="$emit('click-button', {event: $event, value: currentValue})"
+        @click="$emit('click-button', { event: $event, value: currentValue })"
       >
         {{ suffixButtonText }}
       </m-button>
@@ -70,7 +70,7 @@
           icon: prefixButtonIcon,
           shape: 'rounded'
         }"
-        @click="$emit('click-button', {event: $event, value: currentValue})"
+        @click="$emit('click-button', { event: $event, value: currentValue })"
       >
         {{ prefixButtonText }}
       </m-button>
