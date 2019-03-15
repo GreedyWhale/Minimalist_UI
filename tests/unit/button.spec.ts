@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import { shallowMount, mount } from "@vue/test-utils";
 import sinon from "sinon";
-import MButton from "@/components/MButton/index.vue";
-import MIcon from "@/components/MIcon/index.vue";
+import MButton from "@/components/button/index.vue";
+import MIcon from "@/components/icon/index.vue";
 
 describe("MButton,vue", () => {
   it("MButton组件存在", () => {
@@ -22,7 +22,8 @@ describe("MButton,vue", () => {
           shape: "rounded",
           color: "purple",
           disable: true,
-          iconPosition: "right"
+          iconPosition: "right",
+          isLoading: true
         }
       }
     });

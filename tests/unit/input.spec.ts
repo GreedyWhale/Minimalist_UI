@@ -1,9 +1,9 @@
 import { expect } from "chai";
 import { shallowMount, mount } from "@vue/test-utils";
 import sinon from "sinon";
-import MInput from "@/components/MInput/index.vue";
-import MIcon from "@/components/MIcon/index.vue";
-import MButton from "@/components/MButton/index.vue";
+import MInput from "@/components/input/index.vue";
+import MIcon from "@/components/icon/index.vue";
+import MButton from "@/components/button/index.vue";
 
 describe("MInput.vue", () => {
   it("MInput组件可以设置type，placeholder，maxlength，disabled，clearable", () => {

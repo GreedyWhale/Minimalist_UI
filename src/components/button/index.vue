@@ -22,8 +22,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import { ButtonConfig } from "./MButton.d";
-import MIcon from "@/components/MIcon/index.vue";
+import { ButtonConfig } from "./button.d";
+import MIcon from "@/components/icon/index.vue";
 
 @Component({
   name: 'MButton',

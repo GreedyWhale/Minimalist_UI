@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { shallowMount } from "@vue/test-utils";
-import MIcon from "@/components/MIcon/index.vue";
+import MIcon from "@/components/icon/index.vue";
 
 describe("MIcon.vue", () => {
   it("MIcon组件接受icon", () => {

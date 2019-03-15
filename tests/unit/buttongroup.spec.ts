@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { mount } from "@vue/test-utils";
-import MButton from "@/components/MButton/index.vue";
-import MButtonGroup from "@/components/MButtonGroup/index.vue";
+import MButton from "@/components/button/index.vue";
+import MButtonGroup from "@/components/buttonGroup/index.vue";
 
 describe("MButtonGroup.vue", () => {
   it("MButtonGroup的可以使用solt功能", () => {

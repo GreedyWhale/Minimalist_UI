@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import { PropSize } from "./MCol.d";
+import { PropSize } from "./col.d";
 
 @Component
 export default class MCol extends Vue {

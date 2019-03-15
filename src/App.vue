@@ -12,12 +12,12 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
-import MButton from "./components/MButton/index.vue";
-import MIcon from "./components/MIcon/index.vue";
-import MButtonGroup from "./components/MButtonGroup/index.vue";
-import MInput from "./components/MInput/index.vue";
-import MRow from "./components/MRow/index.vue";
-import MCol from "./components/MCol/index.vue";
+import MButton from "./components/button/index.vue";
+import MIcon from "./components/icon/index.vue";
+import MButtonGroup from "./components/buttonGroup/index.vue";
+import MInput from "./components/input/index.vue";
+import MRow from "@/components/grid/row/index.vue";
+import MCol from "@/components/grid/col/index.vue";
 
 @Component({
   components: {

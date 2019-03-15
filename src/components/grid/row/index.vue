@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import { CustomVm } from "./MRow.d";
+import { CustomVm } from "./row.d";
 
 @Component
 export default class MRow extends Vue {

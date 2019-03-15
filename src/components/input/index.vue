@@ -93,8 +93,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Model } from "vue-property-decorator";
-import MIcon from "@/components/MIcon/index.vue";
-import MButton from "@/components/MButton/index.vue";
+import MIcon from "@/components/icon/index.vue";
+import MButton from "@/components/button/index.vue";
 @Component({
   name: "MInput",
   components: {
