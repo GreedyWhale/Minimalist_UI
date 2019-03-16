@@ -8,7 +8,9 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { CustomVm } from "./row.d";
 
-@Component
+@Component({
+  name: "MRow"
+})
 export default class MRow extends Vue {
   @Prop() private gutter!: string | number;
   @Prop() private align!: string;

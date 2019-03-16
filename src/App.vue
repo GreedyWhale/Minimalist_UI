@@ -1,16 +1,14 @@
 <template>
   <div id="app">
     <div>
-      <m-input
-        placeholder="测试"
-        prompt-msg="姓名超过100个字"
-        prompt-msg-position="down"
-        :is-error-msg="true"
-        suffix-button-text="按钮"
-        suffix-button-icon="loading"
-        prefix-icon="search"
-        clearable
-      ></m-input>
+      <m-layout class="layout">
+        <m-layout>
+          <m-header class="header">header</m-header>
+          <m-main class="main">main</m-main>
+          <m-footer class="footer">footer</m-footer>
+        </m-layout>
+        <m-aside class="aside">aside</m-aside>
+      </m-layout>
     </div>
   </div>
 </template>
@@ -23,6 +21,11 @@ import MButtonGroup from "./components/buttonGroup/index.vue";
 import MInput from "./components/input/index.vue";
 import MRow from "@/components/grid/row/index.vue";
 import MCol from "@/components/grid/col/index.vue";
+import MLayout from "@/components/layout/index.vue";
+import MHeader from "@/components/layout/header/index.vue";
+import MMain from "@/components/layout/main/index.vue";
+import MFooter from "@/components/layout/footer/index.vue";
+import MAside from "@/components/layout/aside/index.vue";
 
 @Component({
   components: {
@@ -31,25 +34,15 @@ import MCol from "@/components/grid/col/index.vue";
     MButtonGroup,
     MInput,
     MRow,
-    MCol
+    MCol,
+    MLayout,
+    MHeader,
+    MMain,
+    MFooter,
+    MAside
   }
 })
-export default class App extends Vue {
-  msg: string = "asdada";
-
-  print(event: any): void {
-    console.log(event, 1);
-  }
-}
+export default class App extends Vue {}
 </script>
 
-<style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style lang="scss"></style>

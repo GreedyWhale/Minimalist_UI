@@ -10,7 +10,9 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { PropSize } from "./col.d";
 
-@Component
+@Component({
+  name: "MCol"
+})
 export default class MCol extends Vue {
   @Prop({ default: 24 }) private span!: string | number;
   @Prop() private offset!: string | number;
