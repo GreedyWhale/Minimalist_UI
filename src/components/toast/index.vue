@@ -9,7 +9,7 @@
         <m-icon :icon="icon" />
       </div>
       <div class="content">
-        <div v-if="enbleHtml" v-html="$slots.default[0]"></div>
+        <div v-if="enbleHtml && usePlugin" v-html="$slots.default[0]"></div>
         <slot v-else></slot>
       </div>
       <div
@@ -40,8 +40,8 @@ export default class MToast extends Vue {
   @Prop({ default: true }) private autoClose!: boolean;
   @Prop({ default: 3000 }) private delayTime!: number;
   @Prop({ default: "top" }) private position!: string;
+  @Prop({ default: false }) private usePlugin!: boolean;
   @Prop({
-    default: "",
     validator(value: string) {
       return ["tips", "warning", "danger", "success"].indexOf(value) !== -1;
     }

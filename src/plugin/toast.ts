@@ -18,7 +18,9 @@ function createToast(
   propsData?: any
 ) {
   const Constructor = Vue.extend(MToast);
-  const toast = new Constructor({ propsData });
+  const toast = new Constructor({
+    propsData: { ...propsData, usePlugin: true }
+  });
   toast.$slots.default = [message];
   toast.$mount();
   toast.$on("close", () => {
