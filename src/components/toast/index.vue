@@ -1,15 +1,23 @@
 <template>
   <div class="container" ref="wrapper" :data-position="position">
-    <div class="m-toast flex-align__center" @animationend="animationend" :data-is-end="isCloseAnimation">
+    <div
+      class="m-toast flex-align__center"
+      @animationend="animationend"
+      :data-is-end="isCloseAnimation"
+    >
       <div :class="['icon', 'flex-align__center', icon]" v-if="icon">
-        <m-icon :icon="icon"/>
+        <m-icon :icon="icon" />
       </div>
       <div class="content">
         <div v-if="enbleHtml" v-html="$slots.default[0]"></div>
         <slot v-else></slot>
       </div>
-      <div class="close-button flex-align__center" v-if="showCloseButton" @click="onClickCloseButton">
-        <m-icon icon="close"/>
+      <div
+        class="close-button flex-align__center"
+        v-if="showCloseButton"
+        @click="onClickCloseButton"
+      >
+        <m-icon icon="close" />
       </div>
     </div>
   </div>
@@ -31,13 +39,14 @@ export default class MToast extends Vue {
   @Prop({ default: false }) private showCloseButton!: boolean;
   @Prop({ default: true }) private autoClose!: boolean;
   @Prop({ default: 3000 }) private delayTime!: number;
-  @Prop({ default: 'top' }) private position!: string;
+  @Prop({ default: "top" }) private position!: string;
   @Prop({
-    default: '',
+    default: "",
     validator(value: string) {
-      return ['tips', 'warning', 'danger', 'success'].indexOf(value) !== -1
+      return ["tips", "warning", "danger", "success"].indexOf(value) !== -1;
     }
-  }) private icon!: string;
+  })
+  private icon!: string;
   @Prop() private onClose!: CallBack;
 
   isCloseAnimation: boolean = false;
@@ -46,29 +55,29 @@ export default class MToast extends Vue {
     this.executeAutoClose();
   }
   destroyed(): void {
-    clearTimeout(closeTimer)
+    clearTimeout(closeTimer);
   }
   // methods
   animationend(): void {
-    if(this.isCloseAnimation) {
-      this.close()
+    if (this.isCloseAnimation) {
+      this.close();
     }
   }
   executeAutoClose() {
-    if(this.autoClose) {
+    if (this.autoClose) {
       closeTimer = setTimeout(() => {
         this.isCloseAnimation = true;
-      }, this.delayTime)
+      }, this.delayTime);
     }
   }
   close(): void {
     this.$el.remove();
-    this.$emit('close');
+    this.$emit("close");
     this.$destroy();
   }
   onClickCloseButton(): void {
     this.isCloseAnimation = true;
-    if (this.onClose && typeof this.onClose === 'function') {
+    if (this.onClose && typeof this.onClose === "function") {
       this.onClose(this);
     }
   }
@@ -170,7 +179,7 @@ export default class MToast extends Vue {
 @keyframes middle-pack-up {
   0% {
     opacity: 1;
-    transform: scale(1)
+    transform: scale(1);
   }
   100% {
     opacity: 0;
@@ -189,21 +198,21 @@ export default class MToast extends Vue {
   transform: translateX(-50%);
   .m-toast {
     background: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     font-size: 16px;
     border-radius: $borderRadius;
     color: #000;
-    padding: .3em 1em;
+    padding: 0.3em 1em;
     line-height: 1.5;
     min-height: 38px;
     max-width: 380px;
     box-sizing: border-box;
     animation-name: top-unfold;
-    animation-duration: .3s;
+    animation-duration: 0.3s;
     animation-timing-function: linear;
     &[data-is-end="true"] {
-        animation-name: top-pack-up;
-      }
+      animation-name: top-pack-up;
+    }
     .content {
       word-break: break-all;
     }
@@ -213,7 +222,7 @@ export default class MToast extends Vue {
       cursor: pointer;
     }
     .icon {
-      margin-right: .3em;
+      margin-right: 0.3em;
       &.tips {
         color: #aaa;
       }

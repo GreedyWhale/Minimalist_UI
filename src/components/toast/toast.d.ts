@@ -3,7 +3,7 @@ interface Toast {
 }
 
 interface CallBack {
-  <T> (vueCompontent: Vue.Component, ...rest: any[]): any;
+  <T>(vueCompontent: Vue.Component, ...rest: any[]): any;
 }
 
 export { Toast, CallBack };
