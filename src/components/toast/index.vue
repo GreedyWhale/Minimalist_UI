@@ -51,7 +51,6 @@ export default class MToast extends Vue {
 
   isCloseAnimation: boolean = false;
   mounted(): void {
-    console.log(this.$slots);
     this.executeAutoClose();
   }
   destroyed(): void {
