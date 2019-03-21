@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Inject } from "vue-property-decorator";
+import { Vue, Component, Inject } from "vue-property-decorator";
 import { CustomObject } from "@/types/index.ts";
 import MIcon from "@/components/icon/index.vue";
 @Component({
@@ -53,6 +53,7 @@ export default class MTabsHead extends Vue {
   offsetX: number = 0;
   // methods
   scrollToCurrent(vm: any): any {
+    if (!vm) return;
     // todo 算法需研究，目前参考ivew的实现
     const scrollContent: CustomObject = this.$refs.scrollContent;
     const scrollWrap: CustomObject = this.$refs.scroll;
@@ -95,6 +96,7 @@ export default class MTabsHead extends Vue {
     this.offsetX = newOffset;
   }
   updateLinePosition(vm: any): void {
+    if (!vm) return;
     const { left, width } = vm.$el.getBoundingClientRect();
     const { left: scrollLeft } = (this.$refs
       .scrollContent as CustomObject).getBoundingClientRect();

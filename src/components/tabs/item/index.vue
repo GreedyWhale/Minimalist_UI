@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="['tabs-item', itemclass]"
+    :class="itemclass"
     @click="updateSelected"
     @mouseenter="isHoverActive = true"
     @mouseleave="isHoverActive = false"
@@ -19,6 +19,7 @@ import { listenSelected } from "../methods";
 export default class MTabsItem extends Vue {
   @Inject() readonly eventBus!: EventBus;
   @Prop({ type: String }) private name!: string;
+  @Prop({ type: Boolean }) private disabled!: boolean;
   // data
   isActive: boolean = false;
   isHoverActive: boolean = false;
@@ -30,12 +31,20 @@ export default class MTabsItem extends Vue {
     return {
       "tabs-item": true,
       active: this.isActive,
-      "hover-active": this.isHoverActive
+      "hover-active": this.isHoverActive,
+      disabled: this.disabled
     };
   }
   // methods
   updateSelected(): void {
-    this.eventBus.$emit("update:selected", this.name, this);
+    if (
+      !this.disabled &&
+      this.eventBus &&
+      typeof this.eventBus.$emit === "function"
+    ) {
+      this.eventBus.$emit("update:selected", this.name, this);
+      this.$emit("click", this.name, this);
+    }
   }
 }
 </script>
@@ -55,6 +64,11 @@ export default class MTabsItem extends Vue {
   }
   > .m-icon {
     margin-right: 5px;
+  }
+  &.disabled {
+    color: #ccc !important;
+    font-weight: normal;
+    cursor: not-allowed;
   }
 }
 </style>

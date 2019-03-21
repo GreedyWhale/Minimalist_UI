@@ -15,12 +15,13 @@ export default class MTabs extends Vue {
     | string
     | number;
   @Provide() eventBus: EventBus = new Vue();
-  mounted(): void {
-    this.updateSelected(this.selected);
-  }
   @Watch("selected")
   onSelectedChanged(val: string | number, oldVal: string | number) {
     this.updateSelected(val);
+  }
+
+  mounted(): void {
+    this.updateSelected(this.selected);
   }
   // methods
   updateSelected(selected: string | number): void {
@@ -36,7 +37,6 @@ export default class MTabs extends Vue {
         });
       }
     });
-    // console.log(child)
     this.eventBus.$emit("update:selected", selected, selectedChild);
   }
 }
