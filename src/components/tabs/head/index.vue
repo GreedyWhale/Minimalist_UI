@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { Vue, Component, Inject } from "vue-property-decorator";
-import { CustomObject } from "@/types/index.ts";
+import { CustomObject } from "@/types/index.d";
 import MIcon from "@/components/icon/index.vue";
 @Component({
   name: "MTabsHead",

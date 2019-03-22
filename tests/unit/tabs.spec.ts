@@ -37,11 +37,11 @@ describe("MTabsHead.vue", () => {
     const head = wrapper.find(".tabs-head");
     head.setData({
       showContralBtn: true
-    })
-    expect(head.contains('.pre-btn')).to.be.true
-    expect(head.contains('.next-btn')).to.be.true
+    });
+    expect(head.contains(".pre-btn")).to.be.true;
+    expect(head.contains(".next-btn")).to.be.true;
   });
-})
+});
 describe("MTabsItem.vue", () => {
   it("MTabsItem组件接受name", () => {
     const item = wrapper.find(".tabs-item");
@@ -49,14 +49,14 @@ describe("MTabsItem.vue", () => {
   });
   it("MTabsItem组件接受disabled", () => {
     const item = wrapper.find(".tabs-item");
-    expect(item.classes()).to.contains('disabled');
+    expect(item.classes()).to.contains("disabled");
   });
   it("MTabsItem组件可以响应点击事件", () => {
     const clickHandler = sinon.spy();
     const item = wrapper.findAll(".tabs-item").at(1);
     const vm = item.vm;
     vm.$on("click", clickHandler);
-    item.trigger('click')
+    item.trigger("click");
     expect(clickHandler.called).to.be.true;
   });
 });
