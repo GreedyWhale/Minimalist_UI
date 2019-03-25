@@ -19,7 +19,7 @@ import { listenSelected } from "../methods";
 export default class MTabsItem extends Vue {
   @Inject() readonly eventBus!: EventBus;
   @Prop({ type: String }) private name!: string;
-  @Prop({ type: Boolean }) private disabled!: boolean;
+  @Prop({ default: false, type: Boolean }) private disabled!: boolean;
   // data
   isActive: boolean = false;
   isHoverActive: boolean = false;

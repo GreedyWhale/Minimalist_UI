@@ -121,11 +121,11 @@ export default class MInput extends Vue {
   @Prop({ default: "text" }) private type!: string;
   @Prop({ default: "" }) private placeholder!: string;
   @Prop() private maxlength!: string | number;
-  @Prop({ default: false }) private disabled!: boolean;
-  @Prop({ default: false }) private clearable!: boolean | string;
+  @Prop({ default: false, type: Boolean }) private disabled!: boolean;
+  @Prop({ default: false, type: Boolean }) private clearable!: boolean;
   @Prop({ default: "" }) private promptMsg!: string;
   @Prop({ default: "" }) private promptMsgPosition!: string;
-  @Prop({ default: false }) private isErrorMsg!: boolean;
+  @Prop({ default: false, type: Boolean }) private isErrorMsg!: boolean;
   @Prop({ default: "" }) private suffixIcon!: string;
   @Prop({ default: "" }) private prefixIcon!: string;
   @Prop({ default: "" }) private suffixButtonText!: string;
@@ -184,9 +184,7 @@ export default class MInput extends Vue {
     return this.$slots.prefixContent !== undefined;
   }
   get showClearIcon(): boolean {
-    const clearable: boolean =
-      this.clearable === "" ? true : Boolean(this.clearable);
-    return clearable && Boolean(this.currentValue);
+    return this.clearable && Boolean(this.currentValue);
   }
 }
 </script>

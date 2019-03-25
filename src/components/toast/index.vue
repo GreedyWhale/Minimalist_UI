@@ -35,12 +35,12 @@ let closeTimer: any;
   }
 })
 export default class MToast extends Vue {
-  @Prop({ default: false }) private enbleHtml!: boolean;
-  @Prop({ default: false }) private showCloseButton!: boolean;
-  @Prop({ default: true }) private autoClose!: boolean;
+  @Prop({ default: false, type: Boolean }) private enbleHtml!: boolean;
+  @Prop({ default: false, type: Boolean }) private showCloseButton!: boolean;
+  @Prop({ default: true, type: Boolean }) private autoClose!: boolean;
   @Prop({ default: 3000 }) private delayTime!: number;
   @Prop({ default: "top" }) private position!: string;
-  @Prop({ default: false }) private usePlugin!: boolean;
+  @Prop({ default: false, type: Boolean}) private usePlugin!: boolean;
   @Prop({
     validator(value: string) {
       return ["tips", "warning", "danger", "success"].indexOf(value) !== -1;

@@ -17,7 +17,7 @@ import "@/assets/iconfont/index.js";
 })
 export default class MIcon extends Vue {
   @Prop({ default: "" }) private icon!: string;
-  @Prop() private isLoading!: boolean;
+  @Prop({ default: false, type: Boolean }) private isLoading!: boolean;
 
   // compouted
   get newIconName(): string {
