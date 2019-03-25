@@ -5,6 +5,8 @@
       v-if="visible"
       ref="popoverContent"
       :data-position="position"
+      @mouseenter="onMouseEnter"
+      @mouseleave="onMouseLeave"
     >
       <slot name="content" :close="close"></slot>
     </div>
@@ -17,6 +19,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { PositionInfo } from "./popover.d";
+let enterTimer: any = null;
 @Component({
   name: "MPopover"
 })
@@ -25,18 +28,35 @@ export default class MPopover extends Vue {
   @Prop({ type: String, default: "click" }) private trigger!: string;
 
   mounted(): void {
-    if(this.trigger === 'click') {
-      (this.$refs.popover as any).addEventListener('click', this.onClick);
+    if (this.trigger === "click") {
+      (this.$refs.popover as any).addEventListener("click", this.onClick);
     } else {
-      (this.$refs.popover as any).addEventListener('mouseenter', this.open);
-      (this.$refs.popover as any).addEventListener('mouseleave', this.close);
+      (this.$refs.popover as any).addEventListener(
+        "mouseenter",
+        this.onMouseEnter
+      );
+      (this.$refs.popover as any).addEventListener(
+        "mouseleave",
+        this.onMouseLeave
+      );
+    }
+  }
+  destroyed(): void {
+    if (this.trigger === "click") {
+      (this.$refs.popover as any).removeEventListener("click", this.onClick);
+    } else {
+      (this.$refs.popover as any).removeEventListener(
+        "mouseenter",
+        this.onMouseEnter
+      );
+      (this.$refs.popover as any).removeEventListener(
+        "mouseleave",
+        this.onMouseLeave
+      );
     }
   }
   // data
   visible: boolean = false;
-  user: Object = {
-    name: 1
-  }
   // methods
   clickDocument(event: Event): void {
     const isPoppver: boolean =
@@ -55,6 +75,28 @@ export default class MPopover extends Vue {
   onClick(event: Event): void {
     if ((this.$refs.popover as any).contains(event.target)) {
       this.visible ? this.close() : this.open();
+    }
+  }
+  onMouseEnter(): void {
+    if (this.trigger !== "hover") {
+      return;
+    }
+    if (enterTimer) {
+      clearTimeout(enterTimer);
+    }
+    enterTimer = setTimeout(() => {
+      this.open();
+    }, 100);
+  }
+  onMouseLeave(): void {
+    if (this.trigger !== "hover") {
+      return;
+    }
+    if (enterTimer) {
+      clearTimeout(enterTimer);
+      enterTimer = setTimeout(() => {
+        this.close();
+      }, 100);
     }
   }
   open(): void {
