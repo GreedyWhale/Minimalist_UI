@@ -41,21 +41,23 @@ export default class MCollapseItem extends Vue {
   }
   // methods
   listenUpdateSelectd(): void {
-    this.eventBus.$on('updateActive', (activeList: any[]) => {
-      const active = activeList.some((value: string | number) => value === this.name);
+    this.eventBus.$on("updateActive", (activeList: any[]) => {
+      const active = activeList.some(
+        (value: string | number) => value === this.name
+      );
       this.open = active;
-    })
+    });
   }
   toggleOpenState(): void {
-    this.eventBus.$emit('changeActiveName', this.name, this.open);
+    this.eventBus.$emit("changeActiveName", this.name, this.open);
   }
-  enter(el:any, done: ()=>{}): void{
+  enter(el: any, done: () => {}): void {
     const sectionHeight: number = el.scrollHeight;
-    el.style.height = sectionHeight + 'px';
-    done()
+    el.style.height = sectionHeight + "px";
+    done();
   }
-  leave(el:any, done: ()=>{}): void {
-    el.style.height = 0 + 'px';
+  leave(el: any, done: () => {}): void {
+    el.style.height = 0 + "px";
     done();
   }
 }
@@ -82,9 +84,9 @@ $border: 1px solid $border-color;
   }
   .collapse-content {
     border-bottom: $border;
-    overflow:hidden;
+    overflow: hidden;
     transition: height 0.3s ease-out;
-    height:0;
+    height: 0;
     box-sizing: border-box;
     &__wrap {
       margin: 1em;
@@ -92,7 +94,7 @@ $border: 1px solid $border-color;
   }
   .collapse-icon {
     font-size: 12px;
-    transition: all .3s;
+    transition: all 0.3s;
     &[data-open="true"] {
       transform: rotateZ(90deg);
     }
