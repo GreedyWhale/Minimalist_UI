@@ -3,7 +3,7 @@ import { expect } from "chai";
 import sinon from "sinon";
 import MToast from "@/components/toast/index.vue";
 
-describe("MToast.vue", () => {
+describe("m-toast.vue", () => {
   it("MToast组件接受enbleHtml", () => {
     const wrapper = shallowMount(MToast, {
       propsData: {

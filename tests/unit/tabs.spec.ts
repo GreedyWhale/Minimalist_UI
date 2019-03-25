@@ -32,7 +32,7 @@ const component = {
   `
 };
 const wrapper = mount(component);
-describe("MTabsHead.vue", () => {
+describe("m-tabs-head.vue", () => {
   it("MTabsHead组件可以设置的ContralButton", () => {
     const head = wrapper.find(".tabs-head");
     head.setData({
@@ -42,7 +42,7 @@ describe("MTabsHead.vue", () => {
     expect(head.contains(".next-btn")).to.be.true;
   });
 });
-describe("MTabsItem.vue", () => {
+describe("m-tabs-item.vue", () => {
   it("MTabsItem组件接受name", () => {
     const item = wrapper.find(".tabs-item");
     expect(item.props("name")).to.equal("tab1");
@@ -51,7 +51,7 @@ describe("MTabsItem.vue", () => {
     const item = wrapper.find(".tabs-item");
     expect(item.classes()).to.contains("disabled");
   });
-  it("MTabsItem组件可以响应点击事件", () => {
+  it("m-tabs-item组件可以响应点击事件", () => {
     const clickHandler = sinon.spy();
     const item = wrapper.findAll(".tabs-item").at(1);
     const vm = item.vm;
