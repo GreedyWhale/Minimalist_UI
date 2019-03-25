@@ -40,7 +40,7 @@ export default class MToast extends Vue {
   @Prop({ default: true, type: Boolean }) private autoClose!: boolean;
   @Prop({ default: 3000 }) private delayTime!: number;
   @Prop({ default: "top" }) private position!: string;
-  @Prop({ default: false, type: Boolean}) private usePlugin!: boolean;
+  @Prop({ default: false, type: Boolean }) private usePlugin!: boolean;
   @Prop({
     validator(value: string) {
       return ["tips", "warning", "danger", "success"].indexOf(value) !== -1;
