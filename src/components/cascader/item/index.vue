@@ -3,10 +3,16 @@
     <ul class="left" :data-has-right="Boolean(rightSource)">
       <li
         class="label"
-        v-for="sourceItem in source" :key="sourceItem.label"
-        @click="selected = sourceItem">
+        v-for="sourceItem in source"
+        :key="sourceItem.label"
+        @click="selected = sourceItem"
+      >
         {{ sourceItem.label }}
-        <m-icon v-if="sourceItem.children" icon="right" class="right-arrow"></m-icon>
+        <m-icon
+          v-if="sourceItem.children"
+          icon="right"
+          class="right-arrow"
+        ></m-icon>
       </li>
     </ul>
     <div class="right" v-if="rightSource">
@@ -21,7 +27,7 @@ import { SourceItem } from "../cascader.d";
 import MIcon from "@/components/icon/index.vue";
 
 @Component({
-  name: 'MCascaderItem',
+  name: "MCascaderItem",
   components: {
     MIcon
   }
@@ -32,7 +38,7 @@ export default class MCascaderItem extends Vue {
   selected: SourceItem | null = null;
   // computed
   get rightSource(): Array<SourceItem> | null {
-    if(this.selected && this.selected.children) {
+    if (this.selected && this.selected.children) {
       return this.selected.children;
     }
     return null;
@@ -41,7 +47,9 @@ export default class MCascaderItem extends Vue {
 </script>
 
 <style lang="scss" scoped>
-ul, li {
+@import "@/assets/scss/var.scss";
+ul,
+li {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -53,8 +61,8 @@ ul, li {
   .left {
     height: 250px;
     overflow: auto;
-    &[data-has-right='true'] {
-      border-right: 1px solid #e4e7ed;
+    &[data-has-right="true"] {
+      border-right: 1px solid $grey;
     }
   }
   .label {
@@ -71,9 +79,8 @@ ul, li {
     }
     .right-arrow {
       margin-left: auto;
-      transform: scale(.5);
+      transform: scale(0.5);
     }
   }
 }
 </style>
-

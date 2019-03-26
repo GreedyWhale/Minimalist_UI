@@ -1,7 +1,7 @@
 interface SourceItem {
   label: any;
   value: any;
-  children?: any
+  children?: any;
 }
 
-export { SourceItem }
+export { SourceItem };

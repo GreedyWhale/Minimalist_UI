@@ -120,6 +120,7 @@ export default class MTabsHead extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/var.scss";
 .tabs-head {
   position: relative;
   &__scroll {
@@ -149,7 +150,7 @@ export default class MTabsHead extends Vue {
     left: 0;
     right: 0;
     z-index: 1;
-    background: #e4e7ed;
+    background: $grey;
   }
   &[data-has-contral-btn="true"] {
     padding: 0 40px;

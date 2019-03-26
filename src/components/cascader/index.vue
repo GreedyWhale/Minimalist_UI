@@ -2,7 +2,11 @@
   <div class="cascader">
     <div class="cascader-view" @click="visiblePopover = !visiblePopover">
       <p>请选择</p>
-      <m-icon icon="right" class="arrow-icon" :data-is-unfold="visiblePopover"></m-icon>
+      <m-icon
+        icon="right"
+        class="arrow-icon"
+        :data-is-unfold="visiblePopover"
+      ></m-icon>
     </div>
     <div class="cascader-content">
       <m-cascader-item :source="source" v-if="visiblePopover"></m-cascader-item>
@@ -16,14 +20,20 @@ import { SourceItem } from "./cascader.d";
 import MIcon from "@/components/icon/index.vue";
 import MCascaderItem from "./item/index.vue";
 @Component({
-  name: 'MCascader',
+  name: "MCascader",
   components: {
     MCascaderItem,
     MIcon
   }
 })
 export default class MCascader extends Vue {
-  @Prop({ type: Array, default(){ return []} }) private source!: Array<SourceItem>;
+  @Prop({
+    type: Array,
+    default() {
+      return [];
+    }
+  })
+  private source!: Array<SourceItem>;
   // data
   visiblePopover: boolean = false;
 }
@@ -44,15 +54,15 @@ export default class MCascader extends Vue {
     border-radius: $borderRadius;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     > p {
       margin: 0;
     }
     .arrow-icon {
-      transform: scale(.5) rotate(90deg);
-      margin-left: auto;
-      transition: all .2s;
+      transform: scale(0.5) rotate(90deg);
+      transition: all 0.2s;
       &[data-is-unfold] {
-        transform: scale(.5) rotate(270deg);
+        transform: scale(0.5) rotate(270deg);
       }
     }
   }
@@ -68,4 +78,3 @@ export default class MCascader extends Vue {
   }
 }
 </style>
-
