@@ -91,9 +91,8 @@ export default class MCollapse extends Vue {
 
 <style lang="scss" scoped>
 @import "@/assets/scss/var.scss";
-@import "./general.scss";
 .collapse {
   border-radius: $borderRadius;
-  border: 1px solid $border-color;
+  border: 1px solid $collapse-border-color;
 }
 </style>

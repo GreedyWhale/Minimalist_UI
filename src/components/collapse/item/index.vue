@@ -64,9 +64,8 @@ export default class MCollapseItem extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "../general.scss";
 @import "@/assets/scss/var.scss";
-$border: 1px solid $border-color;
+$border: 1px solid $collapse-border-color;
 .collapse-item {
   font-size: 16px;
   .collapse-title {
