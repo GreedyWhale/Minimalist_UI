@@ -3,9 +3,10 @@
     <ul class="left" :data-has-right="Boolean(rightSource)">
       <li
         class="label"
+        :data-is-selected="sourceItem.value === selected[level]"
         v-for="sourceItem in source"
         :key="sourceItem.label"
-        @click="selected = sourceItem"
+        @click="setSelected(sourceItem)"
       >
         {{ sourceItem.label }}
         <m-icon
@@ -16,7 +17,9 @@
       </li>
     </ul>
     <div class="right" v-if="rightSource">
-      <m-cascader-item :source="rightSource"></m-cascader-item>
+      <m-cascader-item
+      :source="rightSource" :level="level + 1"
+      :selected="selected" @update:selected="onUpdateSelected"></m-cascader-item>
     </div>
   </div>
 </template>
@@ -34,20 +37,34 @@ import MIcon from "@/components/icon/index.vue";
 })
 export default class MCascaderItem extends Vue {
   @Prop({ type: Array }) private source!: Array<SourceItem>;
-  // data
-  selected: SourceItem | null = null;
+  @Prop({ type: Number, default: 0 }) private level!: number;
+  @Prop({ type: Array }) private selected!: any[];
   // computed
   get rightSource(): Array<SourceItem> | null {
-    if (this.selected && this.selected.children) {
-      return this.selected.children;
+    if (this.selected[this.level]) {
+      let selected = this.source.filter(item => item.value === this.selected[this.level]);
+      if(selected[0] && selected[0].children) {
+        return selected[0].children;
+      }
     }
     return null;
+  }
+  // methods
+  setSelected(sourceItem: SourceItem): void {
+    let selected = JSON.parse(JSON.stringify(this.selected));
+    selected[this.level] = sourceItem.value;
+    selected.splice(this.level + 1)
+    this.$emit('update:selected', selected)
+  }
+  onUpdateSelected(selected: any[]) {
+    this.$emit('update:selected', selected)
   }
 }
 </script>
 
 <style lang="scss" scoped>
 @import "@/assets/scss/var.scss";
+$label-hover-bg: #f5f7fa;
 ul,
 li {
   list-style: none;
@@ -75,7 +92,11 @@ li {
     align-items: center;
     justify-content: center;
     &:hover {
-      background: rgba(228, 227, 227, 0.774);
+      font-weight: bold;
+      background: $label-hover-bg;
+    }
+    &[data-is-selected="true"] {
+      background: $label-hover-bg;
     }
     .right-arrow {
       margin-left: auto;
