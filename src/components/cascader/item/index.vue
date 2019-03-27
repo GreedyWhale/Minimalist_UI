@@ -18,7 +18,7 @@
     </ul>
     <div class="right" v-if="rightSource">
       <m-cascader-item
-      :source="rightSource" :level="level + 1"
+      :source="rightSource" :level="level + 1" @change="onChange"
       :selected="selected" @update:selected="onUpdateSelected"></m-cascader-item>
     </div>
   </div>
@@ -54,10 +54,14 @@ export default class MCascaderItem extends Vue {
     let selected = JSON.parse(JSON.stringify(this.selected));
     selected[this.level] = sourceItem.value;
     selected.splice(this.level + 1)
-    this.$emit('update:selected', selected)
+    this.$emit('update:selected', selected);
+    this.$emit('change', sourceItem, this.level);
   }
-  onUpdateSelected(selected: any[]) {
-    this.$emit('update:selected', selected)
+  onUpdateSelected(selected: any[]): void {
+    this.$emit('update:selected', selected);
+  }
+  onChange(sourceItem: SourceItem, level: number): void {
+    this.$emit('change', sourceItem, level);
   }
 }
 </script>

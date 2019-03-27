@@ -11,7 +11,7 @@
     </div>
     <div class="cascader-content">
       <m-cascader-item
-        :source="source" v-if="visiblePopover"
+        :source="source" v-if="visiblePopover" @change="onChange"
         :selected="selected" @update:selected="onUpdateSelected"></m-cascader-item>
     </div>
   </div>
@@ -41,12 +41,20 @@ export default class MCascader extends Vue {
   // data
   visiblePopover: boolean = false;
   placeholder: string = '请选择';
+  selectedContentArr: any[] = [];
   mounted() {
     this.checkSelected()
   };
   // methods
   onUpdateSelected(selected: any[]) {
     this.$emit('select', selected)
+  }
+  onChange(sourceItem: SourceItem, level: number) {
+    const contentArr = JSON.parse(JSON.stringify(this.selectedContentArr));
+    contentArr[level] = sourceItem.label;
+    contentArr.splice(level + 1);
+    this.selectedContentArr = contentArr;
+    this.$emit('change', sourceItem);
   }
   checkSelected(): void {
     if(!(this.selected instanceof Array)) {
@@ -55,7 +63,10 @@ export default class MCascader extends Vue {
   }
   // computed
   get selectedContent(): string {
-    return (this.selected || []).join('/');
+    if(this.selectedContentArr.length) {
+      return this.selectedContentArr.join('/');
+    }
+    return '';
   }
 }
 </script>
