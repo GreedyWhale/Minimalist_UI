@@ -9,6 +9,7 @@ const data: any[] = [
   {
     value: 'yinhun',
     label: '银魂',
+    disable: true,
     children: [],
     id: 2,
     parent_id: 0,

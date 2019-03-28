@@ -1,7 +1,19 @@
 <template>
   <div id="app">
     <div class="app">
-      <m-cascader :source="source" v-model="selected" @change="a"></m-cascader>
+      <m-cascader
+        :source.sync="source"
+        v-model="selected"
+        :loadData="loadData"
+        @selected-items="b"
+      ></m-cascader>
+      <div>
+        <m-cascader
+          :source="source"
+          v-model="selected"
+          @change="a"
+        ></m-cascader>
+      </div>
     </div>
     <p>1231</p>
   </div>
@@ -334,7 +346,6 @@ export default class App extends Vue {
   }
   setSourceItem(list: any[], conditions: any) {
     for (let i = 0; i < list.length; i++) {
-      console.log(1);
       if (list[i].id === conditions[0].parent_id) {
         list[i].children = conditions;
         return true;
@@ -353,6 +364,11 @@ export default class App extends Vue {
       }
     }
   }
+  loadData(selected: any, upDataSource: Function): void {
+    this.getData(selected.id).then((res: any) => {
+      upDataSource(res);
+    });
+  }
   a(event: any) {
     let source = JSON.parse(JSON.stringify(this.source));
     this.getData(event.id).then((res: any) => {
@@ -361,6 +377,9 @@ export default class App extends Vue {
         this.source = source;
       }
     });
+  }
+  b(event: any) {
+    console.log(event);
   }
   getData(id: number) {
     return new Promise<any[]>(resolve => {

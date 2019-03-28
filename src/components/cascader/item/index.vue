@@ -4,6 +4,7 @@
       <li
         class="label"
         :data-is-selected="sourceItem.value === selected[level]"
+        :data-is-disable="sourceItem.disable"
         v-for="sourceItem in source"
         :key="sourceItem.label"
         @click="setSelected(sourceItem)"
@@ -13,6 +14,7 @@
           v-if="sourceItem.children"
           icon="right"
           class="right-arrow"
+          :isLoading="loadingItem.value === sourceItem.value"
         ></m-icon>
       </li>
     </ul>
@@ -23,6 +25,7 @@
         @change="onChange"
         :selected="selected"
         @update:selected="onUpdateSelected"
+        :loadingItem="loadingItem"
       ></m-cascader-item>
     </div>
   </div>
@@ -43,6 +46,13 @@ export default class MCascaderItem extends Vue {
   @Prop({ type: Array }) private source!: Array<SourceItem>;
   @Prop({ type: Number, default: 0 }) private level!: number;
   @Prop({ type: Array }) private selected!: any[];
+  @Prop({
+    type: Object,
+    default() {
+      return {};
+    }
+  })
+  private loadingItem!: Object;
   // computed
   get rightSource(): Array<SourceItem> | null {
     if (this.selected[this.level]) {
@@ -57,11 +67,14 @@ export default class MCascaderItem extends Vue {
   }
   // methods
   setSelected(sourceItem: SourceItem): void {
+    if (sourceItem.disable) {
+      return;
+    }
     let selected = JSON.parse(JSON.stringify(this.selected));
     selected[this.level] = sourceItem.value;
     selected.splice(this.level + 1);
     this.$emit("update:selected", selected);
-    this.$emit("change", sourceItem);
+    this.$emit("change", sourceItem, this.level);
   }
   onUpdateSelected(selected: any[]): void {
     this.$emit("update:selected", selected);
@@ -107,6 +120,14 @@ li {
     }
     &[data-is-selected="true"] {
       background: $label-hover-bg;
+    }
+    &[data-is-disable="true"] {
+      color: #ccc;
+      cursor: not-allowed;
+      &:hover {
+        font-weight: normal;
+        background: inherit;
+      }
     }
     .right-arrow {
       transform: scale(0.5);

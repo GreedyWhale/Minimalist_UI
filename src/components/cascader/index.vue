@@ -16,6 +16,7 @@
         @change="onChange"
         :selected="selected || copySelected"
         @update:selected="onUpdateSelected"
+        :loadingItem="loadingItem"
       ></m-cascader-item>
     </div>
   </div>
@@ -42,10 +43,13 @@ export default class MCascader extends Vue {
     }
   })
   private source!: Array<SourceItem>;
+  @Prop({ type: Function }) private loadData!: Function;
   // data
   visiblePopover: boolean = false;
   placeholder: string = "请选择";
   copySelected: any[] = [];
+  allSelectedItems: any[] = [];
+  loadingItem: any = {};
   // methods
   clickDocument(event: Event): void {
     if (
@@ -71,8 +75,19 @@ export default class MCascader extends Vue {
     this.$emit("select", selected);
     this.copySelected = selected;
   }
-  onChange(sourceItem: SourceItem, level: number, index: number): void {
+  onChange(sourceItem: SourceItem, level: number): void {
+    let copyAllSelectedItems: any[] = JSON.parse(
+      JSON.stringify(this.allSelectedItems)
+    );
+    copyAllSelectedItems[level] = sourceItem;
+    copyAllSelectedItems.splice(level + 1);
+    this.allSelectedItems = copyAllSelectedItems;
     this.$emit("change", sourceItem);
+    this.$emit("selected-items", copyAllSelectedItems);
+    if (this.loadData) {
+      this.loadingItem = sourceItem;
+      this.loadData(sourceItem, this.onUpdateSource);
+    }
   }
   findValueInSource(list: SourceItem[], conditions: any): any[] {
     return list.filter((item: SourceItem) => item.value === conditions);
@@ -94,6 +109,38 @@ export default class MCascader extends Vue {
       }
     }
     return [];
+  }
+  setSourceItem(list: any[], conditions: any) {
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].id === conditions[0].parent_id) {
+        list[i].children = conditions;
+        return true;
+      }
+    }
+  }
+  recursionSource(list: any[], conditions: any) {
+    let done;
+    for (let i = 0; i < list.length; i++) {
+      done = this.setSourceItem(list, conditions);
+      if (done) {
+        return;
+      }
+      if (list[i].children && list[i].children.length) {
+        this.recursionSource(list[i].children, conditions);
+      }
+    }
+  }
+  onUpdateSource(list: any[]): void {
+    if (!list) {
+      this.loadingItem = {};
+      return;
+    }
+    let source = JSON.parse(JSON.stringify(this.source));
+    if (list && list.length) {
+      this.recursionSource(source, list);
+      this.$emit("update:source", source);
+      this.loadingItem = {};
+    }
   }
   // computed
   get selectedContent(): string {
