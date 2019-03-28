@@ -50,6 +50,7 @@ export default class MCascader extends Vue {
   copySelected: any[] = [];
   allSelectedItems: any[] = [];
   loadingItem: any = {};
+  selectedItem: SourceItem = { value: "", label: "" };
   // methods
   clickDocument(event: Event): void {
     if (
@@ -82,6 +83,7 @@ export default class MCascader extends Vue {
     copyAllSelectedItems[level] = sourceItem;
     copyAllSelectedItems.splice(level + 1);
     this.allSelectedItems = copyAllSelectedItems;
+    this.selectedItem = sourceItem;
     this.$emit("change", sourceItem);
     this.$emit("selected-items", copyAllSelectedItems);
     if (this.loadData) {
@@ -92,7 +94,7 @@ export default class MCascader extends Vue {
   findValueInSource(list: SourceItem[], conditions: any): any[] {
     return list.filter((item: SourceItem) => item.value === conditions);
   }
-  recursiveSource(list: SourceItem[], conditions: any): any[] {
+  getContentArr(list: SourceItem[], conditions: any): any[] {
     if (!list) {
       return [];
     }
@@ -102,7 +104,7 @@ export default class MCascader extends Vue {
     }
     for (let i = 0; i < list.length; i++) {
       if (list[i].children) {
-        result = this.recursiveSource(list[i].children, conditions);
+        result = this.getContentArr(list[i].children, conditions);
         if (result && result.length) {
           return result;
         }
@@ -110,34 +112,35 @@ export default class MCascader extends Vue {
     }
     return [];
   }
-  setSourceItem(list: any[], conditions: any) {
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].id === conditions[0].parent_id) {
-        list[i].children = conditions;
+  setSourceItem(source: any[], newSource: any, sourceItem: SourceItem) {
+    for (let i = 0; i < source.length; i++) {
+      if (source[i].value === sourceItem.value) {
+        source[i].children = newSource;
         return true;
       }
     }
   }
-  recursionSource(list: any[], conditions: any) {
+  getNewSource(source: any[], newSource: any[], sourceItem: SourceItem) {
     let done;
-    for (let i = 0; i < list.length; i++) {
-      done = this.setSourceItem(list, conditions);
+    for (let i = 0; i < source.length; i++) {
+      done = this.setSourceItem(source, newSource, sourceItem);
       if (done) {
         return;
       }
-      if (list[i].children && list[i].children.length) {
-        this.recursionSource(list[i].children, conditions);
+      if (source[i].children && source[i].children.length) {
+        this.getNewSource(source[i].children, newSource, sourceItem);
       }
     }
   }
-  onUpdateSource(list: any[]): void {
-    if (!list) {
+  onUpdateSource(newSource: any[]): void {
+    // 如果点击的选项没有children属性，不更新
+    if (!newSource || !this.selectedItem.children) {
       this.loadingItem = {};
       return;
     }
     let source = JSON.parse(JSON.stringify(this.source));
-    if (list && list.length) {
-      this.recursionSource(source, list);
+    if (newSource && newSource.length) {
+      this.getNewSource(source, newSource, this.selectedItem);
       this.$emit("update:source", source);
       this.loadingItem = {};
     }
@@ -148,7 +151,7 @@ export default class MCascader extends Vue {
     let content: any[] = [];
     if (selected) {
       selected.forEach(item => {
-        const contentItem: any[] = this.recursiveSource(this.source, item);
+        const contentItem: any[] = this.getContentArr(this.source, item);
         if (contentItem && contentItem.length) {
           content.push(...contentItem);
         }
