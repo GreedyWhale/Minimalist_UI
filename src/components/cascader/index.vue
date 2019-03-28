@@ -1,6 +1,6 @@
 <template>
-  <div class="cascader">
-    <div class="cascader-view" @click="visiblePopover = !visiblePopover">
+  <div class="cascader" ref="cascader">
+    <div class="cascader-view" @click="togglePopover">
       <p v-if="selectedContent">{{ selectedContent }}</p>
       <p class="placeholder" v-else>{{ placeholder }}</p>
       <m-icon
@@ -47,6 +47,23 @@ export default class MCascader extends Vue {
   placeholder: string = "请选择";
   copySelected: any[] = [];
   // methods
+  clickDocument(event: Event): void {
+    if(this.$refs.cascader === event.target || (this.$refs.cascader as any).contains(event.target)) {
+      return;
+    }
+    this.close();
+  }
+  togglePopover(): void {
+    this.visiblePopover ? this.close(): this.open();
+  }
+  open(): void {
+    document.addEventListener('click', this.clickDocument);
+    this.visiblePopover = true;
+  }
+  close(): void {
+    document.removeEventListener('click', this.clickDocument);
+    this.visiblePopover = false;
+  }
   onUpdateSelected(selected: any[]): void {
     this.$emit("select", selected);
     this.copySelected = selected;
@@ -87,6 +104,9 @@ export default class MCascader extends Vue {
       return content.map(val => val.label).join('/')
     }
     return '';
+  }
+  destroyed(): void {
+    document.removeEventListener('click', this.clickDocument);
   }
 }
 </script>
