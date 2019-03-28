@@ -8,7 +8,7 @@
         :key="sourceItem.label"
         @click="setSelected(sourceItem)"
       >
-        {{ sourceItem.label }}
+        <span>{{ sourceItem.label }}</span>
         <m-icon
           v-if="sourceItem.children"
           icon="right"
@@ -61,7 +61,7 @@ export default class MCascaderItem extends Vue {
     selected[this.level] = sourceItem.value;
     selected.splice(this.level + 1);
     this.$emit("update:selected", selected);
-    this.$emit("change", sourceItem, this.level);
+    this.$emit("change", sourceItem);
   }
   onUpdateSelected(selected: any[]): void {
     this.$emit("update:selected", selected);
@@ -100,7 +100,7 @@ li {
     white-space: nowrap;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     &:hover {
       font-weight: bold;
       background: $label-hover-bg;
@@ -109,7 +109,6 @@ li {
       background: $label-hover-bg;
     }
     .right-arrow {
-      margin-left: auto;
       transform: scale(0.5);
     }
   }
