@@ -1,6 +1,12 @@
 <template>
   <div id="app">
-    
+    <div class="box">
+      <m-swiper :initIndex='0'>
+        <m-swiper-item>1</m-swiper-item>
+        <m-swiper-item>2</m-swiper-item>
+        <m-swiper-item>3</m-swiper-item>
+      </m-swiper>
+    </div>
   </div>
 </template>
 
@@ -28,6 +34,8 @@ import MCollapse from "@/components/collapse/index.vue";
 import MCollapseItem from "@/components/collapse/item/index.vue";
 import MCascader from "@/components/cascader/index.vue";
 import MCascaderItem from "@/components/cascader/item/index.vue";
+import MSwiper from "@/components/swiper/index.vue";
+import MSwiperItem from "@/components/swiper/item/index.vue";
 import tsetData from "../testdata";
 
 @Component({
@@ -53,7 +61,9 @@ import tsetData from "../testdata";
     MCollapse,
     MCollapseItem,
     MCascader,
-    MCascaderItem
+    MCascaderItem,
+    MSwiper,
+    MSwiperItem
   }
 })
 export default class App extends Vue {
@@ -63,6 +73,8 @@ export default class App extends Vue {
 
 <style lang="scss">
 #app {
-
+  .box {
+    width: 300px;
+  }
 }
 </style>
