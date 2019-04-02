@@ -1,5 +1,8 @@
 <template>
-  <div class="swiper" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
+  <div
+    class="swiper"
+    @mouseenter="onMouseEnter" @mouseleave="onMouseLeave"
+    @touchstart="onTouchStart" @touchend="onTouchEnd">
     <slot></slot>
     <ul v-if="childrenLength && visibleDots" class="control-dots" :data-vertical="vertical">
       <li
@@ -33,7 +36,8 @@ export default class MSwiper extends Vue {
   @Prop({ type: [Number, String] }) private active!: number | string;
   @Prop({ type: Boolean }) private autoplay!: boolean;
   @Prop({ type: Boolean, default: true }) visibleDots!: boolean;
-  @Prop({ type: Boolean, default: false}) vertical!: boolean;
+  @Prop({ type: Boolean, default: false }) vertical!: boolean;
+  @Prop({ type: Boolean, default: true }) loop!: boolean;
   @Prop({
     type: String,
     default: 'hover',
@@ -48,6 +52,8 @@ export default class MSwiper extends Vue {
   childrenLength: number = 0;
   needJudgeBoundary: boolean = true;
   hideControlBtn: boolean = true;
+  startX: number = 0;
+  startY: number = 0;
   mounted() {
     this.initActive()
     .then(() => {
@@ -119,10 +125,10 @@ export default class MSwiper extends Vue {
   setActiveIndex(index: number, needJudgeBoundary: boolean = true): void {
     this.lastActiveIndex = this.activeIndex;
     if(index === -1) {
-      index = this.childrenList.length - 1;
+      index = this.loop ? this.childrenList.length - 1 : 0;
     }
     if(index === this.childrenList.length) {
-      index = 0;
+      index = this.loop ? 0 : this.childrenList.length -1;
     }
     this.activeIndex = index;
     this.needJudgeBoundary = needJudgeBoundary;
@@ -146,6 +152,40 @@ export default class MSwiper extends Vue {
   clearAutoplayTimer(): void {
     clearTimeout(autoPlayTimer)
     autoPlayTimer = null;
+  }
+  onTouchStart(e: TouchEvent): void {
+    this.clearAutoplayTimer();
+    const { clientX, clientY } = e.touches[0];
+    this.startX = clientX;
+    this.startY = clientY;
+  }
+  onTouchEnd(e: TouchEvent): void {
+    const { clientX: endX, clientY: endY } = e.changedTouches[0];
+    const distance = Math.sqrt(Math.pow(endX - this.startX, 2) + Math.pow(endY - this.startY, 2));
+    const deltaY = Math.abs(endY - this.startY)
+    const rate = distance / deltaY;
+    if(this.vertical && rate < 2) {
+        // 向下
+        if(this.startY - endY > 10) {
+          this.setActiveIndex(this.activeIndex - 1);
+        }
+        // 向上
+        if(this.startY - endY < -10) {
+          this.setActiveIndex(this.activeIndex + 1);
+        }
+    } else if(!this.vertical && rate > 2){
+      // 向左
+      if(this.startX - endX > 10) {
+        this.setActiveIndex(this.activeIndex + 1);
+      }
+      // 向右
+      if(this.startX - endX < -10) {
+        this.setActiveIndex(this.activeIndex - 1);
+      }
+    }
+    this.$nextTick(() => {
+      this.executeAutoPlay();
+    })
   }
   // computed
   get childrenList(): any[] {
