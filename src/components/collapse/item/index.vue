@@ -6,7 +6,7 @@
         <m-icon icon="right" />
       </div>
     </div>
-    <transition @enter="enter" @leave="leave">
+    <transition @enter="enter" @beforeLeave="beforeLeave">
       <div class="collapse-content" v-if="open">
         <div class="collapse-content__wrap">
           <slot></slot>
@@ -56,9 +56,8 @@ export default class MCollapseItem extends Vue {
     el.style.height = sectionHeight + "px";
     done();
   }
-  leave(el: any, done: () => {}): void {
+  beforeLeave(el: any): void {
     el.style.height = 0 + "px";
-    done();
   }
 }
 </script>
