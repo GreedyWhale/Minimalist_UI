@@ -16,7 +16,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 export default class MSwiperItem extends Vue {
   @Prop({ type: String }) name!: string;
   // data
-  activeName: string | number = '';
+  activeName: string | number = "";
   reverse: boolean = false;
   vertical: boolean = false;
   // computed
@@ -24,10 +24,10 @@ export default class MSwiperItem extends Vue {
     return this.activeName === this.name;
   }
   get transitionName(): string {
-    if(this.vertical) {
-      return this.reverse ? 'vertical-slide-reverse' : 'vertical-slide'
+    if (this.vertical) {
+      return this.reverse ? "vertical-slide-reverse" : "vertical-slide";
     }
-    return this.reverse ? 'slide-reverse' : 'slide'
+    return this.reverse ? "slide-reverse" : "slide";
   }
 }
 </script>
@@ -69,7 +69,7 @@ export default class MSwiperItem extends Vue {
   transform: translate3d(-100%, 0, 0);
 }
 .vertical-slide-enter,
-.vertical-slide-reverse-leave-to, {
+.vertical-slide-reverse-leave-to {
   transform: translate3d(0, 100%, 0);
 }
 .vertical-slide-leave-to,

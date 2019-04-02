@@ -1,4 +1,4 @@
-import { shallowMount, mount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import Vue from "vue";
 import { expect } from "chai";
 import sinon from "sinon";

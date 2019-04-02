@@ -1,9 +1,6 @@
 import { expect } from "chai";
-import { shallowMount, mount } from "@vue/test-utils";
-import sinon from "sinon";
-import Vue from "vue";
+import { mount } from "@vue/test-utils";
 import MCascader from "@/components/cascader/index.vue";
-import MCascaderItem from "@/components/cascader/item/index.vue";
 
 const test_data = [
   {
