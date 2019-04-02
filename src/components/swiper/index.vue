@@ -1,45 +1,63 @@
 <template>
-  <div class="swiper">
+  <div class="swiper" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
     <slot></slot>
-    <ul v-if="childrenLength">
+    <ul v-if="childrenLength && visibleDots" class="control-dots" :data-vertical="vertical">
       <li
-        v-for="(item, index) in childrenLength"
-        :key="item" @click="setActiveIndex(index)">
-        {{ item }}
+        v-for="(item, index) in childrenLength" :class="[activeIndex === index ? 'active' : '']"
+        :key="item" @click="setActiveIndex(index, false)">
       </li>
     </ul>
-    <div @click="onControlBtnClick(-1)" class="control-btn">上一个</div>
-    <div @click="onControlBtnClick(1)" class="control-btn">下一个</div>
+    <template v-if="visibleControlBtn">
+      <div @click="onControlBtnClick(-1)" class="control-btn control-btn__prev">
+        <m-icon icon="left"></m-icon>
+      </div>
+      <div @click="onControlBtnClick(1)" class="control-btn control-btn__next">
+        <m-icon icon="right"></m-icon>
+      </div>
+    </template>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from "vue-property-decorator";
-
+import MIcon from "@/components/icon/index.vue";
 let autoPlayTimer: any;
 @Component({
-  name: "MSwiper"
+  name: "MSwiper",
+  components: {
+    MIcon
+  }
 })
 export default class MSwiper extends Vue {
   @Prop({ type: Number, default: 3000 }) private delay!: number;
   @Prop({ type: [Number, String] }) private active!: number | string;
   @Prop({ type: Boolean }) private autoplay!: boolean;
+  @Prop({ type: Boolean, default: true }) visibleDots!: boolean;
+  @Prop({ type: Boolean, default: false}) vertical!: boolean;
+  @Prop({
+    type: String,
+    default: 'hover',
+    validator(value){
+      return ['hover', 'never', 'always'].indexOf(value) >= 0;
+    }
+  })
+  arrow!: string
   // data
   activeIndex: number = 0;
   lastActiveIndex: number = 0;
   childrenLength: number = 0;
+  needJudgeBoundary: boolean = true;
+  hideControlBtn: boolean = true;
   mounted() {
     this.initActive()
     .then(() => {
       this.setActiveChild();
-      if(this.autoplay) {
-        this.executeAutoPlay();
-      }
+      this.executeAutoPlay();
       this.childrenLength = this.childrenList.length;
     })
   }
   destroyed(): void {
-    clearTimeout(autoPlayTimer);
+    this.clearAutoplayTimer();
   }
   // methods
   initActive(): Promise<any> {
@@ -50,11 +68,13 @@ export default class MSwiper extends Vue {
     })
   }
   getReverse(): boolean {
-    if(this.lastActiveIndex === 0 && this.activeIndex === this.childrenList.length -1) {
-      return true;
-    }
-    if(this.lastActiveIndex === this.childrenList.length -1 && this.activeIndex === 0) {
-      return false;
+    if(this.needJudgeBoundary) {
+      if(this.lastActiveIndex === 0 && this.activeIndex === this.childrenList.length -1) {
+        return true;
+      }
+      if(this.lastActiveIndex === this.childrenList.length -1 && this.activeIndex === 0) {
+        return false;
+      }
     }
     return this.lastActiveIndex > this.activeIndex;
   }
@@ -63,6 +83,7 @@ export default class MSwiper extends Vue {
     let reverse = this.getReverse();
     this.childrenList.forEach(vm => {
       vm.reverse = reverse
+      vm.vertical = this.vertical;
     });
     this.$nextTick(() => {
       this.childrenList.forEach(vm => {
@@ -71,6 +92,7 @@ export default class MSwiper extends Vue {
     })
   }
   executeAutoPlay(): void {
+    if(!this.autoplay) { return }
     if(autoPlayTimer) { return };
     let run = () => {
       let index: number = this.getActiveIndex();
@@ -94,7 +116,7 @@ export default class MSwiper extends Vue {
     });
     return index;
   }
-  setActiveIndex(index: number): void {
+  setActiveIndex(index: number, needJudgeBoundary: boolean = true): void {
     this.lastActiveIndex = this.activeIndex;
     if(index === -1) {
       index = this.childrenList.length - 1;
@@ -103,14 +125,38 @@ export default class MSwiper extends Vue {
       index = 0;
     }
     this.activeIndex = index;
+    this.needJudgeBoundary = needJudgeBoundary;
     this.$emit('change', this.childrenList[index].name, index)
   }
   onControlBtnClick(num: number): void {
     this.setActiveIndex(this.activeIndex + num);
   }
+  onMouseEnter(): void {
+    this.clearAutoplayTimer();
+    if(this.arrow === 'hover') {
+      this.hideControlBtn = false;
+    }
+  }
+  onMouseLeave(): void {
+    this.executeAutoPlay();
+    if(this.arrow === 'hover') {
+      this.hideControlBtn = true;
+    }
+  }
+  clearAutoplayTimer(): void {
+    clearTimeout(autoPlayTimer)
+    autoPlayTimer = null;
+  }
   // computed
   get childrenList(): any[] {
     return this.$children.filter(vm => vm.$options.name === 'MSwiperItem');
+  }
+  get visibleControlBtn(): boolean {
+    if(this.arrow === 'always') { return true }
+    if(this.arrow === 'hover' && !this.hideControlBtn) {
+      return true;
+    }
+    return !(this.arrow === 'never');
   }
   @Watch('activeIndex')
   onActiveIndexChange(newValue: number) {
@@ -120,8 +166,79 @@ export default class MSwiper extends Vue {
 </script>
 
 <style lang="scss" scoped>
+$control-z-index: 10;
+$control-bg: rgba(0,0,0,.4);
 .swiper {
   position: relative;
   overflow: hidden;
+  .control-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: $control-z-index;
+    background: $control-bg;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #fff;
+    &.control-btn__prev {
+      left: 30px;
+    }
+    &.control-btn__next {
+      right: 30px;
+    }
+  }
+  .control-btn,
+  .control-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .control-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    z-index: $control-z-index;
+    margin: 0;
+    padding: 0;
+    &, li {
+      list-style: none;
+    }
+    > li {
+      box-sizing: border-box;
+      background: $control-bg;
+      margin-right: 5px;
+      width: 20px;
+      height: 4px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all .3s;
+      &:hover {
+        background: #fff;
+      }
+      &.active {
+        width: 30px;
+        background: #fff;
+      }
+    }
+    &[data-vertical='true'] {
+      flex-direction: column;
+      top: 0;
+      bottom: 0;
+      left: auto;
+      right: 10px;
+      > li {
+        width: 4px;
+        height: 20px;
+        margin-right: 0;
+        margin-bottom: 5px;
+      }
+      &.active {
+        height: 30px;
+      }
+    }
+  }
 }
 </style>
