@@ -53,7 +53,7 @@ export default class MToast extends Vue {
   mounted(): void {
     this.executeAutoClose();
   }
-  destroyed(): void {
+  beforeDestroy(): void {
     clearTimeout(closeTimer);
   }
   // methods

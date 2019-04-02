@@ -41,7 +41,7 @@ export default class MPopover extends Vue {
       );
     }
   }
-  destroyed(): void {
+  beforeDestroy(): void {
     if (this.trigger === "click") {
       (this.$refs.popover as any).removeEventListener("click", this.onClick);
     } else {

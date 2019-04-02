@@ -70,7 +70,7 @@ export default class MSwiper extends Vue {
       this.childrenLength = this.childrenList.length;
     });
   }
-  destroyed(): void {
+  beforeDestroy(): void {
     this.clearAutoplayTimer();
   }
   // methods

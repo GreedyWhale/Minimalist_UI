@@ -162,7 +162,7 @@ export default class MCascader extends Vue {
     }
     return "";
   }
-  destroyed(): void {
+  beforeDestroy(): void {
     document.removeEventListener("click", this.clickDocument);
   }
 }
