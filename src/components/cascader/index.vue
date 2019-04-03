@@ -86,6 +86,9 @@ export default class MCascader extends Vue {
     this.selectedItem = sourceItem;
     this.$emit("change", sourceItem);
     this.$emit("selected-items", copyAllSelectedItems);
+    if (!sourceItem.children) {
+      this.visiblePopover = false;
+    }
     if (this.loadData) {
       this.loadingItem = sourceItem;
       this.loadData(sourceItem, this.onUpdateSource);
