@@ -1,6 +1,22 @@
 <template>
   <div id="app">
-    
+    <m-menu default-active="shimban">
+      <m-menu-item name="animation">动画</m-menu-item>
+      <m-menu-item name="shimban">新番</m-menu-item>
+      <m-menu-item name="demon">鬼畜</m-menu-item>
+      <m-sub-menu name="entertainment">
+        <template v-slot:title>娱乐</template>
+        <m-menu-item name="music">音乐</m-menu-item>
+        <m-menu-item name="movie">电影</m-menu-item>
+        <m-menu-item name="code">编程</m-menu-item>
+        <m-sub-menu name="eat">
+          <template v-slot:title>吃饭</template>
+          <m-menu-item name="morning">早饭</m-menu-item>
+          <m-menu-item name="afternoon">中饭</m-menu-item>
+          <m-menu-item name="evening">晚饭</m-menu-item>
+        </m-sub-menu>
+      </m-sub-menu>
+    </m-menu>
   </div>
 </template>
 
@@ -28,7 +44,11 @@ import MCollapse from "@/components/collapse/index.vue";
 import MCollapseItem from "@/components/collapse/item/index.vue";
 import MCascader from "@/components/cascader/index.vue";
 import MCascaderItem from "@/components/cascader/item/index.vue";
-import tsetData from "../testdata";
+import MSwiper from "@/components/swiper/index.vue";
+import MSwiperItem from "@/components/swiper/item/index.vue";
+import MMenu from "@/components/menu/index.vue";
+import MMenuItem from "@/components/menu/item/index.vue";
+import MSubMenu from "@/components/menu/sub/index.vue";
 
 @Component({
   components: {
@@ -53,16 +73,60 @@ import tsetData from "../testdata";
     MCollapse,
     MCollapseItem,
     MCascader,
-    MCascaderItem
+    MCascaderItem,
+    MSwiper,
+    MSwiperItem,
+    MMenu,
+    MMenuItem,
+    MSubMenu
   }
 })
 export default class App extends Vue {
-  
+  a(event: any): void {}
+  aaa = ['huoying'];
+  test_data = [
+    {
+      label: "火影",
+      value: "huoying",
+      children: [
+        {
+          label: "雏田",
+          value: "chutian"
+        },
+        {
+          label: "自来也",
+          value: "zilaiye"
+        },
+        {
+          label: "佩恩",
+          value: "peien",
+          children: []
+        }
+      ]
+    },
+    {
+      label: "银魂",
+      value: "yinhun",
+      children: [
+        {
+          label: "坂田银时",
+          value: "bantianyinshi"
+        },
+        {
+          label: "神乐",
+          value: "shenle"
+        },
+        {
+          label: "志村新八",
+          value: "zhicunxinba"
+        }
+      ]
+    }
+  ];
 }
 </script>
 
 <style lang="scss">
 #app {
-
 }
 </style>

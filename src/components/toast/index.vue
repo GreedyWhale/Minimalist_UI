@@ -27,7 +27,6 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { CallBack } from "./toast.d";
 import MIcon from "@/components/icon/index.vue";
-let closeTimer: any;
 @Component({
   name: "MToast",
   components: {
@@ -48,13 +47,14 @@ export default class MToast extends Vue {
   })
   private icon!: string;
   @Prop() private onClose!: CallBack;
-
+  // data
   isCloseAnimation: boolean = false;
+  closeTimer: any = null;
   mounted(): void {
     this.executeAutoClose();
   }
   beforeDestroy(): void {
-    clearTimeout(closeTimer);
+    clearTimeout(this.closeTimer);
   }
   // methods
   animationend(): void {
@@ -64,7 +64,7 @@ export default class MToast extends Vue {
   }
   executeAutoClose() {
     if (this.autoClose) {
-      closeTimer = setTimeout(() => {
+      this.closeTimer = setTimeout(() => {
         this.isCloseAnimation = true;
       }, this.delayTime);
     }

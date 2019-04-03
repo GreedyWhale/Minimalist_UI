@@ -1,0 +1,28 @@
+$blue: #2d8cf0;
+
+.item {
+  padding: 0 1.5em;
+  line-height: 2.5;
+  white-space: nowrap;
+  cursor: pointer;
+  color: #000;
+  position: relative;
+  background: #fff;
+  min-width: 4em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &[data-active="true"],
+  &:hover {
+    color: $blue;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      background: $blue;
+      height: 2px;
+    }
+  }
+}

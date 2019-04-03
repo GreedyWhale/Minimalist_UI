@@ -19,14 +19,14 @@
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { PositionInfo } from "./popover.d";
-let enterTimer: any = null;
 @Component({
   name: "MPopover"
 })
 export default class MPopover extends Vue {
   @Prop({ type: String, default: "top" }) private position!: string;
   @Prop({ type: String, default: "click" }) private trigger!: string;
-
+  // data
+  enterTimer: any = null;
   mounted(): void {
     if (this.trigger === "click") {
       (this.$refs.popover as any).addEventListener("click", this.onClick);
@@ -81,10 +81,10 @@ export default class MPopover extends Vue {
     if (this.trigger !== "hover") {
       return;
     }
-    if (enterTimer) {
-      clearTimeout(enterTimer);
+    if (this.enterTimer) {
+      clearTimeout(this.enterTimer);
     }
-    enterTimer = setTimeout(() => {
+    this.enterTimer = setTimeout(() => {
       this.open();
     }, 100);
   }
@@ -92,9 +92,9 @@ export default class MPopover extends Vue {
     if (this.trigger !== "hover") {
       return;
     }
-    if (enterTimer) {
-      clearTimeout(enterTimer);
-      enterTimer = setTimeout(() => {
+    if (this.enterTimer) {
+      clearTimeout(this.enterTimer);
+      this.enterTimer = setTimeout(() => {
         this.close();
       }, 100);
     }

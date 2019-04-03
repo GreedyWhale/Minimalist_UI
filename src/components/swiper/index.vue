@@ -33,7 +33,6 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from "vue-property-decorator";
 import MIcon from "@/components/icon/index.vue";
-let autoPlayTimer: any;
 @Component({
   name: "MSwiper",
   components: {
@@ -63,6 +62,7 @@ export default class MSwiper extends Vue {
   hideControlBtn: boolean = true;
   startX: number = 0;
   startY: number = 0;
+  autoPlayTimer: any = null;
   mounted() {
     this.initActive().then(() => {
       this.setActiveChild();
@@ -117,16 +117,16 @@ export default class MSwiper extends Vue {
     if (!this.autoplay) {
       return;
     }
-    if (autoPlayTimer) {
+    if (this.autoPlayTimer) {
       return;
     }
     let run = () => {
       let index: number = this.getActiveIndex();
       index += 1;
       this.setActiveIndex(index);
-      autoPlayTimer = setTimeout(run, this.delay);
+      this.autoPlayTimer = setTimeout(run, this.delay);
     };
-    autoPlayTimer = setTimeout(run, this.delay);
+    this.autoPlayTimer = setTimeout(run, this.delay);
   }
   getActiveName(): any {
     return this.childrenList[this.activeIndex].name;
@@ -170,8 +170,8 @@ export default class MSwiper extends Vue {
     }
   }
   clearAutoplayTimer(): void {
-    clearTimeout(autoPlayTimer);
-    autoPlayTimer = null;
+    clearTimeout(this.autoPlayTimer);
+    this.autoPlayTimer = null;
   }
   onTouchStart(e: TouchEvent): void {
     this.clearAutoplayTimer();
