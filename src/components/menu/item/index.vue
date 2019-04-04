@@ -55,5 +55,8 @@ export default class MMenuItem extends Vue {
 @import "../general.scss";
 .menu-item {
   @extend .item;
+  .m-icon {
+    margin-right: 8px;
+  }
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
-  <div class="sub-menu" @mouseenter="onMouuseEnter" @mouseleave="onMouseLeave">
+  <div class="sub-menu" @mouseenter="onMouuseEnter" @mouseleave="onMouseLeave" ref="menu">
     <div
       :class="{ 'sub-menu__title': true, vertical: isVertical }"
       :data-active="active || open"
       :style="itemStyle"
       @click="onClick"
     >
-      <div><slot name="title"></slot></div>
+      <div class="sub-menu__title-content"><slot name="title"></slot></div>
       <m-icon
         icon="right"
         v-if="childrenLength"
@@ -69,7 +69,32 @@ export default class MSubMenu extends Vue {
   mounted() {
     this.initListeners();
   }
+  beforeDestroy(): void {
+    document.removeEventListener("click", this.clickDocument);
+  }
   // methods
+  clickDocument(event: Event): void {
+    if (
+      this.$refs.menu === event.target ||
+      (this.$refs.menu as any).contains(event.target) ||
+      this.isVertical
+    ) {
+      return;
+    }
+    this.packUp();
+  }
+  unfold(): void {
+    if(!this.isVertical) {
+      document.addEventListener('click', this.clickDocument);
+    }
+    this.open = true;
+  }
+  packUp(): void {
+    if(!this.isVertical) {
+      document.removeEventListener('click', this.clickDocument);
+    }
+    this.open = false;
+  }
   initListeners(): void {
     this.eventBus.$on(UPDATE_ACTIVE, (name: number | string) => {
       if (!this.isVertical) {
@@ -95,7 +120,7 @@ export default class MSubMenu extends Vue {
     }
     clearTimeout(this.openTimer);
     this.openTimer = setTimeout(() => {
-      this.open = true;
+      this.unfold()
     }, 100);
   }
   onMouseLeave(): void {
@@ -104,7 +129,7 @@ export default class MSubMenu extends Vue {
     }
     clearTimeout(this.openTimer);
     this.openTimer = setTimeout(() => {
-      this.open = false;
+      this.packUp()
     }, 100);
   }
   enter(el: any, done: Function) {
@@ -170,11 +195,19 @@ export default class MSubMenu extends Vue {
         transform: rotate(270deg);
       }
     }
+    &-content {
+      display: flex;
+      align-items: center;
+      .m-icon {
+        margin-right: 8px;
+      }
+    }
   }
   .menu-list {
     position: absolute;
     top: 100%;
     left: 0;
+    width: 100%;
     margin-top: 4px;
     box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
       0 2px 4px 0 rgba(232, 237, 250, 0.5);
@@ -185,6 +218,7 @@ export default class MSubMenu extends Vue {
     & .sub-menu {
       & .sub-menu__title {
         @extend .sub-menu__item;
+        justify-content: space-between;
         .arrow-icon {
           transform: rotate(0);
           &.open {
