@@ -29,7 +29,7 @@ $light-blue: #dfebf8;
     }
   }
   &.vertical {
-    justify-content: space-between;
+    justify-content: flex-start;
     width: 240px;
     &[data-active="true"],
     &:hover {
@@ -41,6 +41,18 @@ $light-blue: #dfebf8;
     }
     &:hover {
       background: $light-blue;
+    }
+  }
+  &.disabled {
+    color: #909399 !important;
+    cursor: not-allowed !important;
+    &:hover,
+    &[data-active="true"] {
+      color: #909399 !important;
+      background: inherit !important;
+      &::after {
+        content: none !important;
+      }
     }
   }
 }

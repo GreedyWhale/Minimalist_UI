@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="{ 'menu-item': true, vertical: isVertical }"
+    :class="{ 'menu-item': true, vertical: isVertical, disabled }"
     :style="itemStyle"
     :data-active="active"
     @click="onClick"
@@ -21,7 +21,8 @@ export default class MMenuItem extends Vue {
   @Inject() readonly eventBus!: Vue.default;
   @Inject() readonly isVertical!: boolean;
   @Prop({ type: [Number, String], required: true }) name!: number | string;
-
+  @Prop({ type: Number }) to!: string;
+  @Prop({ type: Boolean, default: false }) disabled!: string;
   // data
   active: boolean = false;
   mounted(): void {
@@ -34,9 +35,13 @@ export default class MMenuItem extends Vue {
     });
   }
   onClick(): void {
+    if(this.disabled) { return }
     (this.$parent as any).upDateNamePath &&
       (this.$parent as any).upDateNamePath([this.name]);
     this.eventBus.$emit(UPDATE_ACTIVE, this.name);
+    if(this.to) {
+      window && window.open(this.to)
+    }
   }
   // computed
   get itemStyle(): Object {

@@ -1,7 +1,7 @@
 <template>
   <div class="sub-menu" @mouseenter="onMouuseEnter" @mouseleave="onMouseLeave" ref="menu">
     <div
-      :class="{ 'sub-menu__title': true, vertical: isVertical }"
+      :class="{ 'sub-menu__title': true, vertical: isVertical, disabled }"
       :data-active="active || open"
       :style="itemStyle"
       @click="onClick"
@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Inject } from "vue-property-decorator";
-import { UPDATE_ACTIVE, UPDATE_NAME_PATH } from "../constant";
+import { UPDATE_ACTIVE, UPDATE_NAME_PATH, CLICK_SUB_MENU } from "../constant";
 import MIcon from "@/components/icon/index.vue";
 import { findComponentParent } from "../methods";
 
@@ -49,14 +49,13 @@ export default class MSubMenu extends Vue {
   @Inject() readonly eventBus!: Vue.default;
   @Inject() readonly isVertical!: boolean;
   @Prop({ type: [Number, String], required: true }) name!: number | string;
+  @Prop({ type: Boolean, default: false }) disabled!: string;
   // data
   open: boolean = false;
   openTimer: any = null;
   active: boolean = false;
+  childrenLength: number = 0;
   // computed
-  childrenLength(): Number {
-    return this.$children.length;
-  }
   get itemStyle(): Object {
     let style = {};
     if (this.isVertical) {
@@ -68,6 +67,7 @@ export default class MSubMenu extends Vue {
   }
   mounted() {
     this.initListeners();
+    this.childrenLength = this.$children.length;
   }
   beforeDestroy(): void {
     document.removeEventListener("click", this.clickDocument);
@@ -77,20 +77,21 @@ export default class MSubMenu extends Vue {
     if (
       this.$refs.menu === event.target ||
       (this.$refs.menu as any).contains(event.target) ||
-      this.isVertical
+      this.isVertical ||
+      this.disabled
     ) {
       return;
     }
     this.packUp();
   }
   unfold(): void {
-    if(!this.isVertical) {
+    if(!this.isVertical || !this.disabled) {
       document.addEventListener('click', this.clickDocument);
     }
     this.open = true;
   }
   packUp(): void {
-    if(!this.isVertical) {
+    if(!this.isVertical || !this.disabled) {
       document.removeEventListener('click', this.clickDocument);
     }
     this.open = false;
@@ -112,10 +113,12 @@ export default class MSubMenu extends Vue {
       (this.$parent as any).upDateNamePath(newNamePath);
   }
   onClick(): void {
+    if(this.disabled) { return }
     this.open = !this.open;
+    this.eventBus.$emit(CLICK_SUB_MENU, this.name, this.open);
   }
   onMouuseEnter(): void {
-    if (this.isVertical) {
+    if (this.isVertical || this.disabled) {
       return;
     }
     clearTimeout(this.openTimer);
@@ -124,7 +127,7 @@ export default class MSubMenu extends Vue {
     }, 100);
   }
   onMouseLeave(): void {
-    if (this.isVertical) {
+    if (this.isVertical || this.disabled) {
       return;
     }
     clearTimeout(this.openTimer);
@@ -177,6 +180,7 @@ export default class MSubMenu extends Vue {
   .sub-menu__title {
     @extend .item;
     &.vertical {
+      justify-content: space-between;
       &[data-active="true"] {
         color: inherit;
         background: inherit;
