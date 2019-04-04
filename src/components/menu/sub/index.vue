@@ -1,5 +1,10 @@
 <template>
-  <div class="sub-menu" @mouseenter="onMouuseEnter" @mouseleave="onMouseLeave" ref="menu">
+  <div
+    class="sub-menu"
+    @mouseenter="onMouuseEnter"
+    @mouseleave="onMouseLeave"
+    ref="menu"
+  >
     <div
       :class="{ 'sub-menu__title': true, vertical: isVertical, disabled }"
       :data-active="active || open"
@@ -48,6 +53,7 @@ import { findComponentParent } from "../methods";
 export default class MSubMenu extends Vue {
   @Inject() readonly eventBus!: Vue.default;
   @Inject() readonly isVertical!: boolean;
+  @Inject() readonly subMenuTriggerWay!: string;
   @Prop({ type: [Number, String], required: true }) name!: number | string;
   @Prop({ type: Boolean, default: false }) disabled!: string;
   // data
@@ -85,14 +91,14 @@ export default class MSubMenu extends Vue {
     this.packUp();
   }
   unfold(): void {
-    if(!this.isVertical || !this.disabled) {
-      document.addEventListener('click', this.clickDocument);
+    if (!this.isVertical || !this.disabled) {
+      document.addEventListener("click", this.clickDocument);
     }
     this.open = true;
   }
   packUp(): void {
-    if(!this.isVertical || !this.disabled) {
-      document.removeEventListener('click', this.clickDocument);
+    if (!this.isVertical || !this.disabled) {
+      document.removeEventListener("click", this.clickDocument);
     }
     this.open = false;
   }
@@ -113,26 +119,36 @@ export default class MSubMenu extends Vue {
       (this.$parent as any).upDateNamePath(newNamePath);
   }
   onClick(): void {
-    if(this.disabled) { return }
-    this.open = !this.open;
+    if (this.disabled) {
+      return;
+    }
+    this.open ? this.packUp() : this.unfold();
     this.eventBus.$emit(CLICK_SUB_MENU, this.name, this.open);
   }
   onMouuseEnter(): void {
-    if (this.isVertical || this.disabled) {
+    if (
+      this.isVertical ||
+      this.disabled ||
+      this.subMenuTriggerWay === "click"
+    ) {
       return;
     }
     clearTimeout(this.openTimer);
     this.openTimer = setTimeout(() => {
-      this.unfold()
+      this.unfold();
     }, 100);
   }
   onMouseLeave(): void {
-    if (this.isVertical || this.disabled) {
+    if (
+      this.isVertical ||
+      this.disabled ||
+      this.subMenuTriggerWay === "click"
+    ) {
       return;
     }
     clearTimeout(this.openTimer);
     this.openTimer = setTimeout(() => {
-      this.packUp()
+      this.packUp();
     }, 100);
   }
   enter(el: any, done: Function) {

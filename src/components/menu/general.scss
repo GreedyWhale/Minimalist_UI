@@ -30,7 +30,7 @@ $light-blue: #dfebf8;
   }
   &.vertical {
     justify-content: flex-start;
-    width: 240px;
+    min-width: 240px;
     &[data-active="true"],
     &:hover {
       color: $blue;

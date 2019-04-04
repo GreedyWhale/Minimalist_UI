@@ -35,12 +35,14 @@ export default class MMenuItem extends Vue {
     });
   }
   onClick(): void {
-    if(this.disabled) { return }
+    if (this.disabled) {
+      return;
+    }
     (this.$parent as any).upDateNamePath &&
       (this.$parent as any).upDateNamePath([this.name]);
     this.eventBus.$emit(UPDATE_ACTIVE, this.name);
-    if(this.to) {
-      window && window.open(this.to)
+    if (this.to) {
+      window && window.open(this.to);
     }
   }
   // computed
