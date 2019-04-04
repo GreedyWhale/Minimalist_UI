@@ -1,6 +1,8 @@
 $blue: #2d8cf0;
+$light-blue: #dfebf8;
 
 .item {
+  box-sizing: border-box;
   padding: 0 1.5em;
   line-height: 2.5;
   white-space: nowrap;
@@ -12,6 +14,7 @@ $blue: #2d8cf0;
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
   &[data-active="true"],
   &:hover {
     color: $blue;
@@ -23,6 +26,21 @@ $blue: #2d8cf0;
       right: 0;
       background: $blue;
       height: 2px;
+    }
+  }
+  &.vertical {
+    justify-content: space-between;
+    width: 240px;
+    &[data-active="true"],
+    &:hover {
+      color: $blue;
+      background: $light-blue;
+      &::after {
+        content: none;
+      }
+    }
+    &:hover {
+      background: $light-blue;
     }
   }
 }

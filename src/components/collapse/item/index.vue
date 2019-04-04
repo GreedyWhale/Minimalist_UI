@@ -6,7 +6,7 @@
         <m-icon icon="right" />
       </div>
     </div>
-    <transition @enter="enter" @beforeLeave="beforeLeave">
+    <transition @enter="enter" @before-leave="beforeLeave">
       <div class="collapse-content" v-if="open">
         <div class="collapse-content__wrap">
           <slot></slot>
