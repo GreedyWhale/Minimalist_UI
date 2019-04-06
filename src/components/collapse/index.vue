@@ -51,9 +51,6 @@ export default class MCollapse extends Vue {
   }
   listenChangeActiveName(): void {
     this.eventBus.$on("changeActiveName", (name: string, isOpen: boolean) => {
-      const activeNames: any[] = JSON.parse(
-        JSON.stringify(this.activeNamesCopy)
-      );
       if (isOpen) {
         // 需要关闭
         this.removeActiveName(name);
