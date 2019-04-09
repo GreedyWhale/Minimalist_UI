@@ -16,13 +16,17 @@
       <thead>
         <tr>
           <template v-if="extendedColumns.length">
-            <th v-for="extendedCol in extendedColumns" :key="`${extendedCol.field}-th`">
-              <input
-                v-if="extendedCol.field === 'selection'"
-                type="checkbox" ref="selectAll"
-                @change="selectAllItems" :checked="areAllItemsSelected">
-              <span v-if="extendedCol.field === 'index'">#</span>
-            </th>
+            <template v-for="extendedCol in extendedColumns">
+              <th :key="`${extendedCol.field}-th-checkbox`" v-if="extendedCol.field === 'selection'" class="center-cell">
+                <input
+                  type="checkbox" ref="selectAll"
+                  @change="selectAllItems" :checked="areAllItemsSelected">
+              </th>
+              <th :key="`${extendedCol.field}-th-index`" v-if="extendedCol.field === 'index'" class="center-cell">
+                <span>#</span>
+              </th>
+              <th :key="`${extendedCol.field}-th-expend`" v-if="extendedCol.field === 'expend'" class="center-cell"></th>
+            </template>
           </template>
           <th v-for="col in columns" :key="col.field">
             <div class="table-header__cell">
@@ -36,6 +40,7 @@
               </span>
             </div>
           </th>
+          <th v-if="$scopedSlots.actions"></th>
         </tr>
       </thead>
     </table>
@@ -56,13 +61,18 @@
         <thead v-if="columns.length && !fixedHead">
           <tr>
             <template v-if="extendedColumns.length">
-              <th v-for="extendedCol in extendedColumns" :key="`${extendedCol.field}-th`">
-                <input
-                  v-if="extendedCol.field === 'selection'"
-                  type="checkbox" ref="selectAll"
-                  @change="selectAllItems" :checked="areAllItemsSelected">
-                <span v-if="extendedCol.field === 'index'">#</span>
-              </th>
+              <template v-for="extendedCol in extendedColumns">
+                <td :key="`${extendedCol.field}-th-checkbox`" v-if="extendedCol.field === 'selection'" class="center-cell">
+                  <input
+                    type="checkbox" ref="selectAll"
+                    @change="selectAllItems" :checked="areAllItemsSelected">
+                </td>
+                <td :key="`${extendedCol.field}-th-index`" v-if="extendedCol.field === 'index'" class="center-cell">
+                  <span>#</span>
+                </td>
+                <td :key="`${extendedCol.field}-th-expend`" v-if="extendedCol.field === 'expend'" class="center-cell">
+                </td>
+              </template>
             </template>
             <th v-for="col in columns" :key="col.field">
               <div class="table-header__cell">
@@ -76,23 +86,51 @@
                 </span>
               </div>
             </th>
+            <th v-if="$scopedSlots.actions"></th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in dataSource" :key="item.key">
-            <template v-if="extendedColumns.length">
-              <td v-for="extendedCol in extendedColumns" :key="`${extendedCol.field}-td`">
-                <input
-                  v-if="extendedCol.field === 'selection'"
-                  type="checkbox" :checked="inSelectedItems(item.key)"
-                  @change="selectItem($event, item, index)">
-                  <span v-if="extendedCol.field === 'index'">{{ index + 1 }}</span>
+          <template v-for="(item, index) in dataSource">
+            <tr :key="item.key">
+              <template v-if="extendedColumns.length">
+                <template v-for="extendedCol in extendedColumns">
+                  <td
+                    :key="`${extendedCol.field}-td-checkbox`"
+                    v-if="extendedCol.field === 'selection'"
+                    class="center-cell">
+                    <input
+                      type="checkbox" :checked="inSelectedItems(item.key)"
+                      @change="selectItem($event, item, index)">
+                  </td>
+                  <td
+                    :key="`${extendedCol.field}-td-index`"
+                    v-if="extendedCol.field === 'index'"
+                    class="center-cell">
+                    <span>{{ index + 1 }}</span>
+                  </td>
+                  <td
+                    :key="`${extendedCol.field}-td-expend`"
+                    v-if="extendedCol.field === 'expend'"
+                    class="expend-icon center-cell" @click="toggleExpend(item.key)">
+                    <m-icon icon="right" v-if="item[expendField]"></m-icon>
+                  </td>
+                </template>
+              </template>
+              <td v-for="col in columns" :key="`${item.key}-${col.field}`">
+                {{ item[col.field] }}
               </td>
-            </template>
-            <td v-for="col in columns" :key="`${item.key}-${col.field}`">
-              {{ item[col.field] }}
-            </td>
-          </tr>
+              <td v-if="$scopedSlots.actions">
+                <slot name="actions" :item="item"></slot>
+              </td>
+            </tr>
+            <tr v-if="item[expendField] && inExpendedKeys(item.key)" :key="`${item.key}-expend`">
+              <td
+                class="no-border-cell"
+                v-for="extendedItem in extendedColumns"
+                :key="`${extendedItem.field}-placeholder`"></td>
+              <td :colspan="colspan">{{ item[expendField] }}</td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>
@@ -141,6 +179,7 @@ export default class MTable extends Vue {
   }
   // data
   sortTypes: any[] = [];
+  expendedKeys: any[] = [];
   // cycle
   mounted(): void {
     this.setSortTypes();
@@ -158,6 +197,22 @@ export default class MTable extends Vue {
     if(dataSourceKeys.length !== selectedItems.length) { return false }
     let equal = dataSourceKeys.some((value: any, index: number) => value.key !== selectedItems[index].key);
     return !equal
+  }
+  get expendField(): string {
+    let key = ''
+    if(this.extendedColumns.length) {
+      this.extendedColumns.some((value: any) => {
+        if(value.field === 'expend') {
+          key = value.expendField;
+          return true;
+        }
+        return false;
+      })
+    }
+    return key
+  }
+  get colspan(): number {
+    return this.$scopedSlots.actions ? this.columns.length + 1 : this.extendedColumns.length;
   }
   // methods
   selectAllItems(event: Event): void {
@@ -234,6 +289,16 @@ export default class MTable extends Vue {
     }
     return '';
   }
+  inExpendedKeys(key:any): boolean {
+    return this.expendedKeys.indexOf(key) >= 0
+  }
+  toggleExpend(key: any): void{
+    if(this.inExpendedKeys(key)) {
+      this.expendedKeys.splice(this.expendedKeys.indexOf(key), 1)
+    } else {
+      this.expendedKeys.push(key);
+    }
+  }
 }
 </script>
 
@@ -308,6 +373,16 @@ $grey: #ebebeb;
       white-space:nowrap; 
       text-overflow:ellipsis;
     }
+    .expend-icon {
+      cursor: pointer;
+      .m-icon {
+        width: 10px;
+        height: 10px;
+      }
+    }
+    .center-cell {
+      text-align: center;
+    }
     &.striped {
       tbody {
         tr {
@@ -334,6 +409,9 @@ $grey: #ebebeb;
         }
       }
     }
+  }
+  & .no-border-cell {
+    border-right: none !important;
   }
 }
 </style>
