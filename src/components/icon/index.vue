@@ -1,5 +1,5 @@
 <template>
-  <div class="m-icon" :data-isLoading="isLoading">
+  <div class="m-icon" :data-is-loading="isLoading">
     <slot />
     <svg class="icon-font" aria-hidden="true" v-if="newIconName">
       <use :xlink:href="`#icon-${newIconName}`"></use>
@@ -44,7 +44,7 @@ export default class MIcon extends Vue {
   align-items: center;
   justify-content: center;
   flex: none;
-  &[data-isLoading="true"] {
+  &[data-is-loading="true"] {
     animation: rotate 0.5s linear infinite;
   }
 }

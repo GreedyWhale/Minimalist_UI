@@ -11,7 +11,7 @@
     <m-icon
       v-if="buttonConfig.icon || buttonConfig.isLoading"
       :icon="buttonConfig.icon"
-      :isLoading="buttonConfig.isLoading"
+      :is-loading="buttonConfig.isLoading"
     />
     <slot name="prefix" />
     <div class="content">

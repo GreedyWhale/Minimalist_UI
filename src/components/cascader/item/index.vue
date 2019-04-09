@@ -14,7 +14,7 @@
           v-if="sourceItem.children"
           icon="right"
           class="right-arrow"
-          :isLoading="loadingItem.value === sourceItem.value"
+          :is-loading="loadingItem.value === sourceItem.value"
         ></m-icon>
       </li>
     </ul>
