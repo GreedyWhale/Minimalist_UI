@@ -1,31 +1,50 @@
 <template>
-  <div :class="{'m-table__wrapper': true, 'bordered': bordered}">
+  <div :class="{ 'm-table__wrapper': true, bordered: bordered }">
     <table :class="tableClass" v-if="columns.length && fixedHead">
       <colgroup>
         <template v-if="extendedColumns.length">
           <col
-            v-for="extendedCol in extendedColumns" :key="`${extendedCol.field}-extended-col`"
-            :style="setCellWidth(extendedCol.width)">
+            v-for="extendedCol in extendedColumns"
+            :key="`${extendedCol.field}-extended-col`"
+            :style="setCellWidth(extendedCol.width)"
+          />
         </template>
         <template v-if="columns.length">
           <col
-            v-for="column in columns" :key="`${column.field}-col`"
-            :style="setCellWidth(column.width)">
+            v-for="column in columns"
+            :key="`${column.field}-col`"
+            :style="setCellWidth(column.width)"
+          />
         </template>
       </colgroup>
       <thead>
         <tr>
           <template v-if="extendedColumns.length">
             <template v-for="extendedCol in extendedColumns">
-              <th :key="`${extendedCol.field}-th-checkbox`" v-if="extendedCol.field === 'selection'" class="center-cell">
+              <th
+                :key="`${extendedCol.field}-th-checkbox`"
+                v-if="extendedCol.field === 'selection'"
+                class="center-cell"
+              >
                 <input
-                  type="checkbox" ref="selectAll"
-                  @change="selectAllItems" :checked="areAllItemsSelected">
+                  type="checkbox"
+                  ref="selectAll"
+                  @change="selectAllItems"
+                  :checked="areAllItemsSelected"
+                />
               </th>
-              <th :key="`${extendedCol.field}-th-index`" v-if="extendedCol.field === 'index'" class="center-cell">
+              <th
+                :key="`${extendedCol.field}-th-index`"
+                v-if="extendedCol.field === 'index'"
+                class="center-cell"
+              >
                 <span>#</span>
               </th>
-              <th :key="`${extendedCol.field}-th-expend`" v-if="extendedCol.field === 'expend'" class="center-cell"></th>
+              <th
+                :key="`${extendedCol.field}-th-expend`"
+                v-if="extendedCol.field === 'expend'"
+                class="center-cell"
+              ></th>
             </template>
           </template>
           <th v-for="col in columns" :key="col.field">
@@ -34,9 +53,16 @@
               <span
                 class="table-header__cell-icons"
                 @click="clickSortIcon($event, col.field)"
-                v-if="visibleSortIcons(col.field)">
-                <m-icon icon="caret-up" :class="{active: setSortIconClass(col.field, 'asc')}"></m-icon>
-                <m-icon icon="caret-down" :class="{active: setSortIconClass(col.field, 'desc')}"></m-icon>
+                v-if="visibleSortIcons(col.field)"
+              >
+                <m-icon
+                  icon="caret-up"
+                  :class="{ active: setSortIconClass(col.field, 'asc') }"
+                ></m-icon>
+                <m-icon
+                  icon="caret-down"
+                  :class="{ active: setSortIconClass(col.field, 'desc') }"
+                ></m-icon>
               </span>
             </div>
           </th>
@@ -44,34 +70,55 @@
         </tr>
       </thead>
     </table>
-    <div class="m-table__wrapper-inner" :style="height ? `height: ${height}px` : ''">
+    <div
+      class="m-table__wrapper-inner"
+      :style="height ? `height: ${height}px` : ''"
+    >
       <table :class="tableClass">
         <colgroup>
           <template v-if="extendedColumns.length">
             <col
-              v-for="extendedCol in extendedColumns" :key="`${extendedCol.field}-extended-col`"
-              :style="setCellWidth(extendedCol.width)">
+              v-for="extendedCol in extendedColumns"
+              :key="`${extendedCol.field}-extended-col`"
+              :style="setCellWidth(extendedCol.width)"
+            />
           </template>
           <template v-if="columns.length">
             <col
-              v-for="column in columns" :key="`${column.field}-col`"
-              :style="setCellWidth(column.width)">
+              v-for="column in columns"
+              :key="`${column.field}-col`"
+              :style="setCellWidth(column.width)"
+            />
           </template>
         </colgroup>
         <thead v-if="columns.length && !fixedHead">
           <tr>
             <template v-if="extendedColumns.length">
               <template v-for="extendedCol in extendedColumns">
-                <td :key="`${extendedCol.field}-th-checkbox`" v-if="extendedCol.field === 'selection'" class="center-cell">
+                <td
+                  :key="`${extendedCol.field}-th-checkbox`"
+                  v-if="extendedCol.field === 'selection'"
+                  class="center-cell"
+                >
                   <input
-                    type="checkbox" ref="selectAll"
-                    @change="selectAllItems" :checked="areAllItemsSelected">
+                    type="checkbox"
+                    ref="selectAll"
+                    @change="selectAllItems"
+                    :checked="areAllItemsSelected"
+                  />
                 </td>
-                <td :key="`${extendedCol.field}-th-index`" v-if="extendedCol.field === 'index'" class="center-cell">
+                <td
+                  :key="`${extendedCol.field}-th-index`"
+                  v-if="extendedCol.field === 'index'"
+                  class="center-cell"
+                >
                   <span>#</span>
                 </td>
-                <td :key="`${extendedCol.field}-th-expend`" v-if="extendedCol.field === 'expend'" class="center-cell">
-                </td>
+                <td
+                  :key="`${extendedCol.field}-th-expend`"
+                  v-if="extendedCol.field === 'expend'"
+                  class="center-cell"
+                ></td>
               </template>
             </template>
             <th v-for="col in columns" :key="col.field">
@@ -80,9 +127,16 @@
                 <span
                   class="table-header__cell-icons"
                   @click="clickSortIcon($event, col.field)"
-                  v-if="visibleSortIcons(col.field)">
-                  <m-icon icon="caret-up" :class="{active: setSortIconClass(col.field, 'asc')}"></m-icon>
-                  <m-icon icon="caret-down" :class="{active: setSortIconClass(col.field, 'desc')}"></m-icon>
+                  v-if="visibleSortIcons(col.field)"
+                >
+                  <m-icon
+                    icon="caret-up"
+                    :class="{ active: setSortIconClass(col.field, 'asc') }"
+                  ></m-icon>
+                  <m-icon
+                    icon="caret-down"
+                    :class="{ active: setSortIconClass(col.field, 'desc') }"
+                  ></m-icon>
                 </span>
               </div>
             </th>
@@ -97,21 +151,27 @@
                   <td
                     :key="`${extendedCol.field}-td-checkbox`"
                     v-if="extendedCol.field === 'selection'"
-                    class="center-cell">
+                    class="center-cell"
+                  >
                     <input
-                      type="checkbox" :checked="inSelectedItems(item.key)"
-                      @change="selectItem($event, item, index)">
+                      type="checkbox"
+                      :checked="inSelectedItems(item.key)"
+                      @change="selectItem($event, item, index)"
+                    />
                   </td>
                   <td
                     :key="`${extendedCol.field}-td-index`"
                     v-if="extendedCol.field === 'index'"
-                    class="center-cell">
+                    class="center-cell"
+                  >
                     <span>{{ index + 1 }}</span>
                   </td>
                   <td
                     :key="`${extendedCol.field}-td-expend`"
                     v-if="extendedCol.field === 'expend'"
-                    class="expend-icon center-cell" @click="toggleExpend(item.key)">
+                    class="expend-icon center-cell"
+                    @click="toggleExpend(item.key)"
+                  >
                     <m-icon icon="right" v-if="item[expendField]"></m-icon>
                   </td>
                 </template>
@@ -123,11 +183,15 @@
                 <slot name="actions" :item="item"></slot>
               </td>
             </tr>
-            <tr v-if="item[expendField] && inExpendedKeys(item.key)" :key="`${item.key}-expend`">
+            <tr
+              v-if="item[expendField] && inExpendedKeys(item.key)"
+              :key="`${item.key}-expend`"
+            >
               <td
                 class="no-border-cell"
                 v-for="extendedItem in extendedColumns"
-                :key="`${extendedItem.field}-placeholder`"></td>
+                :key="`${extendedItem.field}-placeholder`"
+              ></td>
               <td :colspan="colspan">{{ item[expendField] }}</td>
             </tr>
           </template>
@@ -150,28 +214,51 @@ import MIcon from "@/components/icon/index.vue";
   }
 })
 export default class MTable extends Vue {
-  @Prop({ type: Array, default(){ return [] }, required: true }) columns!: any[];
-  @Prop({ type: Array, default(){ return [] }, required: true }) extendedColumns!: any[];
   @Prop({
     type: Array,
-    default(){ return [] },
+    default() {
+      return [];
+    },
+    required: true
+  })
+  columns!: any[];
+  @Prop({
+    type: Array,
+    default() {
+      return [];
+    }
+  })
+  extendedColumns!: any[];
+  @Prop({
+    type: Array,
+    default() {
+      return [];
+    },
     required: true,
     validator(arr: any[]): boolean {
-      return arr.every((value: any) => value.key !== undefined)
+      return arr.every((value: any) => value.key !== undefined);
     }
-  }) dataSource!: any[];
+  })
+  dataSource!: any[];
   @Prop({ type: Boolean, default: false }) bordered!: boolean;
   @Prop({ type: Boolean, default: false }) striped!: boolean;
-  @Prop({ type: Array, default(){ return [] } }) selectedItems!: any[];
+  @Prop({
+    type: Array,
+    default() {
+      return [];
+    }
+  })
+  selectedItems!: any[];
   @Prop({ type: Boolean, default: false }) loading!: boolean;
   @Prop({ type: Boolean, default: false }) fixedHead!: boolean;
   @Prop({ type: Number, default: 0 }) height!: number;
-  @Watch('selectedItems')
+  @Watch("selectedItems")
   onSelectedItemsChanged(newValue: any[]) {
-    const selectAll = (this.$refs.selectAll as any[])[0] || this.$refs.selectAll;
-    if(newValue.length === this.dataSource.length) {
+    const selectAll =
+      (this.$refs.selectAll as any[])[0] || this.$refs.selectAll;
+    if (newValue.length === this.dataSource.length) {
       (selectAll as HTMLInputElement).indeterminate = false;
-    } else if(newValue.length && (newValue.length < this.dataSource.length)) {
+    } else if (newValue.length && newValue.length < this.dataSource.length) {
       (selectAll as HTMLInputElement).indeterminate = true;
     } else {
       (selectAll as HTMLInputElement).indeterminate = false;
@@ -187,114 +274,132 @@ export default class MTable extends Vue {
   // computed
   get tableClass(): Object {
     return {
-      'm-table': true,
+      "m-table": true,
       striped: this.striped
-    }
+    };
   }
   get areAllItemsSelected(): boolean {
     const dataSourceKeys = this.dataSource.map((data: any) => data.key).sort();
-    const selectedItems = this.selectedItems.map((data: any) => data.key).sort();
-    if(dataSourceKeys.length !== selectedItems.length) { return false }
-    let equal = dataSourceKeys.some((value: any, index: number) => value.key !== selectedItems[index].key);
-    return !equal
+    const selectedItems = this.selectedItems
+      .map((data: any) => data.key)
+      .sort();
+    if (dataSourceKeys.length !== selectedItems.length) {
+      return false;
+    }
+    let equal = dataSourceKeys.some(
+      (value: any, index: number) => value.key !== selectedItems[index].key
+    );
+    return !equal;
   }
   get expendField(): string {
-    let key = ''
-    if(this.extendedColumns.length) {
+    let key = "";
+    if (this.extendedColumns.length) {
       this.extendedColumns.some((value: any) => {
-        if(value.field === 'expend') {
+        if (value.field === "expend") {
           key = value.expendField;
           return true;
         }
         return false;
-      })
+      });
     }
-    return key
+    return key;
   }
   get colspan(): number {
-    return this.$scopedSlots.actions ? this.columns.length + 1 : this.extendedColumns.length;
+    return this.$scopedSlots.actions
+      ? this.columns.length + 1
+      : this.columns.length;
   }
   // methods
   selectAllItems(event: Event): void {
     const checked = (event.target as HTMLInputElement).checked;
     const selectedItems: any[] = checked ? this.dataSource : [];
-    this.$emit("update:selectedItems", selectedItems)
+    this.$emit("update:selectedItems", selectedItems);
     this.$emit("on-select-all", {
       selectedAll: checked,
-      selectedItems,
-    })
-    this.$emit("on-change", {selectedItems})
+      selectedItems
+    });
+    this.$emit("on-change", { selectedItems });
   }
   selectItem(event: Event, item: any, index: number): void {
     const checked = (event.target as HTMLInputElement).checked;
     let selectedItems = JSON.parse(JSON.stringify(this.selectedItems));
-    if(checked) {
-      selectedItems.push(item)
+    if (checked) {
+      selectedItems.push(item);
     } else {
-      selectedItems = selectedItems.filter((value: any) => value.key !== item.key);
+      selectedItems = selectedItems.filter(
+        (value: any) => value.key !== item.key
+      );
     }
-    this.$emit("update:selectedItems", selectedItems)
+    this.$emit("update:selectedItems", selectedItems);
     this.$emit("on-select", {
       selected: checked,
       item: item
-    })
-    this.$emit("on-change", { selectedItems })
+    });
+    this.$emit("on-change", { selectedItems });
   }
   inSelectedItems(key: any): boolean {
     return this.selectedItems.some((item: any) => item.key === key);
   }
   setSortTypes(): void {
-    this.sortTypes = this.columns.map((col: any) => ({[col.field]: col.sortType }))
+    this.sortTypes = this.columns.map((col: any) => ({
+      [col.field]: col.sortType
+    }));
   }
   clickSortIcon(event: Event, key: any): void {
     const elem: any = event.target;
-    let icon: string = '';
+    let icon: string = "";
     let currentIndex: number | null = null;
     let currentItem = this.sortTypes.find((value: any, index: number) => {
       currentIndex = index;
-      return value[key] && value[key] !== undefined
+      return value[key] && value[key] !== undefined;
     });
-    if(elem && elem.getAttribute) {
-      icon = elem.getAttribute('xlink:href');
+    if (elem && elem.getAttribute) {
+      icon = elem.getAttribute("xlink:href");
     }
-    if(currentItem) {
-      if(icon === '#icon-caret-up') {
-        currentItem[key] = 'asc';
-      } else if(icon === '#icon-caret-down' || currentItem[key] === 'asc') {
-        currentItem[key] = 'desc';
-      } else if(currentItem[key] === 'desc') {
-        currentItem[key] = true
+    if (currentItem) {
+      if (icon === "#icon-caret-up") {
+        currentItem[key] = "asc";
+      } else if (icon === "#icon-caret-down" || currentItem[key] === "asc") {
+        currentItem[key] = "desc";
+      } else if (currentItem[key] === "desc") {
+        currentItem[key] = true;
       } else {
-        currentItem[key] = 'asc';
+        currentItem[key] = "asc";
       }
-      if(currentIndex !== null) {
-        const currentColumn = this.columns.find((value: any) => value.field === key);
-        this.$emit('on-sort', {
-          sortType: currentItem[key], 
+      if (currentIndex !== null) {
+        const currentColumn = this.columns.find(
+          (value: any) => value.field === key
+        );
+        this.$emit("on-sort", {
+          sortType: currentItem[key],
           currentColumn: currentColumn
-        })
+        });
         this.$set(this.sortTypes, currentIndex, currentItem);
       }
     }
   }
   visibleSortIcons(key: any): boolean {
-    return this.sortTypes.some((value: any) => value[key] && value[key] !== undefined)
+    return this.sortTypes.some(
+      (value: any) => value[key] && value[key] !== undefined
+    );
   }
   setSortIconClass(key: any, sortType: string): boolean {
-    return this.sortTypes.some((value: any) => value[key] && value[key] === sortType)
+    return this.sortTypes.some(
+      (value: any) => value[key] && value[key] === sortType
+    );
   }
   setCellWidth(width: number): string {
-    if(width) {
+    if (width) {
       return `width: ${width}px; min-width: ${width}px`;
     }
-    return '';
+    return "";
   }
-  inExpendedKeys(key:any): boolean {
-    return this.expendedKeys.indexOf(key) >= 0
+  inExpendedKeys(key: any): boolean {
+    return this.expendedKeys.indexOf(key) >= 0;
   }
-  toggleExpend(key: any): void{
-    if(this.inExpendedKeys(key)) {
-      this.expendedKeys.splice(this.expendedKeys.indexOf(key), 1)
+  toggleExpend(key: any): void {
+    if (this.inExpendedKeys(key)) {
+      this.expendedKeys.splice(this.expendedKeys.indexOf(key), 1);
     } else {
       this.expendedKeys.push(key);
     }
@@ -317,7 +422,7 @@ $grey: #ebebeb;
     height: 100%;
     width: 100%;
     z-index: 2;
-    background: rgba(255,255,255, 0.8);
+    background: rgba(255, 255, 255, 0.8);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -364,14 +469,15 @@ $grey: #ebebeb;
         }
       }
     }
-    th, td {
+    th,
+    td {
       text-align: left;
       border-bottom: 1px solid $grey;
       padding: 14px;
       box-sizing: border-box;
-      overflow:hidden; 
-      white-space:nowrap; 
-      text-overflow:ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     .expend-icon {
       cursor: pointer;
@@ -399,7 +505,8 @@ $grey: #ebebeb;
   &.bordered {
     border: 1px solid $grey;
     border-right: none;
-    th, td {
+    th,
+    td {
       border-right: 1px solid $grey;
     }
     tbody {
@@ -415,4 +522,3 @@ $grey: #ebebeb;
   }
 }
 </style>
-
