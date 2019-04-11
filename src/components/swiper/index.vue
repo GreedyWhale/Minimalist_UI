@@ -43,9 +43,9 @@ export default class MSwiper extends Vue {
   @Prop({ type: Number, default: 3000 }) private delay!: number;
   @Prop({ type: [Number, String] }) private active!: number | string;
   @Prop({ type: Boolean, default: false }) private autoplay!: boolean;
-  @Prop({ type: Boolean, default: true }) visibleDots!: boolean;
-  @Prop({ type: Boolean, default: false }) vertical!: boolean;
-  @Prop({ type: Boolean, default: true }) loop!: boolean;
+  @Prop({ type: Boolean, default: true }) private visibleDots!: boolean;
+  @Prop({ type: Boolean, default: false }) private vertical!: boolean;
+  @Prop({ type: Boolean, default: true }) private loop!: boolean;
   @Prop({
     type: String,
     default: "hover",
@@ -53,7 +53,7 @@ export default class MSwiper extends Vue {
       return ["hover", "never", "always"].indexOf(value) >= 0;
     }
   })
-  arrow!: string;
+  private arrow!: string;
   // data
   activeIndex: number = 0;
   lastActiveIndex: number = 0;

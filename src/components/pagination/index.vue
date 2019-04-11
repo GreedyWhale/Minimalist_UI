@@ -40,10 +40,10 @@ import MIcon from "@/components/icon/index.vue";
   }
 })
 export default class MPagination extends Vue {
-  @Prop({ type: Number, required: true }) total!: number;
-  @Prop({ type: Number, default: 1 }) defaultPage!: number;
-  @Prop({ type: Number, default: 7 }) defaultPageSize!: number;
-  @Prop({ type: Number, default: 5 }) step!: number;
+  @Prop({ type: Number, required: true }) private total!: number;
+  @Prop({ type: Number, default: 1 }) private defaultPage!: number;
+  @Prop({ type: Number, default: 7 }) private defaultPageSize!: number;
+  @Prop({ type: Number, default: 5 }) private step!: number;
   @Watch("defaultPage")
   onDefaultPageChanged(newValue: number) {
     if (newValue !== this.currentPage) {

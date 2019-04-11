@@ -12,10 +12,10 @@ import { UPDATE_ACTIVE, UPDATE_NAME_PATH, CLICK_SUB_MENU } from "./constant";
   name: "MMenu"
 })
 export default class MMenu extends Vue {
-  @Prop({ type: [String, Number] }) defaultActive!: string | number;
-  @Prop({ type: Boolean, default: false }) vertical!: boolean;
-  @Prop({ type: Boolean, default: false }) accordion!: boolean;
-  @Prop({ type: String, default: "hover" }) subMenuTrigger!: string;
+  @Prop({ type: [String, Number] }) private defaultActive!: string | number;
+  @Prop({ type: Boolean, default: false }) private vertical!: boolean;
+  @Prop({ type: Boolean, default: false }) private accordion!: boolean;
+  @Prop({ type: String, default: "hover" }) private subMenuTrigger!: string;
   @Provide() isVertical: boolean = this.vertical;
   @Provide() eventBus: Vue.default = new Vue();
   @Provide() subMenuTriggerWay: string = this.subMenuTrigger;

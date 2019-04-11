@@ -221,14 +221,14 @@ export default class MTable extends Vue {
     },
     required: true
   })
-  columns!: any[];
+  private columns!: any[];
   @Prop({
     type: Array,
     default() {
       return [];
     }
   })
-  extendedColumns!: any[];
+  private extendedColumns!: any[];
   @Prop({
     type: Array,
     default() {
@@ -239,19 +239,19 @@ export default class MTable extends Vue {
       return arr.every((value: any) => value.key !== undefined);
     }
   })
-  dataSource!: any[];
-  @Prop({ type: Boolean, default: false }) bordered!: boolean;
-  @Prop({ type: Boolean, default: false }) striped!: boolean;
+  private dataSource!: any[];
+  @Prop({ type: Boolean, default: false }) private bordered!: boolean;
+  @Prop({ type: Boolean, default: false }) private striped!: boolean;
   @Prop({
     type: Array,
     default() {
       return [];
     }
   })
-  selectedItems!: any[];
-  @Prop({ type: Boolean, default: false }) loading!: boolean;
-  @Prop({ type: Boolean, default: false }) fixedHead!: boolean;
-  @Prop({ type: Number, default: 0 }) height!: number;
+  private selectedItems!: any[];
+  @Prop({ type: Boolean, default: false }) private loading!: boolean;
+  @Prop({ type: Boolean, default: false }) private fixedHead!: boolean;
+  @Prop({ type: Number, default: 0 }) private height!: number;
   @Watch("selectedItems")
   onSelectedItemsChanged(newValue: any[]) {
     const selectAll =

@@ -16,11 +16,11 @@ import { PropSize } from "./col.d";
 export default class MCol extends Vue {
   @Prop({ default: 24 }) private span!: string | number;
   @Prop() private offset!: string | number;
-  @Prop({ type: Object }) sm!: PropSize;
-  @Prop({ type: Object }) md!: PropSize;
-  @Prop({ type: Object }) lg!: PropSize;
-  @Prop({ type: Object }) xl!: PropSize;
-  @Prop({ type: Object }) xxl!: PropSize;
+  @Prop({ type: Object }) private sm!: PropSize;
+  @Prop({ type: Object }) private md!: PropSize;
+  @Prop({ type: Object }) private lg!: PropSize;
+  @Prop({ type: Object }) private xl!: PropSize;
+  @Prop({ type: Object }) private xxl!: PropSize;
   // data
   gutter: number = 0;
   // computed
