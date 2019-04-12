@@ -3,6 +3,9 @@ interface requestOptions {
   action: string;
   name: string;
   file: File;
+  onProgress: (e: ProgressEvent) => void;
+  headers?: Object;
+  withCredentials?: boolean;
 }
 interface CustomError extends Error {
   status: number,

@@ -7,7 +7,7 @@ function getError(options: requestOptions, xhr: XMLHttpRequest): CustomError {
   } else if (xhr.responseText) {
     msg = `${xhr.responseText}`;
   } else {
-    msg = `使用 ${options.method} 请求 ${options.action} 失败。响应状态码：${xhr.status}`;
+    msg = `使用 ${options.method} 请求 ${options.action} 失败。XMLHttpRequest.status：${xhr.status}`;
   }
 
   const err: any = new Error(msg);
@@ -41,8 +41,22 @@ function ajax(options: requestOptions): Promise<any> {
     xhr.onerror = () => {
       reject(getError(options, xhr))
     }
+    if (xhr.upload) {
+      xhr.upload.onprogress = function progress(e: ProgressEvent) {
+        options.onProgress(e)
+      };
+    }
     const formData = new FormData();
     formData.append(options.name, options.file);
+    if (options.withCredentials && 'withCredentials' in xhr) {
+      xhr.withCredentials = true;
+    }
+    const headers: any = options.headers || {};
+    for (let item in headers) {
+      if (headers.hasOwnProperty(item) && headers[item] !== null) {
+          xhr.setRequestHeader(item, headers[item]);
+      }
+    }
     xhr.send(formData);
   })
 }

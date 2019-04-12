@@ -13,13 +13,25 @@
       <slot name="tips"></slot>
     </div>
     <ul class="m-upload__file-list" v-if="fileList.length">
-      <li class="m-upload__file" v-for="file in fileList" :key="file.uid">
-        <div class="m-upload__file-info">
-          {{ file.name }}
+      <li
+        class="m-upload__file" :data-status="file.status"
+        v-for="file in fileList" :key="file.uid">
+        <div class="m-upload__file-item">
+          <div class="m-upload__file-info flex-align__center" @click="handlePreview(file)">
+            <m-icon icon="file" v-if="listType !== 'picture'"></m-icon>
+            <img :src="file.url" v-if="listType === 'picture' && file.url" class="m-upload__file-img">
+            <div class="m-upload__file-name">{{ file.name }}</div>
+          </div>
+          <div
+            @click="handleRemove(file)"
+            class="remove-icon flex-align__center">
+            <m-icon icon="close"></m-icon>
+          </div>
         </div>
-        <div @click="handleRemove(file)">
-          x
-        </div>
+        <div
+          v-if="file.showProgress"
+           class="m-upload__file-progress"
+          :style="`width: ${file.percentage}%`"></div>
       </li>
     </ul>
   </div>
@@ -30,6 +42,7 @@ import { Vue, Component, Prop, Watch } from "vue-property-decorator";
 import MIcon from "@/components/icon/index.vue";
 import ajax from "./methods/ajax";
 import { requestOptions } from "./methods/ajax.d";
+function empty() {}
 @Component({
   name: 'MUpload',
   components: {
@@ -44,12 +57,20 @@ export default class MUpload extends Vue {
   @Prop({ type: Boolean, default: false }) private multiple!: boolean;
   @Prop({ type: String, default: '' }) private accept!: string;
   @Prop({ type: Array, default() { return [] } }) private defaultFileList!: any[];
+  @Prop({ type: Function, default: empty }) private beforeRemove!: (file: any, fileList: any[]) => any;
+  @Prop({ type: Function, default: empty }) private beforeUpload!: (file: any, fileList: any[]) => any;
+  @Prop({ type: Object, default(){ return {} } }) private headers!: Object;
+  @Prop({ type: Boolean, default: false }) private withCredentials!: boolean;
+  @Prop({ type: String, default: '' }) private listType!: string;
+  @Prop({ type: Number }) private size!: number;
+  @Prop({ type: Number }) private limit!: number;
   @Watch('defaultFileList', { immediate: true })
   onDefaultFileListChnaged(newValue: any[]) {
     if(newValue.length) {
       this.fileList = newValue.map((file: any) => {
-        file.status = 'success';
+        file.status = file.status || 'success';
         file.uid = Date.now() + this.tempIndex++;
+        file.percentage = 100;
         return file;
       })
     }
@@ -57,6 +78,7 @@ export default class MUpload extends Vue {
   // data
   fileList: any[] = [];
   tempIndex: number = 1;
+  showProgressTimer: any;
   // methods
   handleClick(): void {
     (this.$refs.fileInput as HTMLInputElement).click()
@@ -69,9 +91,26 @@ export default class MUpload extends Vue {
     (this.$refs.fileInput as any).value = null;
   }
   handleRemove(file: any): void {
-    const fileList = this.fileList;
-    fileList.splice(fileList.indexOf(file), 1);
-    this.$emit('on-remove', file, fileList);
+    const doRemove = () => {
+      const fileList = this.fileList;
+      fileList.splice(fileList.indexOf(file), 1);
+      this.$emit('on-remove', file, fileList);
+    }
+    if(this.beforeRemove && typeof this.beforeRemove === 'function') {
+      const before = this.beforeRemove(file, this.fileList);
+      if(before && before.then) {
+        before.then(() => {
+          doRemove();
+        }, empty);
+      } else if(before !== false) {
+        doRemove();
+      }
+    } else {
+      doRemove();
+    }
+  }
+  handlePreview(file: any): void {
+    this.$emit('on-preview', file, this.fileList);
   }
   uploadFiles(files: FileList): void {
     let fileList: File[] = Array.from(files);
@@ -85,12 +124,36 @@ export default class MUpload extends Vue {
     }
   }
   upload(file: File): void {
+    if(!this.canUpload(file)) {
+      return;
+    }
     this.addFile(file);
+    if(this.beforeUpload && typeof this.beforeUpload === 'function') {
+      const before = this.beforeUpload(file, this.fileList);
+      if(before && before.then) {
+        before.then((processedFile: any) => {
+          if (Object.prototype.toString.call(processedFile) === '[object File]') {
+            this.doUpload(processedFile);
+          } else {
+            this.doUpload(file);
+          }
+        })
+      } else if (before !== false) {
+        this.doUpload(file);
+      }
+    } else {
+      this.doUpload(file);
+    }
+  }
+  doUpload(file: File): void {
     const options: requestOptions = {
       name: this.name,
       action: this.action,
       method: this.method,
-      file
+      headers: this.headers,
+      withCredentials: this.withCredentials,
+      file,
+      onProgress: (e) => this.handleProgress(e, file)
     }
     ajax(options)
       .then(res => {
@@ -100,6 +163,22 @@ export default class MUpload extends Vue {
         this.handleError(err, file);
       })
   }
+  canUpload(file: File): boolean {
+    const { size } = file;
+    if (this.size) {
+      if (size > this.size * 1024) {
+          this.$emit('on-exceeded-size', file, this.fileList);
+          return false;
+      }
+    }
+    if (this.limit) {
+      if (this.limit <= this.fileList.length) {
+          this.$emit('on-exceeded', file, this.fileList);
+          return false;
+      }
+    }
+    return true;
+  }
   addFile(file: any): void {
     const uid = Date.now() + this.tempIndex++;
     file.uid = uid;
@@ -108,7 +187,8 @@ export default class MUpload extends Vue {
       name,
       size,
       uid,
-      status: 'uploading'
+      status: 'uploading',
+      showProgress: true
     }
     try {
       newFile.url = URL.createObjectURL(file);
@@ -123,14 +203,25 @@ export default class MUpload extends Vue {
     const newFile = this.getFile(file);
     if(newFile) {
       newFile.status = 'success';
-      this.$emit('on-success', res, newFile, this.fileList)
+      this.$emit('on-success', res, newFile, this.fileList);
+      this.showProgressTimer = setTimeout(() => {
+        newFile.showProgress = false;
+      }, 1000)
     }
   }
   handleError(err: any, file: File): void {
     const newFile = this.getFile(file);
     if(newFile) {
       newFile.status = 'fail';
+      newFile.showProgress = 'false';
       this.$emit('on-error', err, newFile, this.fileList)
+    }
+  }
+  handleProgress(e: ProgressEvent, file: File): void {
+    const newFile = this.getFile(file);
+    if(newFile) {
+      newFile.percentage = e.loaded / e.total * 100;
+      this.$emit('on-progress', newFile, this.fileList)
     }
   }
   getFile(file: any): any {
@@ -146,12 +237,70 @@ export default class MUpload extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.flex-align__center {
+  display: flex;
+  align-items: center;
+}
 .m-upload {
   &__input-wrapper {
 
   }
   &__input {
     display: none;
+  }
+  &__tips {
+    font-size: 14px;
+    padding-top: 10px;
+    color: #606266;
+  }
+  &__file-list {
+    padding: 10px 0 0 0;
+    margin: 0;
+    overflow: hidden;
+    &, li {
+      list-style: none;
+    }
+  }
+  &__file {
+    margin-bottom: 10px;
+    cursor: pointer;
+    &-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    &-info {
+      flex: 1;
+    }
+    &-name {
+      margin-left: 5px;
+    }
+    &-img {
+      width: 50px;
+      height: 50px;
+      margin-right: 5px;
+    }
+    &-progress {
+      width: 0;
+      height: 2px;
+      background: rgb(1, 100, 1);
+      transition: all 1s ease-in-out;
+      margin-top: 2px;
+    }
+    .remove-icon {
+      padding: 0 10px;
+    }
+    &:hover {
+      background: #f5f7fa;
+    }
+    &[data-status="success"] {
+      .m-upload__file-info {
+        color: rgb(3, 99, 3);
+      }
+    }
+    &[data-status="fail"] {
+      color: rgb(201, 4, 4);
+    }
   }
 }
 </style>
