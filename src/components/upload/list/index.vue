@@ -17,7 +17,7 @@
       </div>
       <div
         v-if="file.showProgress"
-          class="m-upload__file-progress"
+        class="m-upload__file-progress"
         :style="`width: ${file.percentage}%`"></div>
     </li>
   </ul>
@@ -46,6 +46,9 @@ export default class MUploadFileList extends Vue {
 </script>
 
 <style lang="scss" scoped>
+$blue: #2d8cf0;
+$red: #F56C6C;
+$green: #67C23A;
 .flex-align__center {
   display: flex;
   align-items: center;
@@ -80,9 +83,9 @@ export default class MUploadFileList extends Vue {
   &-progress {
     width: 0;
     height: 2px;
-    background: rgb(1, 100, 1);
     transition: all 1s ease-in-out;
     margin-top: 2px;
+    background: $blue;
   }
   .remove-icon {
     padding: 0 10px;
@@ -92,11 +95,17 @@ export default class MUploadFileList extends Vue {
   }
   &[data-status="success"] {
     .m-upload__file-info {
-      color: rgb(3, 99, 3);
+      color: $green;
+    }
+    .m-upload__file-progress {
+      background: $green;
     }
   }
   &[data-status="fail"] {
-    color: rgb(201, 4, 4);
+    color: $red;
+    .m-upload__file-progress {
+      background: $red;
+    }
   }
 }
 </style>
