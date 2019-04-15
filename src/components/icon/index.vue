@@ -1,5 +1,5 @@
 <template>
-  <div class="m-icon" :data-is-loading="isLoading">
+  <div class="m-icon" :data-is-loading="isLoading" @click="$emit('on-click')">
     <slot />
     <svg class="icon-font" aria-hidden="true" v-if="newIconName">
       <use :xlink:href="`#icon-${newIconName}`"></use>

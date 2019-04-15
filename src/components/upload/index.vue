@@ -12,41 +12,32 @@
     <div class="m-upload__tips">
       <slot name="tips"></slot>
     </div>
-    <ul class="m-upload__file-list" v-if="fileList.length">
-      <li
-        class="m-upload__file" :data-status="file.status"
-        v-for="file in fileList" :key="file.uid">
-        <div class="m-upload__file-item">
-          <div class="m-upload__file-info flex-align__center" @click="handlePreview(file)">
-            <m-icon icon="file" v-if="listType !== 'picture'"></m-icon>
-            <img :src="file.url" v-if="listType === 'picture' && file.url" class="m-upload__file-img">
-            <div class="m-upload__file-name">{{ file.name }}</div>
-          </div>
-          <div
-            @click="handleRemove(file)"
-            class="remove-icon flex-align__center">
-            <m-icon icon="close"></m-icon>
-          </div>
-        </div>
-        <div
-          v-if="file.showProgress"
-           class="m-upload__file-progress"
-          :style="`width: ${file.percentage}%`"></div>
-      </li>
-    </ul>
+    <m-upload-file-card
+      v-if="listType === 'card'"
+      :fileList="fileList"
+      :limit="limit"
+      ></m-upload-file-card>
+    <m-upload-file-list
+      v-else
+      :fileList="fileList"
+      :listType="listType"
+      @on-file-preview="handlePreview"
+      @on-file-remove="handleRemove"></m-upload-file-list>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from "vue-property-decorator";
-import MIcon from "@/components/icon/index.vue";
+import MUploadFileList from "./list/index.vue";
+import MUploadFileCard from "./card/index.vue";
 import ajax from "./methods/ajax";
 import { requestOptions } from "./methods/ajax.d";
 function empty() {}
 @Component({
   name: 'MUpload',
   components: {
-    MIcon
+    MUploadFileList,
+    MUploadFileCard
   }
 })
 export default class MUpload extends Vue {
@@ -63,7 +54,7 @@ export default class MUpload extends Vue {
   @Prop({ type: Boolean, default: false }) private withCredentials!: boolean;
   @Prop({ type: String, default: '' }) private listType!: string;
   @Prop({ type: Number }) private size!: number;
-  @Prop({ type: Number }) private limit!: number;
+  @Prop({ type: Number, default: 0 }) private limit!: number;
   @Watch('defaultFileList', { immediate: true })
   onDefaultFileListChnaged(newValue: any[]) {
     if(newValue.length) {
@@ -237,14 +228,7 @@ export default class MUpload extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.flex-align__center {
-  display: flex;
-  align-items: center;
-}
 .m-upload {
-  &__input-wrapper {
-
-  }
   &__input {
     display: none;
   }
@@ -252,55 +236,6 @@ export default class MUpload extends Vue {
     font-size: 14px;
     padding-top: 10px;
     color: #606266;
-  }
-  &__file-list {
-    padding: 10px 0 0 0;
-    margin: 0;
-    overflow: hidden;
-    &, li {
-      list-style: none;
-    }
-  }
-  &__file {
-    margin-bottom: 10px;
-    cursor: pointer;
-    &-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    &-info {
-      flex: 1;
-    }
-    &-name {
-      margin-left: 5px;
-    }
-    &-img {
-      width: 50px;
-      height: 50px;
-      margin-right: 5px;
-    }
-    &-progress {
-      width: 0;
-      height: 2px;
-      background: rgb(1, 100, 1);
-      transition: all 1s ease-in-out;
-      margin-top: 2px;
-    }
-    .remove-icon {
-      padding: 0 10px;
-    }
-    &:hover {
-      background: #f5f7fa;
-    }
-    &[data-status="success"] {
-      .m-upload__file-info {
-        color: rgb(3, 99, 3);
-      }
-    }
-    &[data-status="fail"] {
-      color: rgb(201, 4, 4);
-    }
   }
 }
 </style>
