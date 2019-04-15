@@ -20,7 +20,9 @@ import { findComponentParent } from "../methods";
 export default class MMenuItem extends Vue {
   @Inject() readonly eventBus!: Vue.default;
   @Inject() readonly isVertical!: boolean;
-  @Prop({ type: [Number, String], required: true }) private name!: number | string;
+  @Prop({ type: [Number, String], required: true }) private name!:
+    | number
+    | string;
   @Prop({ type: Number }) private to!: string;
   @Prop({ type: Boolean, default: false }) private disabled!: string;
   // data

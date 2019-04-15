@@ -5,12 +5,17 @@
         class="m-carl__item"
         @mouseenter="onMouseEnter(file, index)"
         @mouseleave="onMouseLeave(file)"
-        v-for="(file, index) in fileList" :key="file.uid">
-        <div class="m-carl__item-floating-layer" v-if="activeFloatingLayer === index">
+        v-for="(file, index) in fileList"
+        :key="file.uid"
+      >
+        <div
+          class="m-carl__item-floating-layer"
+          v-if="activeFloatingLayer === index"
+        >
           <m-icon icon="preview" @on-click="onPreview(file)"></m-icon>
           <m-icon icon="delete" @on-click="onDelete(file)"></m-icon>
         </div>
-        <img :src="file.url" v-if="file.url">
+        <img :src="file.url" v-if="file.url" />
       </li>
       <li class="m-carl__item" v-if="visibleUploadBtn" @click="onUpload">
         <m-icon icon="add"></m-icon>
@@ -19,36 +24,41 @@
   </div>
 </template>
 
-
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
 import MIcon from "@/components/icon/index.vue";
 @Component({
-  name: 'MUploadFileCard',
+  name: "MUploadFileCard",
   components: {
     MIcon
   }
 })
 export default class MUploadFileCard extends Vue {
-  @Prop({ type: Array, default(){ return [] } }) private fileList!: any[];
+  @Prop({
+    type: Array,
+    default() {
+      return [];
+    }
+  })
+  private fileList!: any[];
   @Prop({ type: Number }) private limit!: number;
   // data
   activeFloatingLayer: number | null = null;
   // computed
   get visibleUploadBtn(): boolean {
-    if(this.limit) {
+    if (this.limit) {
       return this.limit > this.fileList.length;
     }
     return true;
   }
   // methods
   onMouseEnter(file: any, index: number): void {
-    if(file.url) {
+    if (file.url) {
       this.activeFloatingLayer = index;
     }
   }
   onMouseLeave(): void {
-    if(this.activeFloatingLayer !== null) {
+    if (this.activeFloatingLayer !== null) {
       this.activeFloatingLayer = null;
     }
   }
@@ -56,14 +66,15 @@ export default class MUploadFileCard extends Vue {
     (this.$parent as any).handleClick && (this.$parent as any).handleClick();
   }
   onPreview(file: any): void {
-    (this.$parent as any).handlePreview && (this.$parent as any).handlePreview(file);
+    (this.$parent as any).handlePreview &&
+      (this.$parent as any).handlePreview(file);
   }
   onDelete(file: any): void {
-    (this.$parent as any).handleRemove && (this.$parent as any).handleRemove(file);
+    (this.$parent as any).handleRemove &&
+      (this.$parent as any).handleRemove(file);
     this.onMouseLeave();
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -76,14 +87,15 @@ $blue: #2d8cf0;
     margin: 0;
     display: flex;
     align-items: center;
-    &, .m-carl__item {
+    &,
+    .m-carl__item {
       list-style: none;
     }
     .m-carl__item {
       position: relative;
       width: 60px;
       height: 60px;
-      border: 1px dashed #dcdee2; 
+      border: 1px dashed #dcdee2;
       margin-right: 5px;
       border-radius: $borderRadius;
       cursor: pointer;
@@ -107,7 +119,7 @@ $blue: #2d8cf0;
         width: 100%;
         height: 100%;
         z-index: 1;
-        background: rgba(0,0,0,.6);
+        background: rgba(0, 0, 0, 0.6);
         display: flex;
         align-items: center;
         justify-content: space-between;

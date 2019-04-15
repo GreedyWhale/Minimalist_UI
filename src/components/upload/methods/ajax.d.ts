@@ -8,9 +8,9 @@ interface requestOptions {
   withCredentials?: boolean;
 }
 interface CustomError extends Error {
-  status: number,
-  method: string,
-  url: string
+  status: number;
+  method: string;
+  url: string;
 }
 
-export { requestOptions, CustomError }
+export { requestOptions, CustomError };

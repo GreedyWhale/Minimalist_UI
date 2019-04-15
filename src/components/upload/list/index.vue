@@ -1,24 +1,33 @@
 <template>
   <ul class="m-upload__file-list" v-if="fileList.length">
     <li
-      class="m-upload__file" :data-status="file.status"
-      v-for="file in fileList" :key="file.uid">
+      class="m-upload__file"
+      :data-status="file.status"
+      v-for="file in fileList"
+      :key="file.uid"
+    >
       <div class="m-upload__file-item">
-        <div class="m-upload__file-info flex-align__center" @click="handleClick(file)">
+        <div
+          class="m-upload__file-info flex-align__center"
+          @click="handleClick(file)"
+        >
           <m-icon icon="file" v-if="listType !== 'picture'"></m-icon>
-          <img :src="file.url" v-if="listType === 'picture' && file.url" class="m-upload__file-img">
+          <img
+            :src="file.url"
+            v-if="listType === 'picture' && file.url"
+            class="m-upload__file-img"
+          />
           <div class="m-upload__file-name">{{ file.name }}</div>
         </div>
-        <div
-          @click="handleRemove(file)"
-          class="remove-icon flex-align__center">
+        <div @click="handleRemove(file)" class="remove-icon flex-align__center">
           <m-icon icon="close"></m-icon>
         </div>
       </div>
       <div
         v-if="file.showProgress"
         class="m-upload__file-progress"
-        :style="`width: ${file.percentage}%`"></div>
+        :style="`width: ${file.percentage}%`"
+      ></div>
     </li>
   </ul>
 </template>
@@ -27,28 +36,34 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import MIcon from "@/components/icon/index.vue";
 @Component({
-  name: 'MUploadFileList',
+  name: "MUploadFileList",
   components: {
     MIcon
   }
 })
 export default class MUploadFileList extends Vue {
-  @Prop({ type: Array, default() { return [] } }) private fileList!: any[];
-  @Prop({ type: String, default: '' }) private listType!: string;
+  @Prop({
+    type: Array,
+    default() {
+      return [];
+    }
+  })
+  private fileList!: any[];
+  @Prop({ type: String, default: "" }) private listType!: string;
   // methods
   handleClick(file: any): void {
-    this.$emit('on-file-preview', file)
+    this.$emit("on-file-preview", file);
   }
   handleRemove(file: any): void {
-    this.$emit('on-file-remove', file)
+    this.$emit("on-file-remove", file);
   }
 }
 </script>
 
 <style lang="scss" scoped>
 $blue: #2d8cf0;
-$red: #F56C6C;
-$green: #67C23A;
+$red: #f56c6c;
+$green: #67c23a;
 .flex-align__center {
   display: flex;
   align-items: center;
@@ -57,7 +72,8 @@ $green: #67C23A;
   padding: 10px 0 0 0;
   margin: 0;
   overflow: hidden;
-  &, li {
+  &,
+  li {
     list-style: none;
   }
 }

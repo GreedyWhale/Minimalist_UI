@@ -54,7 +54,9 @@ export default class MSubMenu extends Vue {
   @Inject() readonly eventBus!: Vue.default;
   @Inject() readonly isVertical!: boolean;
   @Inject() readonly subMenuTriggerWay!: string;
-  @Prop({ type: [Number, String], required: true }) private name!: number | string;
+  @Prop({ type: [Number, String], required: true }) private name!:
+    | number
+    | string;
   @Prop({ type: Boolean, default: false }) private disabled!: string;
   // data
   open: boolean = false;
