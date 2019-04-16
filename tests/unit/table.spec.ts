@@ -65,42 +65,11 @@ describe("m-table.vue", () => {
     wrapper.vm.$on("on-select-all", spySelectAll);
     wrapper.vm.$on("on-select", spySelect);
     wrapper.vm.$on("on-change", spyChange);
-    checkbox.at(0).trigger("click");
-    checkbox.at(1).trigger("click");
+    checkbox.at(0).trigger("change");
+    checkbox.at(1).trigger("change");
     expect(spySelectAll.called).to.be.true;
     expect(spySelect.called).to.be.true;
     expect(spyChange.called).to.be.true;
-  });
-  it("MTable组件接受selectedItems", () => {
-    const component = {
-      name: "test",
-      template: `
-        <m-table
-          :columns="columns" :data-source="dataSource" 
-          :selectedItems.sync="selectedItems"
-          :extended-columns="extendedColumns"></m-table>
-      `,
-      data() {
-        return {
-          extendedColumns: [{ field: "selection", width: 50 }],
-          columns: [{ title: "姓名", field: "name" }],
-          dataSource: [
-            { key: 1, name: "宇智波鼬", age: 17, score: 100, grade: "二" }
-          ],
-          selectedItems: []
-        };
-      }
-    };
-    const wrapper = mount(component);
-    const checkbox = wrapper.find('input[type="checkbox"]');
-    checkbox.trigger("click");
-    expect(wrapper.vm.$data.selectedItems[0]).to.include({
-      key: 1,
-      name: "宇智波鼬",
-      age: 17,
-      score: 100,
-      grade: "二"
-    });
   });
   it("MTable组件接受loading", () => {
     const wrapper = shallowMount(MTable, {
@@ -134,7 +103,7 @@ describe("m-table.vue", () => {
         .exists()
     ).to.be.true;
   });
-  it("Mtable组件支持展开功能", () => {
+  it("Mtable组件支持展开功能", done => {
     const wrapper = shallowMount(MTable, {
       propsData: {
         extendedColumns: [
@@ -156,13 +125,16 @@ describe("m-table.vue", () => {
     });
     const td = wrapper.findAll("td").at(0);
     td.trigger("click");
-    const expendTr = wrapper.findAll("tbody tr").at(1);
-    expect(
-      expendTr
-        .findAll("td")
-        .at(1)
-        .text()
-    ).to.be.equal("测试");
+    setTimeout(() => {
+      const expendTr = wrapper.findAll("tbody tr").at(1);
+      expect(
+        expendTr
+          .findAll("td")
+          .at(1)
+          .text()
+      ).to.be.equal("测试");
+      done();
+    });
   });
   it("Mtable组件支持scopedSlots", () => {
     const component = {

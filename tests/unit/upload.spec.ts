@@ -46,7 +46,7 @@ describe("m-upload.vue", () => {
     wrapper.vm.$on("on-remove", onRemove);
     const file = new File(["123131231"], "success.png");
     (wrapper.vm as any).handleChange({ target: { files: [file] } });
-    const item = wrapper.find('.m-upload__file use[xlink:href="#icon-close"]');
+    const item = wrapper.find(".m-upload__file .remove-icon");
     item.trigger("click");
     expect(onRemove.called).to.be.true;
   });

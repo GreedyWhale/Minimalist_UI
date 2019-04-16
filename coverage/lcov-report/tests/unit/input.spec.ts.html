@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for tests/unit/input.spec.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">tests/unit/</a> input.spec.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>75/75</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>6/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>75/75</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { expect } from "chai";
+import { shallowMount, mount } from "@vue/test-utils";
+import sinon from "sinon";
+import MInput from "@/components/input/index.vue";
+import MIcon from "@/components/icon/index.vue";
+import MButton from "@/components/button/index.vue";
+&nbsp;
+describe("input.vue", () =&gt; {
+  it("MInput组件可以设置type，placeholder，maxlength，disabled，clearable", () =&gt; {
+    const wrapper = shallowMount(MInput, {
+      propsData: {
+        type: "number",
+        placeholder: "hello world",
+        maxlength: 10,
+        disabled: true,
+        clearable: true
+      }
+    });
+    wrapper.setData({ currentValue: 10 });
+    const inputWrapper = wrapper.find(".m-input__wrapper");
+    const input = wrapper.find("input");
+    expect(input.attributes("type")).to.equal("number");
+    expect(input.attributes("placeholder")).to.equal("hello world");
+    expect(input.attributes("maxlength")).to.equal("10");
+    expect(input.attributes("disabled")).to.equal("disabled");
+    expect(inputWrapper.attributes("data-clearable")).to.equal("true");
+  });
+  it("MInput组件可以使用prop方式设置前后缀图标&amp;按钮", () =&gt; {
+    const wrapper = mount(MInput, {
+      propsData: {
+        suffixIcon: "search",
+        prefixIcon: "loading",
+        suffixButtonText: "搜索",
+        suffixButtonIcon: "search",
+        prefixButtonText: "加载",
+        prefixButtonIcon: "loading"
+      },
+      stubs: {
+        MIcon,
+        MButton
+      }
+    });
+    const suffixIcon = wrapper.find(".m-suffix__icon");
+    const prefixIcon = wrapper.find(".m-prefix__icon");
+    const suffixButton = wrapper.find(".m-button__wrap-suffix");
+    const prefixButton = wrapper.find(".m-button__wrap-prefix");
+    expect(suffixIcon.exists()).to.be.true;
+    expect(prefixIcon.exists()).to.be.true;
+    expect(suffixButton.exists()).to.be.true;
+    expect(prefixButton.exists()).to.be.true;
+    expect(suffixIcon.find("use").attributes("href")).to.equal("#icon-search");
+    expect(prefixIcon.find("use").attributes("href")).to.equal("#icon-loading");
+    expect(suffixButton.find("use").attributes("href")).to.equal(
+      "#icon-search"
+    );
+    expect(suffixButton.find(".content").text()).to.equal("搜索");
+    expect(prefixButton.find("use").attributes("href")).to.equal(
+      "#icon-loading"
+    );
+    expect(prefixButton.find(".content").text()).to.equal("加载");
+  });
+  it("MInput组件可以使用slot方式设置前后缀图标&amp;文字", () =&gt; {
+    const wrapper = shallowMount(MInput, {
+      slots: {
+        suffixIcon: "&lt;div&gt;123&lt;/div&gt;",
+        prefixIcon: "&lt;div&gt;456&lt;/div&gt;",
+        suffixContent: "hello",
+        prefixContent: "world"
+      }
+    });
+    expect(wrapper.find(".m-suffix__icon div").text()).to.equal("123");
+    expect(wrapper.find(".m-prefix__icon div").text()).to.equal("456");
+    expect(wrapper.find(".m-input__suffix-content").text()).to.equal("hello");
+    expect(wrapper.find(".m-input__prefix-content").text()).to.equal("world");
+  });
+  it("MInput组件可以响应input,focus,blur,change,on-enter,click-icon,clear, click-button事件", () =&gt; {
+    const clickIconHandler = sinon.spy();
+    const clickButtonHandler = sinon.spy();
+    const inputHandler = sinon.spy();
+    const blurHandler = sinon.spy();
+    const focusHandler = sinon.spy();
+    const changeHandler = sinon.spy();
+    const enterHandler = sinon.spy();
+    const clickClearIconHandler = sinon.spy();
+    const wrapper = shallowMount(MInput, {
+      propsData: {
+        suffixIcon: "search",
+        suffixButtonText: "搜索",
+        suffixButtonIcon: "search",
+        clearable: true
+      },
+      stubs: {
+        MButton,
+        MInput
+      }
+    });
+    wrapper.setData({ currentValue: 123 });
+    const vm = wrapper.vm;
+    vm.$on("input", inputHandler);
+    vm.$on("blur", blurHandler);
+    vm.$on("change", changeHandler);
+    vm.$on("focus", focusHandler);
+    vm.$on("on-enter", enterHandler);
+    vm.$on("clear", clickClearIconHandler);
+    vm.$on("click-button", clickButtonHandler);
+    vm.$on("click-icon", clickIconHandler);
+    wrapper.find("input").trigger("input");
+    wrapper.find("input").trigger("blur");
+    wrapper.find("input").trigger("change");
+    wrapper.find("input").trigger("focus");
+    wrapper.find("input").trigger("keyup.enter");
+    wrapper.find(".m-input__clear-icon").trigger("click");
+    wrapper.find(".m-button__wrap-suffix .m-button").trigger("click");
+    wrapper.find(".m-suffix__icon").trigger("click");
+    expect(clickIconHandler.called).to.be.true;
+    expect(clickButtonHandler.called).to.be.true;
+    expect(inputHandler.called).to.be.true;
+    expect(blurHandler.called).to.be.true;
+    expect(focusHandler.called).to.be.true;
+    expect(changeHandler.called).to.be.true;
+    expect(enterHandler.called).to.be.true;
+    expect(clickClearIconHandler.called).to.be.true;
+  });
+  it("MInput组件接受promptMsg，promptMsgPosition，isErrorMsg", () =&gt; {
+    const wrapper = shallowMount(MInput, {
+      propsData: {
+        promptMsg: "测试",
+        promptMsgPosition: "down",
+        isErrorMsg: true
+      }
+    });
+    const msgElem = wrapper.find(".m-input__prompt");
+    expect(msgElem.text()).to.equal("测试");
+    expect(msgElem.attributes("data-error")).to.equal("true");
+    expect(wrapper.attributes("data-layout")).to.equal("down");
+  });
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Apr 16 2019 23:36:57 GMT+0800 (China Standard Time)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

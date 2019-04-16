@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/components/upload/methods/ajax.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../index.html">all files</a> / <a href="index.html">src/components/upload/methods/</a> ajax.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/37</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/26</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/37</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { requestOptions, CustomE<span class="fstat-no" title="function not covered" >rror } from "./ajax.d";</span>
+&nbsp;
+func<span class="cstat-no" title="statement not covered" >tion getError(options: requestOptions, xhr: XMLHttpRequest): CustomError {</span>
+  let ms<span class="cstat-no" title="statement not covered" >g;</span>
+  if (xhr.response) {
+    msg =<span class="cstat-no" title="statement not covered" > `${xhr.response.error || xhr.response}`;</span>
+  } else<span class="cstat-no" title="statement not covered" > if (xhr.responseText) {</span>
+    msg = `${xhr.responseText}`;
+  } else {
+    msg <span class="cstat-no" title="statement not covered" >= `使用 ${options.method} 请求 ${</span>
+      options.action
+    } 失败。XMLHttp<span class="cstat-no" title="statement not covered" >Request.status：</span>${xhr.status}`;
+  }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+  co<span class="cstat-no" title="statement not covered" >nst err: any = new Error(m</span>sg);
+  er<span class="cstat-no" title="statement not covered" >r.status = x</span>hr.status;
+  err.method = options.method;
+  err.url = options.action<span class="fstat-no" title="function not covered" >;</span>
+  return err;<span class="cstat-no" title="statement not covered" ></span>
+}<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+function getResponse(xhr: XMLHttpRequest): any {
+  co<span class="cstat-no" title="statement not covered" >nst response = xhr.responseText || xhr.response;</span>
+  if (!r<span class="cstat-no" title="statement not covered" >esponse) {</span>
+    return response;
+  }
+  try {<span class="cstat-no" title="statement not covered" ></span>
+    return JSON.parse(response);
+  } catch (e) {
+    return response;<span class="fstat-no" title="function not covered" ></span>
+  }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+}<span class="cstat-no" title="statement not covered" ></span>
+function<span class="cstat-no" title="statement not covered" > ajax(options: requestOptions): Promise&lt;any&gt; {</span>
+  return<span class="cstat-no" title="statement not covered" > new Promise((resol<span class="fstat-no" title="function not covered" >ve, reject) =&gt; {</span></span>
+    const xh<span class="cstat-no" title="statement not covered" >r = new XMLHttpRequest();</span>
+    xhr.open(opt<span class="cstat-no" title="statement not covered" >ions.method, options.action, tru</span>e);
+    xhr.onload = () =&gt; {
+      if (xh<span class="cstat-no" title="statement not covered" >r.status &lt; 200 || xhr.statu</span>s &gt;= 300) {
+        reject(getError(options, xhr));
+      }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+      resolv<span class="cstat-no" title="statement not covered" >e(getResponse(xhr));</span>
+    };
+    xhr.<span class="cstat-no" title="statement not covered" >onerror = () =&gt; {</span>
+      reject<span class="cstat-no" title="statement not covered" >(getError(options, xhr));<span class="fstat-no" title="function not covered" ></span></span>
+    };<span class="cstat-no" title="statement not covered" ></span>
+    if (xhr.upload) {
+      xhr.upload.onprogress = function progress(e: ProgressEvent) {
+        options.onProgres<span class="cstat-no" title="statement not covered" >s(e);</span>
+      };<span class="cstat-no" title="statement not covered" ></span>
+    }<span class="cstat-no" title="statement not covered" ></span>
+    const fo<span class="cstat-no" title="statement not covered" >rmData = new FormData();</span>
+    formData.append(options.name, options.file);
+    if (options.withCred<span class="cstat-no" title="statement not covered" >entials &amp;&amp; "withCreden</span>tials" in xhr) {
+      xh<span class="cstat-no" title="statement not covered" >r.withCredentials = true;</span>
+    }<span class="cstat-no" title="statement not covered" ></span>
+    const header<span class="cstat-no" title="statement not covered" >s: any = options.headers || {};</span>
+    for (let item in headers) {
+      if (headers.hasOwnProperty(item) &amp;&amp; headers[item] !== null) {
+<span class="cstat-no" title="statement not covered" >        xhr.setRequestHeader</span>(item, headers[item]);
+      }
+    }
+    xhr.send(formData);
+  });
+}
+&nbsp;
+export default { ajax };
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Apr 16 2019 23:36:57 GMT+0800 (China Standard Time)
+</div>
+</div>
+<script src="../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../sorter.js"></script>
+</body>
+</html>
