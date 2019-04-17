@@ -170,6 +170,7 @@
                     :key="`${extendedCol.field}-td-expend`"
                     v-if="extendedCol.field === 'expend'"
                     class="expend-icon center-cell"
+                    :data-unfold="item[expendField] && inExpendedKeys(item.key)"
                     @click="toggleExpend(item.key)"
                   >
                     <m-icon icon="right" v-if="item[expendField]"></m-icon>
@@ -484,6 +485,12 @@ $grey: #ebebeb;
       .m-icon {
         width: 10px;
         height: 10px;
+        transition: all .3s;
+      }
+      &[data-unfold="true"] {
+        .m-icon {
+          transform: rotate(90deg);
+        }
       }
     }
     .center-cell {
