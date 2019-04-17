@@ -485,7 +485,7 @@ $grey: #ebebeb;
       .m-icon {
         width: 10px;
         height: 10px;
-        transition: all .3s;
+        transition: all 0.3s;
       }
       &[data-unfold="true"] {
         .m-icon {
