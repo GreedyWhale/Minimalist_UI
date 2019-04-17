@@ -107,7 +107,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Model } from "vue-property-decorator";
+import { Vue, Component, Prop, Model, Watch } from "vue-property-decorator";
 import MIcon from "@/components/icon/index.vue";
 import MButton from "@/components/button/index.vue";
 @Component({
@@ -118,25 +118,29 @@ import MButton from "@/components/button/index.vue";
   }
 })
 export default class MInput extends Vue {
-  @Prop({ default: "text" }) private type!: string;
-  @Prop({ default: "" }) private placeholder!: string;
+  @Prop({ type: String, default: "text" }) private type!: string;
+  @Prop({ type: String, default: "" }) private placeholder!: string;
   @Prop() private maxlength!: string | number;
   @Prop({ default: false, type: Boolean }) private disabled!: boolean;
   @Prop({ default: false, type: Boolean }) private clearable!: boolean;
-  @Prop({ default: "" }) private promptMsg!: string;
-  @Prop({ default: "" }) private promptMsgPosition!: string;
+  @Prop({ type: String, default: "" }) private promptMsg!: string;
+  @Prop({ type: String, default: "" }) private promptMsgPosition!: string;
   @Prop({ default: false, type: Boolean }) private isErrorMsg!: boolean;
-  @Prop({ default: "" }) private suffixIcon!: string;
-  @Prop({ default: "" }) private prefixIcon!: string;
-  @Prop({ default: "" }) private suffixButtonText!: string;
-  @Prop({ default: "" }) private suffixButtonIcon!: string;
-  @Prop({ default: "" }) private prefixButtonText!: string;
-  @Prop({ default: "" }) private prefixButtonIcon!: string;
+  @Prop({ type: String, default: "" }) private suffixIcon!: string;
+  @Prop({ type: String, default: "" }) private prefixIcon!: string;
+  @Prop({ type: String, default: "" }) private suffixButtonText!: string;
+  @Prop({ type: String, default: "" }) private suffixButtonIcon!: string;
+  @Prop({ type: String, default: "" }) private prefixButtonText!: string;
+  @Prop({ type: String, default: "" }) private prefixButtonIcon!: string;
 
   @Model("input", { type: String }) value!: string;
 
+  @Watch("value", { immediate: true })
+  onValueChanged(newValue: string) {
+    this.currentValue = newValue;
+  }
   // data
-  currentValue: string = this.value || "";
+  currentValue: string = "";
   inputFocused: boolean = false;
   // methods
   setCurrentValue(value: string): void {

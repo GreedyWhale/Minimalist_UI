@@ -2,6 +2,7 @@
   <div class="popover" ref="popover">
     <div
       class="popover-content"
+      :style="{ 'max-width': maxWidth }"
       v-if="visible"
       ref="popoverContent"
       :data-position="position"
@@ -25,6 +26,7 @@ import { PositionInfo } from "./popover.d";
 export default class MPopover extends Vue {
   @Prop({ type: String, default: "top" }) private position!: string;
   @Prop({ type: String, default: "click" }) private trigger!: string;
+  @Prop({ type: String }) private maxWidth!: string;
   // data
   enterTimer: any = null;
   mounted(): void {
@@ -164,8 +166,7 @@ $border-color: #ccc;
   font-size: 14px;
   background: #fff;
   word-break: break-all;
-  max-width: 300px;
-  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.2));
   &::after,
   &::before {
     content: "";
