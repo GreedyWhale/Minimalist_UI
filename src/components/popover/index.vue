@@ -27,6 +27,7 @@ export default class MPopover extends Vue {
   @Prop({ type: String, default: "top" }) private position!: string;
   @Prop({ type: String, default: "click" }) private trigger!: string;
   @Prop({ type: String }) private maxWidth!: string;
+  @Prop({ type: String }) private mountPosition!: string;
   // data
   enterTimer: any = null;
   mounted(): void {
@@ -117,7 +118,12 @@ export default class MPopover extends Vue {
   setPopoverPosition(): void {
     const popover: any = this.$refs.popover;
     const popoverContent: any = this.$refs.popoverContent;
-    popoverContent && document.body.appendChild(popoverContent);
+    const mountPosition: Element | null = this.mountPosition
+      ? document.querySelector(this.mountPosition)
+      : document.body;
+    if (mountPosition && popoverContent) {
+      popoverContent && mountPosition.appendChild(popoverContent);
+    }
     const { top, left, height, width } = popover.getBoundingClientRect();
     const {
       height: popoverContentHeight

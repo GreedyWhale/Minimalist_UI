@@ -10,14 +10,19 @@ interface DateItemParameter {
   year: number;
   month: number;
   dateTableIndex: number;
+  needUpdate: boolean;
 }
 interface DateItem {
   dateStamp: string;
+  year: number;
+  month: number;
   date: number;
   cnWeek: string;
   cnWeekShort: string;
   enWeek: string;
   enMonth: string;
+  needUpdate: boolean;
+  isToday: boolean;
 }
 interface Dictionary {
   "M+": number;
@@ -29,4 +34,14 @@ interface Dictionary {
   S: number;
   [key: string]: any;
 }
-export { DateTable, DateItemParameter, DateItem, Dictionary };
+
+interface CurrentDateObj {
+  year: number;
+  month: number;
+  date: number;
+}
+interface CurrentYearAndMonth {
+  year: number;
+  month: number;
+}
+export { DateTable, DateItemParameter, DateItem, Dictionary, CurrentDateObj, CurrentYearAndMonth };

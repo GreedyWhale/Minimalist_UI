@@ -2,7 +2,9 @@ import {
   DateTable,
   DateItemParameter,
   DateItem,
-  Dictionary
+  Dictionary,
+  CurrentDateObj,
+  CurrentYearAndMonth
 } from "./calendar.d";
 
 class Calender {
@@ -91,6 +93,15 @@ class Calender {
       today.getDate() === otherDay.getDate()
     );
   }
+  // 获取当前年月日
+  getCurrentDate(dateStr?: string): CurrentDateObj {
+    const date = dateStr ? new Date(dateStr) : new Date();
+    return {
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      date: date.getDate()
+    };
+  }
   getDateList(
     year: number = new Date().getFullYear(),
     month: number = new Date().getMonth() + 1
@@ -101,9 +112,7 @@ class Calender {
 
     // 如果当前月不是从星期日开始，从上个月补全
     if (firstDayInMonth !== 0) {
-      const isPrveYear: boolean = month - 1 === 0;
-      const prevMonth: number = isPrveYear ? 12 : month - 1;
-      const currentYear: number = isPrveYear ? year - 1 : year;
+      const { year: currentYear, month: prevMonth } = this.subtractOneMonth(year, month)
       const prevMonthDays = this.getOneMonthDays(currentYear, prevMonth);
       const loopStart = prevMonthDays - firstDayInMonth + 1;
       dateList.push(
@@ -111,41 +120,48 @@ class Calender {
           currentYear,
           prevMonth,
           loopStart,
-          prevMonthDays + 1
+          prevMonthDays + 1,
+          true
         )
       );
     }
 
     // 当月日期添加
-    dateList.push(...this.fillDateList(year, month, 1, monthDays + 1));
+    dateList.push(...this.fillDateList(year, month, 1, monthDays + 1, false));
 
     // 当月结束时未填满整个行
     if (dateList.length < 42) {
-      const isNextYear: boolean = month + 1 > 12;
-      const nextMonth: number = isNextYear ? 1 : month + 1;
-      const currentYear: number = isNextYear ? year + 1 : year;
+      const { year: currentYear, month: nextMonth } = this.addOneMonth(year, month)
       const loopEnd = this.totalLength - dateList.length + 1;
-      dateList.push(...this.fillDateList(currentYear, nextMonth, 1, loopEnd));
+      dateList.push(
+        ...this.fillDateList(currentYear, nextMonth, 1, loopEnd, true)
+      );
     }
 
     return dateList;
   }
   setDateListItem(dateItem: DateItemParameter): DateItem {
-    const { year, month, date, dateTableIndex } = dateItem;
+    const { year, month, date, dateTableIndex, needUpdate } = dateItem;
+    const dateStamp = `${year}/${this.zeroize(month)}/${this.zeroize(date)}`;
     return {
-      dateStamp: `${year}/${this.zeroize(month)}/${this.zeroize(date)}`,
+      dateStamp,
+      year,
+      month,
       date,
       cnWeek: this.dateTable.cnWeek[dateTableIndex],
       cnWeekShort: this.dateTable.cnWeekShort[dateTableIndex],
       enWeek: this.dateTable.enWeek[dateTableIndex],
-      enMonth: this.dateTable.enMonth[month - 1]
+      enMonth: this.dateTable.enMonth[month - 1],
+      needUpdate,
+      isToday: this.isToday(dateStamp)
     };
   }
   fillDateList(
     year: number,
     month: number,
     loopStart: number,
-    loopEnd: number
+    loopEnd: number,
+    needUpdate: boolean
   ): DateItem[] {
     let dateList: DateItem[] = [];
     for (let i = loopStart; i < loopEnd; i++) {
@@ -154,11 +170,40 @@ class Calender {
           year: year,
           month: month,
           date: i,
-          dateTableIndex: this.getDayOfWeek(year, month, i)
+          dateTableIndex: this.getDayOfWeek(year, month, i),
+          needUpdate
         })
       );
     }
     return dateList;
+  }
+  addOneMonth(year: number, month: number): CurrentYearAndMonth {
+    if(month + 1 > 12) {
+      return { year: year + 1, month: 1 }
+    }
+    return { year, month: month + 1 }
+  }
+  subtractOneMonth(year: number, month: number): CurrentYearAndMonth {
+    if(month - 1 === 0) {
+      return { year: year - 1, month: 12 }
+    }
+    return { year, month: month - 1 }
+  }
+  getToady(year: number, month: number): DateItem {
+    const { year: currentYear, month: currentMonth, date } = this.getCurrentDate();
+    const dateTableIndex = this.getDayOfWeek(currentYear, currentMonth, date);
+    return {
+      dateStamp: `${currentYear}/${currentMonth}/${date}`,
+      year: currentYear,
+      month: currentMonth,
+      date,
+      cnWeek: this.dateTable.cnWeek[dateTableIndex],
+      cnWeekShort: this.dateTable.cnWeekShort[dateTableIndex],
+      enWeek: this.dateTable.enWeek[dateTableIndex],
+      enMonth: this.dateTable.enMonth[currentMonth - 1],
+      needUpdate: currentYear !== year || currentMonth !== month,
+      isToday: true
+    }
   }
 }
 
