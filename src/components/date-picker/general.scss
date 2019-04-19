@@ -1,0 +1,26 @@
+@import "@/assets/scss/var.scss";
+$red: rgb(250, 85, 85);
+$grey: #ebebeb;
+$border-radius: $borderRadius;
+$itemMinWidth: 294px;
+@mixin mDatepickItemContent {
+  text-align: center;
+  height: 32px;
+  line-height: 32px;
+  box-sizing: border-box;
+  flex: none;
+  border-radius: $borderRadius;
+  margin: 5px;
+  cursor: pointer;
+  &[data-not-current="true"] {
+    color: #a3a2a2;
+  }
+  &[data-is-current="true"] {
+    color: $red;
+    border: 1px solid $red;
+  }
+  &[data-selected="true"] {
+    color: #fff;
+    background: $red;
+  }
+}

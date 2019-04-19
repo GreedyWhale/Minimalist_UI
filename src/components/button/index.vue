@@ -6,7 +6,7 @@
     :data-color="buttonConfig.color"
     :data-disable="buttonConfig.disable"
     :data-position="hasIcon ? buttonConfig.iconPosition : ''"
-    @click="$emit('click')"
+    @click="$emit('click', $event)"
   >
     <m-icon
       v-if="buttonConfig.icon || buttonConfig.isLoading"

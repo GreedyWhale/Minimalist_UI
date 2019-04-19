@@ -2,7 +2,7 @@
   <div class="m-datepicker">
     <m-popover position="bottom">
       <m-input
-        v-model="displayDate"
+        :value="displayDate"
         :placeholder="placeholder"
         prefix-icon="date"
         clearable
@@ -11,60 +11,62 @@
       <template v-slot:content>
         <div class="m-datepicker__panels">
           <div class="m-datepicker__head">
-            <m-icon icon="double-arrow-left" @on-click="onClickPrevYear"></m-icon>
-            <m-icon icon="left" @on-click="onClickPrevMonth"></m-icon>
+            <m-icon
+              icon="double-arrow-left" @on-click="onClickPrevYear"></m-icon>
+            <m-icon icon="left" @on-click="onClickPrevMonth" v-if="currentPanel === 'date'"></m-icon>
             <div class="m-datepicker__head-title">
-              <span @click="togglePanels('year')"
-                >{{ currentDate["year"] }}年</span
+              <span
+                @click="togglePanels('year')"
+                >{{ getDisplayYear() }}</span
               >
-              <span @click="togglePanels('month')"
+              <span
+                @click.stop="togglePanels('month')"
+                v-if="currentPanel === 'date'"
                 >{{ currentDate["month"] }}月</span
               >
             </div>
-            <m-icon icon="right" @on-click="onClickNextMonth"></m-icon>
+            <m-icon icon="right" @on-click="onClickNextMonth" v-if="currentPanel === 'date'"></m-icon>
             <m-icon icon="double-arrow-right" @on-click="onClickNextYear"></m-icon>
           </div>
           <div class="m-datepicker__body">
-            <div v-if="currentPanel === 'year'">年</div>
-            <div v-else-if="currentPanel === 'month'">月</div>
+            <div v-if="currentPanel === 'year'">
+              <m-date-picker-year-panel
+                :start-year="startYear"
+                :selected-year="currentDate['year']"
+                @on-click-year="onClickYear"></m-date-picker-year-panel>
+            </div>
+            <div v-else-if="currentPanel === 'month'">
+              <m-date-picker-month-panel
+                :selectedMonth="currentDate['month']"
+                @on-click-month="onClickMonth"
+              ></m-date-picker-month-panel>
+            </div>
             <div v-else>
-              <ol class="m-datepicker__date">
-                <li class="m-datepicker__date-item m-datepicker__date-week">
-                  <div
-                    class="m-datepicker__date-content"
-                    v-for="week in dateTable[weekType]"
-                    :key="week"
-                  >
-                    {{ week }}
-                  </div>
-                </li>
-                <li
-                  class="m-datepicker__date-item"
-                  v-for="dateItem in formattedDate"
-                  :key="dateItem.id"
-                >
-                  <div
-                    class="m-datepicker__date-content"
-                    :data-is-today="subDateItem.isToday"
-                    :data-selected="isSelected(subDateItem.dateStamp)"
-                    :data-not-current-month="subDateItem.needUpdate"
-                    v-for="subDateItem in dateItem.value"
-                    :key="subDateItem.dateStamp"
-                    @click="onSelected(subDateItem)"
-                  >
-                    {{ subDateItem.date }}
-                  </div>
-                </li>
-              </ol>
+              <m-date-picker-date-panel
+                :date-table="dateTable"
+                :formatted-date="formattedDate"
+                :week-type="weekType"
+                :value-format="valueFormat"
+                :value="value"
+                @on-click-date="onClickDate"></m-date-picker-date-panel>
             </div>
           </div>
-          <div class="m-datepicker__foot" :data-is-multiple="type === 'multiple'">
-            <div class="m-datepicker__foot-today" @click="selectedToday">
-              今天
+          <div class="m-datepicker__foot"
+          :data-is-multiple="type === 'multiple'"
+          :data-visible-goback="currentPanel === 'year' || currentPanel === 'month'">
+            <div class="m-datepicker__foot-today" @click="goBackCurrentDate">
+              {{ goBackCurrentDateBtn }}
             </div>
-            <div class="m-datepicker__foot-btns" v-if="type === 'multiple'">
-              <m-button :options="{ color: 'blue', shape: 'rounded' }">确定</m-button>
-              <m-button :options="{ color: 'blue', shape: 'rounded' }">清除</m-button>
+            <div class="m-datepicker__foot-btns">
+              <template v-if="currentPanel === 'year' || currentPanel === 'month'">
+                <m-button
+                  :options="{ color: 'blue', shape: 'rounded' }"
+                  @click.stop="gobackDatePanel">返回</m-button>
+              </template>
+              <template v-if="type === 'multiple' && currentPanel === 'date'">
+                <m-button :options="{ color: 'blue', shape: 'rounded' }">确定</m-button>
+                <m-button :options="{ color: 'blue', shape: 'rounded' }">清除</m-button>
+              </template>
             </div>
           </div>
         </div>
@@ -74,11 +76,14 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Model, Watch } from "vue-property-decorator";
+import { Vue, Component, Prop, Model, Watch, Provide } from "vue-property-decorator";
 import MPopover from "@/components/popover/index.vue";
 import MIcon from "@/components/icon/index.vue";
 import MInput from "@/components/input/index.vue";
 import MButton from "@/components/button/index.vue";
+import MDatePickerDatePanel from "./date-panel/index.vue";
+import MDatePickerYearPanel from "./year-panel/index.vue";
+import MDatePickerMonthPanel from "./month-panel/index.vue";
 import Calender from "@/utils/calender/calendar";
 import {
   DateTable,
@@ -92,7 +97,10 @@ import {
     MPopover,
     MInput,
     MIcon,
-    MButton
+    MButton,
+    MDatePickerDatePanel,
+    MDatePickerYearPanel,
+    MDatePickerMonthPanel
   }
 })
 export default class MDatePicker extends Vue {
@@ -114,11 +122,19 @@ export default class MDatePicker extends Vue {
       this.displayDate = displayDate;
     }
   }
+  @Watch('currentDate', {deep: true })
+  onCurrentDateChanged(newValue: CurrentDateObj) {
+    const { year } = newValue;
+    if(year !== this.startYear) {
+      this.startYear = year;
+    }
+  }
+  @Provide() calender: Calender = new Calender();
   // data
-  currentPanel: string = "days";
-  calender: Calender = new Calender();
+  currentPanel: string = "date";
   dateList: any[] = [];
   displayDate: string = "";
+  startYear: number = new Date().getFullYear();
   currentDate: CurrentDateObj = {
     year: NaN,
     month: NaN,
@@ -135,6 +151,14 @@ export default class MDatePicker extends Vue {
   }
   get dateTable(): DateTable {
     return this.calender.dateTable;
+  }
+  get goBackCurrentDateBtn(): string {
+    const btns: any = {
+      year: '今年',
+      month: '今月',
+      date: '今天',
+    }
+    return btns[this.currentPanel];
   }
   // methods
   onClear(): void {
@@ -156,10 +180,30 @@ export default class MDatePicker extends Vue {
     }
     return newDateList;
   }
-  onSelected(date: DateItem): void {
+  onClickDate(date: DateItem): void {
     if(this.type === 'single') {
       this.singleSelectHandler(date)
     }
+  }
+  onClickYear(year: number): void {
+    const { year: currentYear ,month, date } = this.currentDate
+    if(currentYear === year) {
+      this.currentPanel = 'month';
+      return;
+    }
+    this.$set(this.currentDate, 'year', year);
+    this.dateList = this.calender.getDateList(year, month);
+    this.currentPanel = 'month';
+  }
+  onClickMonth(month: number): void {
+    const { year, month: currentMonth, date } = this.currentDate;
+    if(currentMonth === month) {
+      this.currentPanel = 'date';
+      return;
+    }
+    this.$set(this.currentDate, 'month', month);
+    this.dateList = this.calender.getDateList(year, month)
+    this.currentPanel = 'date';
   }
   singleSelectHandler(date:DateItem): void {
     const value: string = this.calender.dateFormat(
@@ -193,29 +237,51 @@ export default class MDatePicker extends Vue {
   }
   onClickPrevYear(): void {
     const { year, month } = this.currentDate;
+    if(this.currentPanel === 'year') {
+      this.startYear = this.startYear - 10;
+      return;
+    }
     this.$set(this.currentDate, 'year', year - 1);
     this.dateList = this.calender.getDateList(year - 1, month);
   }
   onClickNextYear(): void {
     const { year, month } = this.currentDate;
+    if(this.currentPanel === 'year') {
+      this.startYear = this.startYear + 10;
+      return;
+    }
     this.$set(this.currentDate, 'year', year + 1);
     this.dateList = this.calender.getDateList(year + 1, month);
   }
-  isSelected(dateStamp: string): boolean {
-    return this.calender.dateFormat(this.valueFormat, dateStamp) === this.value;
-  }
-  selectedToday(): void {
+  goBackCurrentDate(): void {
     const { year, month } = this.currentDate;
+    const currentDate = this.calender.getCurrentDate();
+    if(this.currentPanel === 'year') {
+      this.startYear = currentDate.year;
+      this.$set(this.currentDate, 'year', currentDate.year);
+      return;
+    }
+    if(this.currentPanel === 'month') {
+      this.$set(this.currentDate, 'month', currentDate.month);
+      return;
+    }
     const today: DateItem = this.calender.getToady(year, month);
     this.singleSelectHandler(today);
+  }
+  getDisplayYear(): string {
+    if(this.currentPanel === 'year') {
+      return `${this.startYear - 9}-${this.startYear}`
+    }
+    return `${this.currentDate['year']}年`;
+  }
+  gobackDatePanel(): void {
+    this.currentPanel = 'date';
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/var.scss";
-$red: rgb(250, 85, 85);
-$grey: #ebebeb;
+@import "./general";
 .m-datepicker {
   &__head {
     display: flex;
@@ -238,44 +304,6 @@ $grey: #ebebeb;
       }
     }
   }
-  &__date {
-    padding: 0;
-    margin: 0;
-    &,
-    &-item {
-      list-style: none;
-    }
-    &-item {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
-    &-week {
-      margin-bottom: 5px;
-      border-bottom: 1px solid $grey;
-    }
-    &-content {
-      text-align: center;
-      width: 32px;
-      height: 32px;
-      line-height: 32px;
-      box-sizing: border-box;
-      flex: none;
-      border-radius: $borderRadius;
-      margin: 5px;
-      &[data-not-current-month="true"] {
-        color: #a3a2a2;
-      }
-      &[data-is-today="true"] {
-        color: $red;
-        border: 1px solid $red;
-      }
-      &[data-selected="true"] {
-        color: #fff;
-        background: $red;
-      }
-    }
-  }
   &__foot {
     padding-top: 10px;
     border-top: 1px solid $grey;
@@ -289,11 +317,12 @@ $grey: #ebebeb;
     }
     &-btns {
       .m-button {
-        &:first-child {
-          margin-right: 10px;
+        &:last-child {
+          margin-left: 10px;
         }
       }
     }
+    &[data-visible-goback="true"],
     &[data-is-multiple="true"] {
       justify-content: space-between;
     }
