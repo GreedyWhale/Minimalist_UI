@@ -225,7 +225,7 @@ $gray: #bbb;
     height: 100%;
     line-height: inherit;
     overflow: hidden;
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
     &:hover {
       border-color: $blue;

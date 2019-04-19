@@ -112,7 +112,10 @@ class Calender {
 
     // 如果当前月不是从星期日开始，从上个月补全
     if (firstDayInMonth !== 0) {
-      const { year: currentYear, month: prevMonth } = this.subtractOneMonth(year, month)
+      const { year: currentYear, month: prevMonth } = this.subtractOneMonth(
+        year,
+        month
+      );
       const prevMonthDays = this.getOneMonthDays(currentYear, prevMonth);
       const loopStart = prevMonthDays - firstDayInMonth + 1;
       dateList.push(
@@ -131,7 +134,10 @@ class Calender {
 
     // 当月结束时未填满整个行
     if (dateList.length < 42) {
-      const { year: currentYear, month: nextMonth } = this.addOneMonth(year, month)
+      const { year: currentYear, month: nextMonth } = this.addOneMonth(
+        year,
+        month
+      );
       const loopEnd = this.totalLength - dateList.length + 1;
       dateList.push(
         ...this.fillDateList(currentYear, nextMonth, 1, loopEnd, true)
@@ -178,19 +184,23 @@ class Calender {
     return dateList;
   }
   addOneMonth(year: number, month: number): CurrentYearAndMonth {
-    if(month + 1 > 12) {
-      return { year: year + 1, month: 1 }
+    if (month + 1 > 12) {
+      return { year: year + 1, month: 1 };
     }
-    return { year, month: month + 1 }
+    return { year, month: month + 1 };
   }
   subtractOneMonth(year: number, month: number): CurrentYearAndMonth {
-    if(month - 1 === 0) {
-      return { year: year - 1, month: 12 }
+    if (month - 1 === 0) {
+      return { year: year - 1, month: 12 };
     }
-    return { year, month: month - 1 }
+    return { year, month: month - 1 };
   }
   getToady(year: number, month: number): DateItem {
-    const { year: currentYear, month: currentMonth, date } = this.getCurrentDate();
+    const {
+      year: currentYear,
+      month: currentMonth,
+      date
+    } = this.getCurrentDate();
     const dateTableIndex = this.getDayOfWeek(currentYear, currentMonth, date);
     return {
       dateStamp: `${currentYear}/${currentMonth}/${date}`,
@@ -203,10 +213,10 @@ class Calender {
       enMonth: this.dateTable.enMonth[currentMonth - 1],
       needUpdate: currentYear !== year || currentMonth !== month,
       isToday: true
-    }
+    };
   }
   parseDateStamp(dateStamp: string): number {
-    const dateStampList = dateStamp.split('/').join('');
+    const dateStampList = dateStamp.split("/").join("");
     return parseInt(dateStampList, 10);
   }
 }

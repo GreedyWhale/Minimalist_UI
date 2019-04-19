@@ -44,4 +44,11 @@ interface CurrentYearAndMonth {
   year: number;
   month: number;
 }
-export { DateTable, DateItemParameter, DateItem, Dictionary, CurrentDateObj, CurrentYearAndMonth };
+export {
+  DateTable,
+  DateItemParameter,
+  DateItem,
+  Dictionary,
+  CurrentDateObj,
+  CurrentYearAndMonth
+};

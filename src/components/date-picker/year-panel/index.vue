@@ -2,11 +2,13 @@
   <ol class="m-datepick__year">
     <li v-for="year in yearList" :key="year.id" class="m-datepick__year-item">
       <div
-        v-for="item in year.value" :key="item"
+        v-for="item in year.value"
+        :key="item"
         class="m-datepick__year-content"
         :data-is-current="currentYear === item"
         :data-selected="selectedYear === item"
-        @click.stop="onClick(item)">
+        @click.stop="onClick(item)"
+      >
         {{ item }}
       </div>
     </li>
@@ -27,9 +29,9 @@ export default class MDatePickerYearPanel extends Vue {
   get yearList(): Array<any[]> {
     const startYear = Math.floor(this.startYear / 10) * 10;
     let list = [];
-    let res: any[] = []
-    for(let i = 0; i < 10; i++) {
-      list.push(startYear + i)
+    let res: any[] = [];
+    for (let i = 0; i < 10; i++) {
+      list.push(startYear + i);
     }
     for (let j = 0; j < list.length; j += 3) {
       res.push({
@@ -41,7 +43,7 @@ export default class MDatePickerYearPanel extends Vue {
   }
   // methods
   onClick(year: number): void {
-    this.$emit('on-click-year', year)
+    this.$emit("on-click-year", year);
   }
 }
 </script>
@@ -51,7 +53,8 @@ export default class MDatePickerYearPanel extends Vue {
 .m-datepick__year {
   padding: 0;
   margin: 0;
-  &, &-item {
+  &,
+  &-item {
     list-style: none;
   }
   &-item {
