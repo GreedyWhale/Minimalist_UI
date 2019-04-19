@@ -205,6 +205,10 @@ class Calender {
       isToday: true
     }
   }
+  parseDateStamp(dateStamp: string): number {
+    const dateStampList = dateStamp.split('/').join('');
+    return parseInt(dateStampList, 10);
+  }
 }
 
 export default Calender;

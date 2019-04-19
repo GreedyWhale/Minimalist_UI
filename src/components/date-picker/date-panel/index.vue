@@ -19,6 +19,7 @@
         :data-is-current="subDateItem.isToday"
         :data-selected="isSelected(subDateItem.dateStamp)"
         :data-not-current="subDateItem.needUpdate"
+        :data-less-then-end-date="isLessThenEndDate(subDateItem.dateStamp)"
         v-for="subDateItem in dateItem.value"
         :key="subDateItem.dateStamp"
         @click="onClick(subDateItem)"
@@ -41,14 +42,32 @@ export default class MDatePickerDatePanel extends Vue {
   @Prop({ type: String, default: "cnWeekShort" }) private weekType!: string;
   @Prop({ type: Array, required: true }) private formattedDate!: any[];
   @Prop({ type: String, default: "YYYY/MM/DD" }) private valueFormat!: string;
-  @Prop({ type: String, default: '' }) private value!: string;
+  @Prop({ type: [String, Array], default: '' }) private value!: string | string[];
+  @Prop({ type: Object, default(){ return null } }) private startDate!: DateItem;
+  @Prop({ type: Object, default(){ return null } }) private endDate!: DateItem;
   @Inject() readonly calender!: Calender;
   // methods
   isSelected(dateStamp: string): boolean {
-    return this.calender.dateFormat(this.valueFormat, dateStamp) === this.value;
+    const currentDate = this.calender.dateFormat(this.valueFormat, dateStamp);
+    if(this.startDate || this.endDate) {
+      return dateStamp === (this.startDate || {}).dateStamp || dateStamp === (this.endDate || {}).dateStamp
+    }
+    if(Array.isArray(this.value)) {
+      return this.value.indexOf(currentDate) >= 0;
+    }
+    return currentDate === this.value;
   }
   onClick(date: DateItem): void {
     this.$emit('on-click-date', date)
+  }
+  isLessThenEndDate(dateStamp: string): boolean {
+    if(this.startDate && this.endDate) {
+      return (
+        this.calender.parseDateStamp(dateStamp) > this.calender.parseDateStamp(this.startDate.dateStamp) &&
+        this.calender.parseDateStamp(dateStamp) < this.calender.parseDateStamp(this.endDate.dateStamp)
+      )
+    }
+    return false;
   }
 }
 </script>

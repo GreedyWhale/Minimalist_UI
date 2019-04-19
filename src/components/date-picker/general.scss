@@ -12,6 +12,8 @@ $itemMinWidth: 294px;
   border-radius: $borderRadius;
   margin: 5px;
   cursor: pointer;
+  position: relative;
+  z-index: 1;
   &[data-not-current="true"] {
     color: #a3a2a2;
   }
@@ -22,5 +24,18 @@ $itemMinWidth: 294px;
   &[data-selected="true"] {
     color: #fff;
     background: $red;
+  }
+  &[data-less-then-end-date="true"] {
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: lighten($color: $red, $amount: 30);
+      z-index: -1;
+      border-radius: $borderRadius;
+    }
   }
 }

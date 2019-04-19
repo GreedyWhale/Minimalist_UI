@@ -48,6 +48,8 @@
                 :week-type="weekType"
                 :value-format="valueFormat"
                 :value="value"
+                :start-date="startDate"
+                :end-date="endDate"
                 @on-click-date="onClickDate"></m-date-picker-date-panel>
             </div>
           </div>
@@ -64,8 +66,12 @@
                   @click.stop="gobackDatePanel">返回</m-button>
               </template>
               <template v-if="type === 'multiple' && currentPanel === 'date'">
-                <m-button :options="{ color: 'blue', shape: 'rounded' }">确定</m-button>
-                <m-button :options="{ color: 'blue', shape: 'rounded' }">清除</m-button>
+                <m-button
+                  :options="{ color: 'blue', shape: 'rounded' }"
+                  @click.stop="onConfirm">确定</m-button>
+                <m-button
+                  :options="{ color: 'blue', shape: 'rounded' }"
+                  @click.stop="onCleanUp">清除</m-button>
               </template>
             </div>
           </div>
@@ -111,15 +117,22 @@ export default class MDatePicker extends Vue {
   @Prop({ type: String, default: "" }) private placeholder!: string;
   // single单选 multiple 多选
   @Prop({ type: String, default: "single" }) private type!: string;
-  @Model("update:date", { type: String }) readonly value!: string;
+  @Model("update:date", { type: [String, Array] }) readonly value!: string | string[];
   @Watch("value", { immediate: true })
-  onValueChanged(newValue: string) {
+  onValueChanged(newValue: string | string[]) {
     if (newValue) {
-      const displayDate: string = this.calender.dateFormat(
-        this.format,
-        newValue
-      );
+      let displayDate: string;
+      if(Array.isArray(newValue)) {
+        displayDate = newValue.map((item: string) => this.calender.dateFormat(this.format,item)).join(',')
+      } else {
+        displayDate = this.calender.dateFormat(
+          this.format,
+          newValue
+        );
+      }
       this.displayDate = displayDate;
+    } else {
+      this.displayDate = '';
     }
   }
   @Watch('currentDate', {deep: true })
@@ -141,8 +154,10 @@ export default class MDatePicker extends Vue {
     date: NaN
   };
   updateDateListTimer: any = null;
+  startDate: any = null;
+  endDate: any = null;
   mounted() {
-    this.setDateList();
+    this.dateList = this.calender.getDateList();
     this.currentDate = this.calender.getCurrentDate();
   }
   // computed
@@ -162,13 +177,11 @@ export default class MDatePicker extends Vue {
   }
   // methods
   onClear(): void {
+    this.currentDate = this.calender.getCurrentDate();
     this.$emit("update:date", '');
   }
   togglePanels(type: string): void {
     this.currentPanel = type;
-  }
-  setDateList(): void {
-    this.dateList = this.calender.getDateList();
   }
   formatDateList(dataList: any[]): any[] {
     let newDateList = [];
@@ -182,7 +195,10 @@ export default class MDatePicker extends Vue {
   }
   onClickDate(date: DateItem): void {
     if(this.type === 'single') {
-      this.singleSelectHandler(date)
+      return this.singleSelectHandler(date)
+    }
+    if(this.type === 'multiple') {
+      return this.multipleSelectHandler(date)
     }
   }
   onClickYear(year: number): void {
@@ -222,6 +238,31 @@ export default class MDatePicker extends Vue {
     this.currentDate = monthAndYear;
     this.$emit("update:date", value);
     (this.$children[0] as any).close();
+  }
+  multipleSelectHandler(date:DateItem): void {
+    this.currentDate = {
+      year: date.year,
+      month: date.month,
+      date: date.date
+    }
+    if(!this.startDate) {
+      this.startDate = date;
+      return;
+    }
+    if(this.startDate && !this.endDate) {
+      if(this.calender.parseDateStamp(this.startDate.dateStamp) > this.calender.parseDateStamp(date.dateStamp)) {
+        this.endDate = this.startDate;
+        this.startDate = date;
+        return;
+      }
+      this.endDate = date;
+      return;
+    }
+    if(this.startDate && this.endDate) {
+      this.startDate = date;
+      this.endDate = null
+      return;
+    }
   }
   onClickPrevMonth(): void {
     const { year, month, date } = this.currentDate;
@@ -276,6 +317,17 @@ export default class MDatePicker extends Vue {
   }
   gobackDatePanel(): void {
     this.currentPanel = 'date';
+  }
+  onConfirm(): void {
+    const startDate = this.startDate ? this.calender.dateFormat(this.valueFormat, this.startDate.dateStamp) : '';
+    const endDate = this.endDate ? this.calender.dateFormat(this.valueFormat, this.endDate.dateStamp) : '';
+    this.$emit('update:date', [startDate, endDate]);
+    (this.$children[0] as any).close();
+  }
+  onCleanUp(): void {
+    this.startDate = null;
+    this.endDate = null;
+    this.onClear();
   }
 }
 </script>
