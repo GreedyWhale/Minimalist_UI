@@ -29,7 +29,7 @@ describe("m-collapse.vue", () => {
     item.trigger("click");
     expect(wrapper.vm.$data.activeNames).to.include("2");
   });
-  it("MCollapse组件接受activeName", () => {
+  it("MCollapse组件接受activeName", done => {
     const component = {
       name: "MCollapseTest",
       template: `
@@ -41,8 +41,11 @@ describe("m-collapse.vue", () => {
       `
     };
     const wrapper = mount(component, {});
-    const item = wrapper.find(".collapse-content");
-    expect(item.text()).to.equal("内容三");
+    setTimeout(() => {
+      const item = wrapper.find(".collapse-content");
+      expect(item.text()).to.equal("内容三");
+      done();
+    }, 0);
   });
   it("MCollapse组件接受single", () => {
     const component = {

@@ -142,6 +142,8 @@ import {
   }
 })
 export default class MDatePicker extends Vue {
+  @Prop({ type: Number }) private year!: number;
+  @Prop({ type: Number }) private month!: number;
   @Prop({ type: String, default: "cnWeekShort" }) private weekType!: string;
   @Prop({ type: String, default: "YYYY-MM-DD" })
   private format!: string;
@@ -190,8 +192,11 @@ export default class MDatePicker extends Vue {
   startDate: any = null;
   endDate: any = null;
   mounted() {
-    this.dateList = this.calender.getDateList();
+    this.dateList = this.calender.getDateList(this.year, this.month);
     this.currentDate = this.calender.getCurrentDate();
+  }
+  beforeDestroy() {
+    clearTimeout(this.updateDateListTimer);
   }
   // computed
   get formattedDate(): any[] {
@@ -239,21 +244,25 @@ export default class MDatePicker extends Vue {
     const { year: currentYear, month, date } = this.currentDate;
     if (currentYear === year) {
       this.currentPanel = "month";
+      this.$emit("on-selected-year", year);
       return;
     }
     this.$set(this.currentDate, "year", year);
     this.dateList = this.calender.getDateList(year, month);
     this.currentPanel = "month";
+    this.$emit("on-selected-year", year);
   }
   onClickMonth(month: number): void {
     const { year, month: currentMonth, date } = this.currentDate;
     if (currentMonth === month) {
       this.currentPanel = "date";
+      this.$emit("on-selected-month", month);
       return;
     }
     this.$set(this.currentDate, "month", month);
     this.dateList = this.calender.getDateList(year, month);
     this.currentPanel = "date";
+    this.$emit("on-selected-month", month);
   }
   singleSelectHandler(date: DateItem): void {
     const value: string = this.calender.dateFormat(
