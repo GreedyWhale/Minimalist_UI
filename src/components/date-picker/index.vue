@@ -212,6 +212,7 @@ export default class MDatePicker extends Vue {
   onClear(): void {
     this.currentDate = this.calender.getCurrentDate();
     this.$emit("update:date", "");
+    this.$emit("on-clear", "");
   }
   togglePanels(type: string): void {
     this.currentPanel = type;
@@ -270,6 +271,7 @@ export default class MDatePicker extends Vue {
     }
     this.currentDate = monthAndYear;
     this.$emit("update:date", value);
+    this.$emit("on-change", value);
     (this.$children[0] as any).close();
   }
   multipleSelectHandler(date: DateItem): void {
@@ -368,6 +370,8 @@ export default class MDatePicker extends Vue {
       ? this.calender.dateFormat(this.valueFormat, this.endDate.dateStamp)
       : "";
     this.$emit("update:date", [startDate, endDate]);
+    this.$emit("on-change", [startDate, endDate]);
+    this.$emit("on-confirm", [startDate, endDate]);
     (this.$children[0] as any).close();
   }
   onCleanUp(): void {
