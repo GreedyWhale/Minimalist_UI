@@ -239,4 +239,19 @@ describe("MDatePiacker.vue", () => {
       done();
     }, 0);
   });
+  it("MDatePiacker组件支输入选择日期", () => {
+    const wrapper = mount(MDatePicker, {
+      propsData: {
+        value: "",
+        year: 2019,
+        month: 4
+      }
+    });
+    const input = wrapper.find("input");
+    (input.element as HTMLInputElement).value = "2019-10-01";
+    input.trigger("input");
+    expect(wrapper.vm.$data.currentDate.year).to.equal(2019);
+    expect(wrapper.vm.$data.currentDate.month).to.equal(10);
+    expect(wrapper.vm.$data.currentDate.date).to.equal(1);
+  });
 });
