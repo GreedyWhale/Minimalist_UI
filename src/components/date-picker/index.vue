@@ -7,6 +7,7 @@
         prefix-icon="date"
         clearable
         @clear="onClear"
+        @input="onInput"
       >
       </m-input>
       <template v-slot:content>
@@ -387,6 +388,24 @@ export default class MDatePicker extends Vue {
     this.startDate = null;
     this.endDate = null;
     this.onClear();
+  }
+  onInput(event: string): void {
+    if(this.type !== 'single') { return }
+    const rungReg = /^\d{4}-\d{2}-\d{2}$/;
+    const slashReg = /^\d{4}\/\d{2}\/\d{2}$/;
+    if(rungReg.test(event) || slashReg.test(event)) {
+      const value = this.calender.dateFormat(this.valueFormat, event);
+      const selectedDate: any = this.calender.getCurrentDate(event);
+      const isEffectiveDate = Object.keys(selectedDate).every((key: string) => !!selectedDate[key])
+      if(!isEffectiveDate) {
+        return
+      }
+      if(selectedDate.year !== this.currentDate.year || selectedDate.month !== this.currentDate.month) {
+        this.dateList = this.calender.getDateList(selectedDate.year, selectedDate.month);
+      }
+      this.currentDate = selectedDate;
+      this.$emit('update:date', value);
+    }
   }
 }
 </script>
