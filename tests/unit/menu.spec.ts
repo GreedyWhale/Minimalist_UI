@@ -1,6 +1,5 @@
 import { mount } from "@vue/test-utils";
 import { expect } from "chai";
-import sinon from "sinon";
 import Vue from "vue";
 import MMenu from "@/components/menu/index.vue";
 import MSubMenu from "@/components/menu/sub/index.vue";
