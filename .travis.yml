@@ -12,5 +12,6 @@ before_script:
   - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
 scripts:
   - yarn add global codecov
+  - yarn add
 after_success:
   - yarn codecov
