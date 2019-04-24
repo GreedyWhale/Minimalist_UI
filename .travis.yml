@@ -12,6 +12,5 @@ before_script:
   - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
 scripts:
   - npm install codecov -g
-  - npm install
 after_success:
   - codecov

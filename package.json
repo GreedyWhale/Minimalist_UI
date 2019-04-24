@@ -14,7 +14,7 @@
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit --watch",
     "test": "cross-env BABEL_ENV=test karma start --single-run",
-    "test:karma": "cross-env BABEL_ENV=test karma start --single-run",
+    "codecov": "codecov coverage/lcov.info",
     "build-lib": "vue-cli-service build --target lib --name index 'src/components/index.ts'"
   },
   "files": [
