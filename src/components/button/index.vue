@@ -14,9 +14,9 @@
       :is-loading="buttonConfig.isLoading"
     />
     <slot name="prefix" />
-    <div class="content">
+    <span class="m-button__content" v-if="$slots.default && $slots.default.length">
       <slot />
-    </div>
+    </span>
   </button>
 </template>
 
@@ -39,7 +39,6 @@ export default class MButton extends Vue {
     }
   })
   private options!: Object;
-
   // computed
   get buttonConfig(): ButtonConfig {
     const defaultConfig: ButtonConfig = {
@@ -117,12 +116,13 @@ $buttonType: "solid", "hollow";
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  line-height: 1;
   box-sizing: border-box;
   outline: none;
   cursor: pointer;
   border-width: 1px;
   border-style: solid;
-  padding: 0.2em 1em;
+  padding: 0.3em 1em;
   overflow: hidden;
   font-size: inherit;
   @each $type in $buttonType {
@@ -139,21 +139,17 @@ $buttonType: "solid", "hollow";
       }
     }
   }
-  &[data-shape="rounded"],
-  &[data-shape="box"] {
+  &[data-shape="rounded"] {
     border-radius: 4px;
   }
   &[data-shape="pill"] {
     border-radius: 200px;
   }
-  &[data-shape="square"],
-  &[data-shape="box"],
-  &[data-shape="circle"] {
-    width: 3em;
-    height: 3em;
-  }
   &[data-shape="circle"] {
     border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    padding: 0;
   }
   box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.3),
     0 1px 2px rgba(0, 0, 0, 0.15);
@@ -170,12 +166,12 @@ $buttonType: "solid", "hollow";
     pointer-events: none !important;
   }
   &[data-position="left"] {
-    .content {
+    .m-button__content {
       margin-left: 0.5em;
     }
   }
   &[data-position="right"] {
-    .content {
+    .m-button__content {
       margin-right: 0.5em;
       order: -1;
     }

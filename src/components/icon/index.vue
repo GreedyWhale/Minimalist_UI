@@ -39,11 +39,9 @@ export default class MIcon extends Vue {
   }
 }
 .m-icon {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
   flex: none;
+  line-height: 1;
   &[data-is-loading="true"] {
     animation: rotate 0.5s linear infinite;
   }
