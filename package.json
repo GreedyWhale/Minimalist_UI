@@ -1,19 +1,35 @@
 {
   "name": "@csr/m_ui",
   "version": "0.0.96",
+  "author": {
+    "name": "csr",
+    "email": "madaocai@gmail.com"
+  },
+  "description": "一个使用Vue.js构建的UI组件库",
+  "keywords": ["vue", "UI", "esay"],
   "main": "./dist/index.umd.min.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit --watch",
-    "test": "vue-cli-service test:unit",
+    "test": "cross-env BABEL_ENV=test karma start --single-run",
     "test:karma": "cross-env BABEL_ENV=test karma start --single-run",
     "build-lib": "vue-cli-service build --target lib --name index 'src/components/index.ts'"
   },
   "files": [
     "dist"
   ],
+  "license": "MIT",
+  "homepage": "https://github.com/GreedyWhale/Minimalist_UI#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GreedyWhale/Minimalist_UI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GreedyWhale/Minimalist_UI/issues",
+    "email": "madaocai@gmail.com"
+  },
   "dependencies": {
     "vue": "^2.6.6",
     "vue-class-component": "^6.0.0",
