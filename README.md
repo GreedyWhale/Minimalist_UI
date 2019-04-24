@@ -1,5 +1,6 @@
 ## Minimalist_UI - 一个使用Vue.js构建的UI库。
-[![Build Status](https://travis-ci.com/GreedyWhale/Minimalist_UI.svg?branch=master)](https://travis-ci.com/GreedyWhale/Minimalist_UI)
+[![Build Status](https://travis-ci.com/GreedyWhale/Minimalist_UI.svg?branch=master)](https://travis-ci.com/GreedyWhale/Minimalist_UI) ![npm](https://img.shields.io/npm/v/@csr/m_ui.svg) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@csr/m_ui.svg)
+
 
 ## 介绍
 这是我在学习Vue.js的过程中做的一个UI库，里面包含了常用的一些UI组件，希望对你有用！！
