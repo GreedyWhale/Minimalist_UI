@@ -6,7 +6,11 @@
     "email": "madaocai@gmail.com"
   },
   "description": "一个使用Vue.js构建的UI组件库",
-  "keywords": ["vue", "UI", "esay"],
+  "keywords": [
+    "vue",
+    "UI",
+    "esay"
+  ],
   "main": "./dist/index.umd.min.js",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -14,7 +18,7 @@
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit --watch",
     "test": "cross-env BABEL_ENV=test karma start --single-run",
-    "codecov": "codecov coverage/lcov.info",
+    "report-coverage": "codecov -f coverage/*.info",
     "build-lib": "vue-cli-service build --target lib --name index 'src/components/index.ts'"
   },
   "files": [
@@ -50,6 +54,7 @@
     "babel-eslint": "^10.0.1",
     "babel-plugin-istanbul": "^5.1.2",
     "chai": "^4.1.2",
+    "codecov": "^3.3.0",
     "cross-env": "^5.2.0",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",

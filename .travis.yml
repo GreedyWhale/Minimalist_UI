@@ -11,7 +11,5 @@ before_script:
   - "sudo chown root /opt/google/chrome/chrome-sandbox"
   - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
 scripts:
-  - yarn add global codecov
-  - yarn add
-after_success:
-  - yarn codecov
+  - yarn test
+  - yarn report-coverage
