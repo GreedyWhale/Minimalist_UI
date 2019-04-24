@@ -25,11 +25,9 @@ export { default as MSwiperItem } from "@/components/swiper/item/index.vue";
 export { default as MTable } from "@/components/table/index.vue";
 export { default as MTabs } from "@/components/tabs/index.vue";
 export { default as MTabsBody } from "@/components/tabs/body/index.vue";
-export { default as MTabsHead} from "@/components/tabs/head/index.vue";
+export { default as MTabsHead } from "@/components/tabs/head/index.vue";
 export { default as MTabsItem } from "@/components/tabs/item/index.vue";
 export { default as MTabsPane } from "@/components/tabs/pane/index.vue";
 export { default as MToast } from "@/components/toast/index.vue";
 export { default as MUpload } from "@/components/upload/index.vue";
 export { default as MToastPlugin } from "@/plugin/toast.ts";
-
-

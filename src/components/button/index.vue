@@ -6,7 +6,7 @@
     :data-color="buttonConfig.color"
     :data-disable="buttonConfig.disable"
     :data-position="hasIcon ? buttonConfig.iconPosition : ''"
-    @click="$emit('click', $event)"
+    @click="onClick"
   >
     <m-icon
       v-if="buttonConfig.icon || buttonConfig.isLoading"
@@ -14,7 +14,10 @@
       :is-loading="buttonConfig.isLoading"
     />
     <slot name="prefix" />
-    <span class="m-button__content" v-if="$slots.default && $slots.default.length">
+    <span
+      class="m-button__content"
+      v-if="$slots.default && $slots.default.length"
+    >
       <slot />
     </span>
   </button>
@@ -39,6 +42,13 @@ export default class MButton extends Vue {
     }
   })
   private options!: Object;
+  //methods
+  onClick(event: Event): void {
+    if (this.buttonConfig.disable) {
+      return;
+    }
+    this.$emit("click", event);
+  }
   // computed
   get buttonConfig(): ButtonConfig {
     const defaultConfig: ButtonConfig = {
@@ -162,8 +172,7 @@ $buttonType: "solid", "hollow";
     border-color: #ddd !important;
     text-shadow: 0 1px 1px white !important;
     box-shadow: none !important;
-    cursor: default !important;
-    pointer-events: none !important;
+    cursor: not-allowed !important;
   }
   &[data-position="left"] {
     .m-button__content {
