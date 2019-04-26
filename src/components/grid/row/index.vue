@@ -12,7 +12,7 @@ import { CustomVm } from "./row.d";
   name: "MRow"
 })
 export default class MRow extends Vue {
-  @Prop({ type: String || Number }) private gutter!: string | number;
+  @Prop({ type: [String, Number] }) private gutter!: string | number;
   @Prop({ type: String }) private align!: string;
 
   // computed

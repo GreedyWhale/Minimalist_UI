@@ -17,7 +17,7 @@ Vue.component("m-tabs-item", MTabsItem);
 const component = {
   name: "test",
   template: `
-    <m-tabs selected="tab1">
+    <m-tabs :selected.sync="selected" @on-click="onClick">
       <m-tabs-head>
         <m-tabs-item name="tab1" disabled></m-tabs-item>
         <m-tabs-item name="tab2"></m-tabs-item>
@@ -29,7 +29,18 @@ const component = {
         <m-tabs-pane name="tab3"></m-tabs-pane>
       </m-tabs-body>
     </m-tabs>
-  `
+  `,
+  data() {
+    return {
+      selected: "tab1",
+      selectedCopy: ""
+    };
+  },
+  methods: {
+    onClick(this: any, selected: string) {
+      this.selectedCopy = selected;
+    }
+  }
 };
 const wrapper = mount(component);
 describe("m-tabs-head.vue", () => {
@@ -51,12 +62,20 @@ describe("m-tabs-item.vue", () => {
     const item = wrapper.find(".tabs-item");
     expect(item.classes()).to.contains("disabled");
   });
-  it("m-tabs-item组件可以响应点击事件", () => {
-    const clickHandler = sinon.spy();
+  it("m-tabs组件可以响应点击事件", () => {
     const item = wrapper.findAll(".tabs-item").at(1);
-    const vm = item.vm;
-    vm.$on("click", clickHandler);
-    item.trigger("click");
-    expect(clickHandler.called).to.be.true;
+    const tabs = wrapper.vm.$children[0];
+    const tabsHead = tabs.$children[0];
+    const tabsItem = tabsHead.$children[1];
+    tabsItem.updateSelected();
+    expect(wrapper.vm.$data.selectedCopy).to.equal("tab2");
+  });
+  it("m-tabs组件支持.sync修饰符", () => {
+    const item = wrapper.findAll(".tabs-item").at(1);
+    const tabs = wrapper.vm.$children[0];
+    const tabsHead = tabs.$children[0];
+    const tabsItem = tabsHead.$children[2];
+    tabsItem.updateSelected();
+    expect(wrapper.vm.$data.selected).to.equal("tab3");
   });
 });

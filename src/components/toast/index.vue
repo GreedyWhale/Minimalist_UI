@@ -1,5 +1,10 @@
 <template>
-  <div class="m-container" ref="wrapper" :data-position="position" v-show="usePlugin || visibleToast">
+  <div
+    class="m-container"
+    ref="wrapper"
+    :data-position="position"
+    v-show="usePlugin || visibleToast"
+  >
     <div
       class="m-toast flex-align__center"
       @animationend="animationend"
@@ -72,14 +77,14 @@ export default class MToast extends Vue {
   }
   showToast(): void {
     clearTimeout(this.closeTimer);
-    if(this.visibleToast) {
+    if (this.visibleToast) {
       this.visibleToast = false;
     }
     this.$nextTick(() => {
       this.visibleToast = true;
       this.isCloseAnimation = false;
       this.executeAutoClose();
-    })
+    });
   }
   close(): void {
     this.usePlugin ? this.pluginclose() : this.noPluginClose();
