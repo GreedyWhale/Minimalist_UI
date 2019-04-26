@@ -64,7 +64,11 @@ export default class MButton extends Vue {
   }
 
   get hasIcon(): boolean {
-    return Boolean(this.buttonConfig.icon) || this.buttonConfig.isLoading;
+    return (
+      this.$slots.prefix !== undefined ||
+      Boolean(this.buttonConfig.icon) ||
+      this.buttonConfig.isLoading
+    );
   }
 }
 </script>

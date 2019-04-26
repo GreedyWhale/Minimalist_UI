@@ -1,5 +1,5 @@
 <template>
-  <div class="aside">
+  <div class="m-aside">
     <slot></slot>
   </div>
 </template>

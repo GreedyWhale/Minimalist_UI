@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-inline__center container" :data-layout="promptMsgPosition">
+  <div class="flex-inline__center m-container" :data-layout="promptMsgPosition">
     <div
       class="m-input__wrapper flex-inline__center"
       :data-disabled="disabled"
@@ -354,7 +354,7 @@ $gray: #bbb;
     color: rgb(224, 55, 55);
   }
 }
-.container {
+.m-container {
   &[data-layout="down"] {
     flex-direction: column;
     align-items: flex-start;

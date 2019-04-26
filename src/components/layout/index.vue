@@ -11,7 +11,7 @@ import { Vue, Component } from "vue-property-decorator";
 })
 export default class MLayout extends Vue {
   // data
-  layoutClass: string[] = ["layout"];
+  layoutClass: string[] = ["m-layout"];
   mounted(): void {
     this.checkChildren();
   }
@@ -19,7 +19,7 @@ export default class MLayout extends Vue {
   checkChildren(): void {
     this.$children.some(vm => {
       if (vm.$options.name === "MAside") {
-        this.layoutClass.push("layout-has__aside");
+        this.layoutClass.push("m-layout__has-aside");
       }
       return vm.$options.name === "MAside";
     });
@@ -28,11 +28,11 @@ export default class MLayout extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.layout {
+.m-layout {
   display: flex;
   flex-direction: column;
   flex: 1;
-  &.layout-has__aside {
+  &.m-layout__has-aside {
     flex-direction: row;
   }
 }

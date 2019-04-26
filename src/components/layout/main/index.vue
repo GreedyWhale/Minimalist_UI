@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="m-main">
     <slot></slot>
   </div>
 </template>
@@ -13,7 +13,7 @@ export default class MMain extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-.main {
-  flex: 1;
+.m-main {
+  flex: 1 0 auto;
 }
 </style>

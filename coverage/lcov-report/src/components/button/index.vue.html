@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">90% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>7/7</span>
+        <span class='fraction'>9/10</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">80% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>2/2</span>
+        <span class='fraction'>4/5</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>3/3</span>
+        <span class='fraction'>4/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">90% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>7/7</span>
+        <span class='fraction'>9/10</span>
       </div>
     </div>
   </div>
@@ -227,10 +227,22 @@
 182
 183
 184
-185</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+185
+186
+187
+188
+189
+190</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">39×</span>
@@ -257,8 +269,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -417,9 +427,9 @@
     :data-type="buttonConfig.type"
     :data-shape="buttonConfig.shape"
     :data-color="buttonConfig.color"
-    :data-disable="buttonConfig.disable"
-    :data-position="hasIcon ? buttonConfig.iconPosition : ''"
-    @click="$emit('click', $event)"
+    :dat<span class="missing-if-branch" title="if path not taken" >I</span>a-disable="buttonConfig.disable"
+    :data-po<span class="cstat-no" title="statement not covered" >sition="</span>hasIcon ? buttonConfig.iconPosition : ''"
+    @click="onClick"
   &gt;
     &lt;m-icon
       v-if="buttonConfig.icon || buttonConfig.isLoading"
@@ -427,9 +437,12 @@
       :is-loading="buttonConfig.isLoading"
     /&gt;
     &lt;slot name="prefix" /&gt;
-    &lt;div class="content"&gt;
+    &lt;span
+      class="m-button__content"
+      v-if="$slots.default &amp;&amp; $slots.default.length"
+    &gt;
       &lt;slot /&gt;
-    &lt;/div&gt;
+    &lt;/span&gt;
   &lt;/button&gt;
 &lt;/template&gt;
 &nbsp;
@@ -452,7 +465,13 @@ export default class MButton extends Vue {
     }
   })
   private options!: Object;
-&nbsp;
+  //methods
+  onClick(event: Event): void {
+    if (this.buttonConfig.disable) {
+      return;
+    }
+    this.$emit("click", event);
+  }
   // computed
   get buttonConfig(): ButtonConfig {
     const defaultConfig: ButtonConfig = {
@@ -468,7 +487,7 @@ export default class MButton extends Vue {
   }
 &nbsp;
   get hasIcon(): boolean {
-    return Boolean(this.buttonConfig.icon) || this.buttonConfig.isLoading;
+    return this.$slots.prefix !== undefined || Boolean(this.buttonConfig.icon) || this.buttonConfig.isLoading;
   }
 }
 &lt;/script&gt;
@@ -530,12 +549,13 @@ $buttonType: "solid", "hollow";
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  line-height: 1;
   box-sizing: border-box;
   outline: none;
   cursor: pointer;
   border-width: 1px;
   border-style: solid;
-  padding: 0.2em 1em;
+  padding: 0.3em 1em;
   overflow: hidden;
   font-size: inherit;
   @each $type in $buttonType {
@@ -552,21 +572,17 @@ $buttonType: "solid", "hollow";
       }
     }
   }
-  &amp;[data-shape="rounded"],
-  &amp;[data-shape="box"] {
+  &amp;[data-shape="rounded"] {
     border-radius: 4px;
   }
   &amp;[data-shape="pill"] {
     border-radius: 200px;
   }
-  &amp;[data-shape="square"],
-  &amp;[data-shape="box"],
-  &amp;[data-shape="circle"] {
-    width: 3em;
-    height: 3em;
-  }
   &amp;[data-shape="circle"] {
     border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    padding: 0;
   }
   box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.3),
     0 1px 2px rgba(0, 0, 0, 0.15);
@@ -579,16 +595,15 @@ $buttonType: "solid", "hollow";
     border-color: #ddd !important;
     text-shadow: 0 1px 1px white !important;
     box-shadow: none !important;
-    cursor: default !important;
-    pointer-events: none !important;
+    cursor: not-allowed !important;
   }
   &amp;[data-position="left"] {
-    .content {
+    .m-button__content {
       margin-left: 0.5em;
     }
   }
   &amp;[data-position="right"] {
-    .content {
+    .m-button__content {
       margin-right: 0.5em;
       order: -1;
     }
@@ -601,7 +616,7 @@ $buttonType: "solid", "hollow";
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Apr 23 2019 16:07:42 GMT+0800 (China Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Apr 26 2019 12:14:14 GMT+0800 (China Standard Time)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

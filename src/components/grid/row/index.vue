@@ -12,8 +12,8 @@ import { CustomVm } from "./row.d";
   name: "MRow"
 })
 export default class MRow extends Vue {
-  @Prop() private gutter!: string | number;
-  @Prop() private align!: string;
+  @Prop({ type: String || Number }) private gutter!: string | number;
+  @Prop({ type: String }) private align!: string;
 
   // computed
   get rowStyle(): Object {
@@ -53,9 +53,6 @@ export default class MRow extends Vue {
   }
   &.align-center {
     justify-content: center;
-  }
-  &.align-end {
-    justify-content: space-between;
   }
   &.align-space-between {
     justify-content: space-between;

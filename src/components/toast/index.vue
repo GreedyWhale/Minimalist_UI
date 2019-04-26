@@ -1,5 +1,5 @@
 <template>
-  <div class="container" ref="wrapper" :data-position="position">
+  <div class="m-container" ref="wrapper" :data-position="position">
     <div
       class="m-toast flex-align__center"
       @animationend="animationend"
@@ -8,7 +8,7 @@
       <div :class="['icon', 'flex-align__center', icon]" v-if="icon">
         <m-icon :icon="icon" />
       </div>
-      <div class="content">
+      <div class="m-toast__content">
         <div v-if="enbleHtml && usePlugin" v-html="$slots.default[0]"></div>
         <slot v-else></slot>
       </div>
@@ -189,7 +189,7 @@ export default class MToast extends Vue {
   display: flex;
   align-items: center;
 }
-.container {
+.m-container {
   position: fixed;
   z-index: 99;
   top: 0;
@@ -212,7 +212,7 @@ export default class MToast extends Vue {
     &[data-is-end="true"] {
       animation-name: top-pack-up;
     }
-    .content {
+    &__content {
       word-break: break-all;
     }
     .close-button {

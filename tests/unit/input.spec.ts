@@ -53,11 +53,11 @@ describe("input.vue", () => {
     expect(suffixButton.find("use").attributes("href")).to.equal(
       "#icon-search"
     );
-    expect(suffixButton.find(".content").text()).to.equal("搜索");
+    expect(suffixButton.find(".m-button__content").text()).to.equal("搜索");
     expect(prefixButton.find("use").attributes("href")).to.equal(
       "#icon-loading"
     );
-    expect(prefixButton.find(".content").text()).to.equal("加载");
+    expect(prefixButton.find(".m-button__content").text()).to.equal("加载");
   });
   it("MInput组件可以使用slot方式设置前后缀图标&文字", () => {
     const wrapper = shallowMount(MInput, {
