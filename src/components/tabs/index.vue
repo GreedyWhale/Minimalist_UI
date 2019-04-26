@@ -7,6 +7,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Provide, Watch } from "vue-property-decorator";
 import { EventBus } from "./tabs.d";
+
 @Component({
   name: "MTabs"
 })
@@ -22,6 +23,10 @@ export default class MTabs extends Vue {
 
   mounted(): void {
     this.updateSelected(this.selected);
+    this.eventBus.$on('on-click', (selected: string | number, selectedChild: Vue.VueConstructor) => {
+      this.$emit('update:selected', selected)
+      this.$emit('on-click', selected)
+    })
   }
   // methods
   updateSelected(selected: string | number): void {

@@ -42,8 +42,7 @@ export default class MTabsItem extends Vue {
       this.eventBus &&
       typeof this.eventBus.$emit === "function"
     ) {
-      this.eventBus.$emit("update:selected", this.name, this);
-      this.$emit("click", this.name, this);
+      this.eventBus.$emit("on-click", this.name, this);
     }
   }
 }

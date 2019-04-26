@@ -99,7 +99,7 @@ export default class MToast extends Vue {
     if (this.onClose && typeof this.onClose === "function") {
       this.onClose(this);
     }
-    this.close();
+    this.isCloseAnimation = true;
   }
 }
 </script>
