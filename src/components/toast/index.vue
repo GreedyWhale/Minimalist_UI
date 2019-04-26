@@ -1,5 +1,5 @@
 <template>
-  <div class="m-container" ref="wrapper" :data-position="position">
+  <div class="m-container" ref="wrapper" :data-position="position" v-show="usePlugin || visibleToast">
     <div
       class="m-toast flex-align__center"
       @animationend="animationend"
@@ -50,8 +50,9 @@ export default class MToast extends Vue {
   // data
   isCloseAnimation: boolean = false;
   closeTimer: any = null;
+  visibleToast: boolean = false;
   mounted(): void {
-    this.executeAutoClose();
+    this.usePlugin && this.executeAutoClose();
   }
   beforeDestroy(): void {
     clearTimeout(this.closeTimer);
@@ -69,16 +70,36 @@ export default class MToast extends Vue {
       }, this.delayTime);
     }
   }
+  showToast(): void {
+    clearTimeout(this.closeTimer);
+    if(this.visibleToast) {
+      this.visibleToast = false;
+    }
+    this.$nextTick(() => {
+      this.visibleToast = true;
+      this.isCloseAnimation = false;
+      this.executeAutoClose();
+    })
+  }
   close(): void {
+    this.usePlugin ? this.pluginclose() : this.noPluginClose();
+  }
+  noPluginClose(): void {
+    clearTimeout(this.closeTimer);
+    this.visibleToast = false;
+    this.isCloseAnimation = false;
+    this.$emit("close");
+  }
+  pluginclose(): void {
     this.$el.remove();
     this.$emit("close");
     this.$destroy();
   }
   onClickCloseButton(): void {
-    this.isCloseAnimation = true;
     if (this.onClose && typeof this.onClose === "function") {
       this.onClose(this);
     }
+    this.close();
   }
 }
 </script>
