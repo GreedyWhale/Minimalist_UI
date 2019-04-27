@@ -220,7 +220,7 @@ export default class MSwiper extends Vue {
     if (this.arrow === "hover" && !this.hideControlBtn) {
       return false;
     } else if (this.arrow === "hover" && this.hideControlBtn) {
-      return true
+      return true;
     }
     return this.arrow === "never";
   }

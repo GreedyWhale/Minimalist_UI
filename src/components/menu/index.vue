@@ -6,7 +6,12 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Provide } from "vue-property-decorator";
-import { UPDATE_ACTIVE, UPDATE_NAME_PATH, CLICK_SUB_MENU } from "./constant";
+import {
+  UPDATE_ACTIVE,
+  UPDATE_NAME_PATH,
+  CLICK_SUB_MENU,
+  UPDATE_DEFAULT_ACTIVE
+} from "./constant";
 import { findComponentChildren } from "./methods";
 
 @Component({
@@ -31,10 +36,14 @@ export default class MMenu extends Vue {
   // methods
   setDefaultActive(name: string | number): void {
     if (name !== undefined) {
-      this.eventBus.$emit(UPDATE_ACTIVE, name);
+      this.eventBus.$emit(UPDATE_DEFAULT_ACTIVE, name);
     }
   }
-  closeOtherSunMenu(children: any[], name: string | number, isOpen: boolean): void {
+  closeOtherSunMenu(
+    children: any[],
+    name: string | number,
+    isOpen: boolean
+  ): void {
     if (isOpen && this.vertical && this.accordion) {
       children.forEach((vm: any) => {
         if (vm.name !== name) {
@@ -50,13 +59,13 @@ export default class MMenu extends Vue {
     this.eventBus.$on(
       CLICK_SUB_MENU,
       (name: number | string, parentName: number | string, isOpen: boolean) => {
-        if(parentName) {
+        if (parentName) {
           const subMenu = findComponentChildren(this, parentName);
-          if(subMenu && subMenu.length) {
+          if (subMenu && subMenu.length) {
             this.closeOtherSunMenu(subMenu, name, isOpen);
           }
         } else {
-          this.closeOtherSunMenu(this.$children, name, isOpen)
+          this.closeOtherSunMenu(this.$children, name, isOpen);
         }
         this.$emit("toggle-sub-menu", name, isOpen);
       }

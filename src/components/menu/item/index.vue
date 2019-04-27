@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Inject } from "vue-property-decorator";
-import { UPDATE_ACTIVE } from "../constant";
+import { UPDATE_ACTIVE, UPDATE_DEFAULT_ACTIVE } from "../constant";
 import { findComponentParent } from "../methods";
 
 @Component({
@@ -33,6 +33,9 @@ export default class MMenuItem extends Vue {
   // methods
   listenToUpdateActive(): void {
     this.eventBus.$on(UPDATE_ACTIVE, (name: number | string) => {
+      this.active = name === this.name;
+    });
+    this.eventBus.$on(UPDATE_DEFAULT_ACTIVE, (name: number | string) => {
       this.active = name === this.name;
     });
   }

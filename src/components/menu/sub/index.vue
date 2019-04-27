@@ -40,9 +40,14 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Inject } from "vue-property-decorator";
-import { UPDATE_ACTIVE, UPDATE_NAME_PATH, CLICK_SUB_MENU } from "../constant";
+import {
+  UPDATE_ACTIVE,
+  UPDATE_NAME_PATH,
+  CLICK_SUB_MENU,
+  UPDATE_DEFAULT_ACTIVE
+} from "../constant";
 import MIcon from "@/components/icon/index.vue";
-import { findComponentParent } from "../methods";
+import { findComponentParent, isContainsChild } from "../methods";
 
 @Component({
   name: "MSubMenu",
@@ -105,6 +110,17 @@ export default class MSubMenu extends Vue {
     this.open = false;
   }
   initListeners(): void {
+    this.eventBus.$on(UPDATE_DEFAULT_ACTIVE, (name: number | string) => {
+      const isSelf = name === this.name;
+      const hasChild = isContainsChild(this, name);
+      if (this.isVertical) {
+        if ((hasChild && !this.open) || isSelf) {
+          this.open = true;
+        }
+      } else {
+        this.active = hasChild || isSelf;
+      }
+    });
     this.eventBus.$on(UPDATE_ACTIVE, (name: number | string) => {
       if (!this.isVertical) {
         this.open = false;
@@ -125,7 +141,12 @@ export default class MSubMenu extends Vue {
       return;
     }
     this.open ? this.packUp() : this.unfold();
-    this.eventBus.$emit(CLICK_SUB_MENU, this.name, (this.$parent as any).name, this.open);
+    this.eventBus.$emit(
+      CLICK_SUB_MENU,
+      this.name,
+      (this.$parent as any).name,
+      this.open
+    );
   }
   onMouuseEnter(): void {
     if (

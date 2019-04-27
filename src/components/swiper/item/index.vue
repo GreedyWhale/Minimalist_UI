@@ -14,7 +14,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
   name: "MSwiperItem"
 })
 export default class MSwiperItem extends Vue {
-  @Prop({ type: String, required: true } ) private name!: string;
+  @Prop({ type: String, required: true }) private name!: string;
   // data
   activeName: string | number = "";
   reverse: boolean = false;
