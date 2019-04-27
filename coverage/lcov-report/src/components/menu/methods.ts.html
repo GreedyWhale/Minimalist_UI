@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">33.33% </span>
+        <span class="strong">58.82% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>7/21</span>
+        <span class='fraction'>20/34</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">16.67% </span>
+        <span class="strong">54.55% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>2/12</span>
+        <span class='fraction'>12/22</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">33.33% </span>
+        <span class="strong">60% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/3</span>
+        <span class='fraction'>3/5</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">36.84% </span>
+        <span class="strong">60% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>7/19</span>
+        <span class='fraction'>18/30</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -71,7 +71,27 @@
 26
 27
 28
-29</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">14×</span>
 <span class="cline-any cline-yes">14×</span>
 <span class="cline-any cline-yes">14×</span>
@@ -97,6 +117,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">18×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const findComponentParent = (context: any, parentName: string): any[] =&gt; {
@@ -111,29 +151,49 @@
   return [];
 };
 <span class="fstat-no" title="function not covered" ></span>
-const findCompone<span class="cstat-no" title="statement not covered" >ntC</span>hildren = (context: any, childName: string | number): any[] =&gt; {
-  let result: any[]<span class="cstat-no" title="statement not covered" > = [];</span>
-  le<span class="cstat-no" title="statement not covered" >t children = context.$children;</span>
-  if(context.$childr<span class="cstat-no" title="statement not covered" >en &amp;&amp; context.$children.<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >length) {</span></span></span>
-    let <span class="cstat-no" title="statement not covered" >child = children.filter((vm: any) =&gt; vm.name === childName);</span>
-    if(child<span class="cstat-no" title="statement not covered" > &amp;&amp; child.length) {</span>
-      return child[0].$children
-    }<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span>
-    for(let <span class="cstat-no" title="statement not covered" >i = 0; i &lt; children.length; i++) {</span>
-      result.concat(findComponentChildren(children[i], childName))
+const findCompone<span class="cstat-no" title="statement not covered" >ntC</span>hildren = (
+  context: any,<span class="cstat-no" title="statement not covered" ></span>
+  ch<span class="cstat-no" title="statement not covered" >ildName: string | number</span>
+): any[] =&gt; {<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
+  let re<span class="cstat-no" title="statement not covered" >sult: any[] = [];</span>
+  let childr<span class="cstat-no" title="statement not covered" >en = context.$children;</span>
+  if (context.$children &amp;&amp; context.$children.length) {
+    let <span class="cstat-no" title="statement not covered" >child = child<span class="cstat-no" title="statement not covered" >re</span>n.filter((vm: any) =&gt; vm.name === childName);</span>
+    if (chil<span class="cstat-no" title="statement not covered" >d &amp;&amp; child.length) {</span>
+      return child[0].$children;
     }<span class="cstat-no" title="statement not covered" ></span>
+    for (let i = 0; i &lt; children.length; i++) {
+<span class="cstat-no" title="statement not covered" >      result.co</span>ncat(findComponentChildren(children[i], childName));
+    }
     return result;
-  }<span class="cstat-no" title="statement not covered" ></span>
+  }
   return [];
 };
-export { findComponentParent, findComponentChildren };
+&nbsp;
+const isContainsChild = (context: any, childName: string | number): boolean =&gt; {
+  let children = context.$children;
+  if (context.$children &amp;&amp; context.$children.length) {
+    let child = children.filter((vm: any) =&gt; vm.name === childName);
+    if (child &amp;&amp; child.length) {
+      return true;
+    }
+    for (let i = 0; i &lt; children.length; i++) {
+      let result = isContainsChild(children[i], childName);
+      if (result) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+export { findComponentParent, findComponentChildren, isContainsChild };
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Apr 27 2019 23:27:18 GMT+0800 (China Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Apr 28 2019 01:24:00 GMT+0800 (China Standard Time)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

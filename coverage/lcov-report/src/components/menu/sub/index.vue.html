@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">43.75% </span>
+        <span class="strong">46.48% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>28/64</span>
+        <span class='fraction'>33/71</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">29.41% </span>
+        <span class="strong">39.53% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>10/34</span>
+        <span class='fraction'>17/43</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">31.82% </span>
+        <span class="strong">30.43% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>7/22</span>
+        <span class='fraction'>7/23</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">43.75% </span>
+        <span class="strong">46.48% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>28/64</span>
+        <span class='fraction'>33/71</span>
       </div>
     </div>
   </div>
@@ -327,7 +327,28 @@
 282
 283
 284
-285</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -383,7 +404,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4×</span>
@@ -466,6 +499,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -653,16 +695,21 @@
 <span class="cstat-no" title="statement not covered" ></span>
 &lt;script lang="ts"&gt;
 import { Vue, Component, Prop, Inject } from "vue-property-decorator";
-import { UPDATE_ACTIVE, UPDATE_NAME_PATH, CLICK_SUB_MENU } from "../constant";
-import MIcon from "@/components/icon/index.vue";
-import { findComponentParent } from "../methods";
+import {
+  UPDATE_ACTIVE,
+  UPDATE_NAME_PATH,
+  CLICK_SUB_MENU,
+  UPDATE_DEFAULT_ACTIVE
+} from "../co<span class="fstat-no" title="function not covered" >nstant";</span>
+import M<span class="cstat-no" title="statement not covered" >Icon from "@/components/icon/index.vue";</span>
+import { fin<span class="cstat-no" title="statement not covered" >dComponentParent, isContainsChild } from "../methods";</span>
 &nbsp;
-@Component({
-  name: "MSub<span class="fstat-no" title="function not covered" >Menu",</span>
-  compon<span class="cstat-no" title="statement not covered" >ents: {</span>
-    MIcon<span class="cstat-no" title="statement not covered" ></span>
+@Compone<span class="cstat-no" title="statement not covered" >nt({</span>
+  name: "MSubMenu",
+  components: {
+    MIcon
   }
-})<span class="cstat-no" title="statement not covered" ></span>
+})
 export default class MSubMenu extends Vue {
   @Inject() readonly eventBus!: Vue.default;
   @Inject() readonly isVertical!: boolean;
@@ -670,75 +717,91 @@ export default class MSubMenu extends Vue {
   @Prop({ type: [Number, String], required: true }) private name!:
     | number
     | string;
-  @Prop({ type: Boolean, default: false }) private disable<span class="fstat-no" title="function not covered" >d!: string;</span>
-  // data<span class="cstat-no" title="statement not covered" ></span>
-  open: boolean = false;
-  openTimer: any = null;
-  active: boolean = false;<span class="fstat-no" title="function not covered" ></span>
-  childrenLength: number =<span class="cstat-no" title="statement not covered" > 0;</span>
-  // com<span class="cstat-no" title="statement not covered" >puted</span>
-  get it<span class="cstat-no" title="statement not covered" >emStyle(): Object {</span>
-    let style = {};
+  @Prop({ type: Boolean, default: false }) private disabled!: string;
+  // data
+  open: boolean = false;<span class="fstat-no" title="function not covered" ></span>
+  openTimer:<span class="cstat-no" title="statement not covered" > any = null;</span>
+  active: boolea<span class="cstat-no" title="statement not covered" >n = false;</span>
+  childrenLength: number = 0;
+  // computed
+  get itemStyle(): Object {<span class="fstat-no" title="function not covered" ></span>
+    let styl<span class="cstat-no" title="statement not covered" >e = {};</span>
     if (this.isVertical) {
       style = {
-        <span class="missing-if-branch" title="if path not taken" >I</span>paddingLeft: findComponentParent(this, "MSubMenu").length + 1.5 + "em"
+        paddingLeft: findComp<span class="fstat-no" title="function not covered" >onentParent(this, "MSubMenu").length + 1.5 + "em"</span>
       };<span class="cstat-no" title="statement not covered" ></span>
-    }
-    return style;<span class="branch-0 cbranch-no" title="branch not covered" ></span>
+    }<span class="cstat-no" title="statement not covered" ></span>
+    retu<span class="cstat-no" title="statement not covered" >rn style;</span>
   }
   mounted() {
-    this.initListene<span class="fstat-no" title="function not covered" >rs();</span>
-    this<span class="cstat-no" title="statement not covered" >.childrenLength = this.$children.length;</span>
-  }
+    this.initListeners();
+    this<span class="missing-if-branch" title="if path not taken" >I</span>.childrenLength = this.$children.length;
+  }<span class="cstat-no" title="statement not covered" ></span>
   beforeDestroy(): void {
-    document<span class="cstat-no" title="statement not covered" >.removeE</span>ventListener("click", this.clickDocument);
+    document.removeE<span class="branch-0 cbranch-no" title="branch not covered" >ventListener("</span>click", this.clickDocument);
   }
-  // met<span class="cstat-no" title="statement not covered" >hods</span>
-  clickD<span class="cstat-no" title="statement not covered" >ocument(event: Event): void {<span class="fstat-no" title="function not covered" ></span></span>
+  // methods
+  clickDocument(even<span class="fstat-no" title="function not covered" >t: Event): void {</span>
     if (<span class="cstat-no" title="statement not covered" ></span>
       this.$refs.menu === event.target ||
       (this.$refs.menu as any).contains(event.target) ||
-      this.isVertic<span class="fstat-no" title="function not covered" >al ||</span>
-      th<span class="cstat-no" title="statement not covered" >is.disabled</span>
-    ) {
-      return;
+      this.i<span class="cstat-no" title="statement not covered" >sVertica</span>l ||
+      this.disabled
+    ) {<span class="cstat-no" title="statement not covered" ></span>
+      re<span class="cstat-no" title="statement not covered" >turn;<span class="fstat-no" title="function not covered" ></span></span>
     }<span class="cstat-no" title="statement not covered" ></span>
     this.packUp();
-  }<span class="cstat-no" title="statement not covered" ></span>
-  unfold<span class="cstat-no" title="statement not covered" >(): void {<span class="fstat-no" title="function not covered" ></span></span>
-    if (!thi<span class="cstat-no" title="statement not covered" >s.isVertical &amp;&amp;</span> !this.disabled) {
+  }
+  unfold(): void {<span class="fstat-no" title="function not covered" ></span>
+    if (<span class="cstat-no" title="statement not covered" >!this.isVertical &amp;&amp; !this.disabled) {</span>
       document.addEventListener("click", this.clickDocument);
     }
-    this.open = true<span class="fstat-no" title="function not covered" >;</span>
-  }<span class="cstat-no" title="statement not covered" ></span>
-  packUp<span class="cstat-no" title="statement not covered" >(): void {</span>
-    if (<span class="cstat-no" title="statement not covered" >!this.isVertical &amp;&amp; !this.di</span>sabled) {
-      do<span class="cstat-no" title="statement not covered" >cument.removeEventListener("click</span>", this.clickDocument);
-    }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-    this.ope<span class="cstat-no" title="statement not covered" >n = fals</span>e;
+    this.ope<span class="cstat-no" title="statement not covered" >n = true</span>;
   }
-  initListeners(): void {
-    this.eventBus.$<span class="fstat-no" title="function not covered" >on(UPDATE_ACTIVE, (name: number | string) =&gt; {</span>
+  packUp<span class="cstat-no" title="statement not covered" >(): void {</span>
+    if (<span class="cstat-no" title="statement not covered" >!this.isVertical &amp;&amp; !this.disabled<span class="fstat-no" title="function not covered" >) {</span></span>
+      docume<span class="cstat-no" title="statement not covered" >nt.removeEventL</span>istener("click", this.clickDocument);
+    }
+    this.open = false;
+  }<span class="fstat-no" title="function not covered" ></span>
+  initListeners(): void {<span class="cstat-no" title="statement not covered" ></span>
+    this<span class="cstat-no" title="statement not covered" >.eventBus.$on(UPDATE_</span>DEFAULT_ACTIVE, (name: number | string) =&gt; {
+      co<span class="cstat-no" title="statement not covered" >nst isSelf = name === this.n</span>ame;
+      co<span class="cstat-no" title="statement not covered" >nst hasChild = isContainsChild(th</span>is, name);
+      if<span class="cstat-no" title="statement not covered" > (this.isVertical) {<span class="fstat-no" title="function not covered" ></span></span>
+        if (<span class="cstat-no" title="statement not covered" >(hasChil</span>d &amp;&amp; !this.open) || isSelf) {
+          this.open = true;
+        }
+      } else {<span class="fstat-no" title="function not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        this.active = hasChild || </span>isSelf;
+      }
+    });<span class="fstat-no" title="function not covered" ></span>
+    this.eventBus.$on(UPDAT<span class="cstat-no" title="statement not covered" >E_ACTIVE, (name: number | s</span>tring) =&gt; {
       if<span class="cstat-no" title="statement not covered" > (!this.isVertical) {</span>
-        this.open = false;
-      }<span class="fstat-no" title="function not covered" ></span>
-    });<span class="cstat-no" title="statement not covered" ></span>
-    this<span class="cstat-no" title="statement not covered" >.eventBus.$on(UPDATE_NAME_PATH, (</span>namePath: any[]) =&gt; {
-      th<span class="cstat-no" title="statement not covered" >is.active = namePath.indexOf</span>(this.name) &gt;= 0;
-    });<span class="cstat-no" title="statement not covered" ></span>
-  }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-  upDateName<span class="cstat-no" title="statement not covered" >Path(nam</span>ePath: any[]) {
+<span class="cstat-no" title="statement not covered" >        this.open = false;</span>
+      }<span class="cstat-no" title="statement not covered" ></span>
+    });<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+    this.eve<span class="cstat-no" title="statement not covered" >ntBus.$o</span>n(UPDATE_NAME_PATH, (namePath: any[]) =&gt; {
+      this.active = namePath.indexOf(this.name) &gt;= 0;
+    });
+  }<span class="fstat-no" title="function not covered" ></span>
+  upDate<span class="cstat-no" title="statement not covered" >NamePath(namePath: any[]) </span>{
     let newNamePath = JSON.parse(JSON.stringify(namePath));
     newNamePath.unshift(this.name);
-    (this.$parent a<span class="fstat-no" title="function not covered" >s any).upDateNamePath &amp;&amp;</span>
-      (t<span class="cstat-no" title="statement not covered" >his.$parent as any).upDate</span>NamePath(newNamePath);
+    (this.$parent as any).upDateNamePath &amp;&amp;
+      (this.$parent as any).upDateNamePath(newNamePath);
   }
   onClick(): void {
     if (this.disabled) {
       return;
     }
     this.open ? this.packUp() : this.unfold();
-    this.eventBus.$emit(CLICK_SUB_MENU, this.name, (this.$parent as any).name, this.open);
+    this.eventBus.$emit(
+      CLICK_SUB_MENU,
+      this.name,
+      (this.$parent as any).name,
+      this.open
+    );
   }
   onMouuseEnter(): void {
     if (
@@ -901,7 +964,7 @@ export default class MSubMenu extends Vue {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Apr 27 2019 23:27:18 GMT+0800 (China Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Apr 28 2019 01:24:00 GMT+0800 (China Standard Time)
 </div>
 </div>
 <script src="../../../../prettify.js"></script>

@@ -128,7 +128,16 @@
 83
 84
 85
-86</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -163,7 +172,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-yes">3×</span>
@@ -213,6 +222,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
   &lt;div :class="{ menu: true, vertical }"&gt;
     &lt;slot&gt;&lt;/slot&gt;
@@ -221,19 +239,24 @@
 &nbsp;
 &lt;script lang="ts"&gt;
 import { Vue, Component, Prop, Provide } from "vue-property-decorator";
-import { UPDATE_ACTIVE, UPDATE_NAME_PATH, CLICK_SUB_MENU } from "./constant";
+import {
+  UPDATE_ACTIVE,
+  UPDATE_NAME_PATH,
+  CLICK_SUB_MENU,
+  UPDATE_DEFAULT_ACTIVE
+} from "./constant";
 import { findComponentChildren } from "./methods";
 &nbsp;
 @Component({
   name: "MMenu"
 })
 export default class MMenu extends Vue {
-  @Prop({ type: [String, Number] }) private defaultActive!: string | number;
+  @Prop(<span class="missing-if-branch" title="else path not taken" >E</span>{ type: [String, Number] }) private defaultActive!: string | number;
   @Prop({ type: Boolean, default: false }) private vertical!: boolean;
   @Prop({ type: Boolean, default: false }) private accordion!: boolean;
   @Prop({ type: String, default: "hover" }) private subMenuTrigger!: string;
   @Provide() isVertical: boolean = this.vertical;
-  @Provi<span class="missing-if-branch" title="else path not taken" >E</span>de() eventBus: Vue.default = new Vue();
+  @Provide() eventBus: Vue.default = new Vue();
   @Provide() subMenuTriggerWay: string = this.subMenuTrigger;
   // data
   activeName: string | number = "";
@@ -246,15 +269,19 @@ export default class MMenu extends Vue {
   // methods
   setDefaultActive(name: string | number): void {
     if (name !== undefined) {
-      this.eventBus.$emit(UPDATE_ACTIVE, name);
-    }
-  }
-  closeOtherSunMenu(children: any[], name: string | number, isOpen: boolean): void {
+      this.e<span class="missing-if-branch" title="if path not taken" >I</span>ventBus.$emit(UPDATE_DEFAULT_ACTIVE, name);
+    }<span class="cstat-no" title="statement not covered" ></span>
+  }<span class="cstat-no" title="statement not covered" ></span>
+  closeOtherSunMenu(<span class="cstat-no" title="statement not covered" ></span>
+    children: any[],
+    name: string | number,
+    isOpen: boolean
+  ): void {
     if (isOpen &amp;&amp; this.vertical &amp;&amp; this.accordion) {
-      childr<span class="missing-if-branch" title="if path not taken" >I</span>en.forEach((vm: any) =&gt; {
-        if (vm.name !== name) {<span class="cstat-no" title="statement not covered" ></span>
-          vm.ope<span class="cstat-no" title="statement not covered" >n = false;</span>
-        }<span class="cstat-no" title="statement not covered" ></span>
+      children.forEach((vm: any) =&gt; {
+        if (vm.name !== name) {
+          vm.open = false;
+        }
       });
     }
   }
@@ -265,13 +292,13 @@ export default class MMenu extends Vue {
     this.eventBus.$on(
       CLICK_SUB_MENU,
       (name: number | string, parentName: number | string, isOpen: boolean) =&gt; {
-        if(parentName) {
+        if (parentName) {
           const subMenu = findComponentChildren(this, parentName);
-          if(subMenu &amp;&amp; subMenu.length) {
+          if (subMenu &amp;&amp; subMenu.length) {
             this.closeOtherSunMenu(subMenu, name, isOpen);
           }
         } else {
-          this.closeOtherSunMenu(this.$children, name, isOpen)
+          this.closeOtherSunMenu(this.$children, name, isOpen);
         }
         this.$emit("toggle-sub-menu", name, isOpen);
       }
@@ -304,7 +331,7 @@ export default class MMenu extends Vue {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Apr 27 2019 23:27:18 GMT+0800 (China Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Apr 28 2019 01:24:00 GMT+0800 (China Standard Time)
 </div>
 </div>
 <script src="../../../prettify.js"></script>
