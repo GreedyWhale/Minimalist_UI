@@ -8,7 +8,7 @@
   >
     <slot></slot>
     <ul
-      v-if="childrenLength && visibleDots"
+      v-if="childrenLength && !visibleDots"
       class="control-dots"
       :data-vertical="vertical"
     >
@@ -19,7 +19,7 @@
         @click="setActiveIndex(index, false)"
       ></li>
     </ul>
-    <template v-if="visibleControlBtn">
+    <template v-if="!visibleControlBtn">
       <div @click="onControlBtnClick(-1)" class="control-btn control-btn__prev">
         <m-icon icon="left"></m-icon>
       </div>
@@ -43,7 +43,7 @@ export default class MSwiper extends Vue {
   @Prop({ type: Number, default: 3000 }) private delay!: number;
   @Prop({ type: [Number, String] }) private active!: number | string;
   @Prop({ type: Boolean, default: false }) private autoplay!: boolean;
-  @Prop({ type: Boolean, default: true }) private visibleDots!: boolean;
+  @Prop({ type: Boolean, default: false }) private visibleDots!: boolean;
   @Prop({ type: Boolean, default: false }) private vertical!: boolean;
   @Prop({ type: Boolean, default: true }) private loop!: boolean;
   @Prop({
@@ -215,12 +215,14 @@ export default class MSwiper extends Vue {
   }
   get visibleControlBtn(): boolean {
     if (this.arrow === "always") {
-      return true;
+      return false;
     }
     if (this.arrow === "hover" && !this.hideControlBtn) {
-      return true;
+      return false;
+    } else if (this.arrow === "hover" && this.hideControlBtn) {
+      return true
     }
-    return !(this.arrow === "never");
+    return this.arrow === "never";
   }
   @Watch("activeIndex")
   onActiveIndexChange(newValue: number) {

@@ -10,4 +10,19 @@ const findComponentParent = (context: any, parentName: string): any[] => {
   return [];
 };
 
-export { findComponentParent };
+const findComponentChildren = (context: any, childName: string | number): any[] => {
+  let result: any[] = [];
+  let children = context.$children;
+  if(context.$children && context.$children.length) {
+    let child = children.filter((vm: any) => vm.name === childName);
+    if(child && child.length) {
+      return child[0].$children
+    }
+    for(let i = 0; i < children.length; i++) {
+      result.concat(findComponentChildren(children[i], childName))
+    }
+    return result;
+  }
+  return [];
+};
+export { findComponentParent, findComponentChildren };

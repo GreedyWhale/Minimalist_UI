@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">91.18% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>29/29</span>
+        <span class='fraction'>31/34</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">87.5% </span>
+        <span class="strong">60% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>7/8</span>
+        <span class='fraction'>9/15</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>8/8</span>
+        <span class='fraction'>9/9</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">91.18% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>29/29</span>
+        <span class='fraction'>31/34</span>
       </div>
     </div>
   </div>
@@ -117,7 +117,19 @@
 72
 73
 74
-75</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
@@ -138,6 +150,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -146,11 +167,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-yes">3×</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -182,7 +205,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -200,6 +222,7 @@
 &lt;script lang="ts"&gt;
 import { Vue, Component, Prop, Provide } from "vue-property-decorator";
 import { UPDATE_ACTIVE, UPDATE_NAME_PATH, CLICK_SUB_MENU } from "./constant";
+import { findComponentChildren } from "./methods";
 &nbsp;
 @Component({
   name: "MMenu"
@@ -226,19 +249,29 @@ export default class MMenu extends Vue {
       this.eventBus.$emit(UPDATE_ACTIVE, name);
     }
   }
+  closeOtherSunMenu(children: any[], name: string | number, isOpen: boolean): void {
+    if (isOpen &amp;&amp; this.vertical &amp;&amp; this.accordion) {
+      childr<span class="missing-if-branch" title="if path not taken" >I</span>en.forEach((vm: any) =&gt; {
+        if (vm.name !== name) {<span class="cstat-no" title="statement not covered" ></span>
+          vm.ope<span class="cstat-no" title="statement not covered" >n = false;</span>
+        }<span class="cstat-no" title="statement not covered" ></span>
+      });
+    }
+  }
   initListeners(): void {
     this.eventBus.$on(UPDATE_ACTIVE, (name: number | string) =&gt; {
       this.$emit("on-select", name, this.namePath);
     });
     this.eventBus.$on(
       CLICK_SUB_MENU,
-      (name: number | string, isOpen: boolean) =&gt; {
-        if (isOpen &amp;&amp; this.vertical) {
-          this.$children.forEach((vm: any) =&gt; {
-            if (vm.name !== name) {
-              vm.open = false;
-            }
-          });
+      (name: number | string, parentName: number | string, isOpen: boolean) =&gt; {
+        if(parentName) {
+          const subMenu = findComponentChildren(this, parentName);
+          if(subMenu &amp;&amp; subMenu.length) {
+            this.closeOtherSunMenu(subMenu, name, isOpen);
+          }
+        } else {
+          this.closeOtherSunMenu(this.$children, name, isOpen)
         }
         this.$emit("toggle-sub-menu", name, isOpen);
       }
@@ -271,7 +304,7 @@ export default class MMenu extends Vue {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Apr 26 2019 18:16:23 GMT+0800 (China Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Apr 27 2019 23:27:18 GMT+0800 (China Standard Time)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

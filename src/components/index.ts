@@ -16,7 +16,7 @@ export { default as MHeader } from "@/components/layout/header/index.vue";
 export { default as MMain } from "@/components/layout/main/index.vue";
 export { default as MMenu } from "@/components/menu/index.vue";
 export { default as MMenuItem } from "@/components/menu/item/index.vue";
-export { default as MMenuSubItem } from "@/components/menu/sub/index.vue";
+export { default as MSubMenu } from "@/components/menu/sub/index.vue";
 export { default as MPagination } from "@/components/pagination/index.vue";
 export { default as MPopover } from "@/components/popover/index.vue";
 export { default as MSticky } from "@/components/sticky/index.vue";

@@ -90,7 +90,8 @@ export default class MCascader extends Vue {
       this.visiblePopover = false;
     }
     if (this.loadData) {
-      this.loadingItem = sourceItem;
+      this.loadingItem =
+        sourceItem.children && !sourceItem.children.length ? sourceItem : {};
       this.loadData(sourceItem, this.onUpdateSource);
     }
   }

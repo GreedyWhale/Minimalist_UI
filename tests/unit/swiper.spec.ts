@@ -86,7 +86,7 @@ describe("swiper.vue", () => {
     const component = {
       name: "test",
       template: `
-        <m-swiper :active="active" :delay="100" :visibleDots="true">
+        <m-swiper :active="active" :delay="100" :visibleDots="false">
           <m-swiper-item name="1">1</m-swiper-item>
           <m-swiper-item name="2">2</m-swiper-item>
           <m-swiper-item name="3">3</m-swiper-item>

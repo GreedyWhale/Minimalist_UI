@@ -14,8 +14,8 @@ import { PropSize } from "./col.d";
   name: "MCol"
 })
 export default class MCol extends Vue {
-  @Prop({ type: Number || String, default: 24 }) private span!: string | number;
-  @Prop({ type: Number || String }) private offset!: string | number;
+  @Prop({ type: [Number, String], default: 24 }) private span!: string | number;
+  @Prop({ type: [Number, String] }) private offset!: string | number;
   @Prop({ type: Object }) private sm!: PropSize;
   @Prop({ type: Object }) private md!: PropSize;
   @Prop({ type: Object }) private lg!: PropSize;

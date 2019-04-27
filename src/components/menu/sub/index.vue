@@ -93,13 +93,13 @@ export default class MSubMenu extends Vue {
     this.packUp();
   }
   unfold(): void {
-    if (!this.isVertical || !this.disabled) {
+    if (!this.isVertical && !this.disabled) {
       document.addEventListener("click", this.clickDocument);
     }
     this.open = true;
   }
   packUp(): void {
-    if (!this.isVertical || !this.disabled) {
+    if (!this.isVertical && !this.disabled) {
       document.removeEventListener("click", this.clickDocument);
     }
     this.open = false;
@@ -125,7 +125,7 @@ export default class MSubMenu extends Vue {
       return;
     }
     this.open ? this.packUp() : this.unfold();
-    this.eventBus.$emit(CLICK_SUB_MENU, this.name, this.open);
+    this.eventBus.$emit(CLICK_SUB_MENU, this.name, (this.$parent as any).name, this.open);
   }
   onMouuseEnter(): void {
     if (
@@ -208,8 +208,6 @@ export default class MSubMenu extends Vue {
       }
     }
     .arrow-icon {
-      width: 10px;
-      height: 10px;
       margin-left: 10px;
       transform: rotate(90deg);
       transition: all 0.3s;

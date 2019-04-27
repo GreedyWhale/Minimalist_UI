@@ -14,7 +14,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
   name: "MSwiperItem"
 })
 export default class MSwiperItem extends Vue {
-  @Prop({ type: String }) private name!: string;
+  @Prop({ type: String, required: true } ) private name!: string;
   // data
   activeName: string | number = "";
   reverse: boolean = false;
@@ -36,7 +36,6 @@ export default class MSwiperItem extends Vue {
 .swiper-item {
   position: relative;
   height: 200px;
-  background: bisque;
   width: 100%;
   top: 0;
   left: 0;
