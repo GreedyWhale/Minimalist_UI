@@ -101,7 +101,7 @@ export default class MUpload extends Vue {
   tempIndex: number = 1;
   showProgressTimer: any;
   emptyFn: Function = () => {};
-  copyFileList: File[] | null = null;
+  copyFileList: File[] = [];
   compareLength: number = 0;
   // methods
   onDrop(e: DragEvent): void {
@@ -179,7 +179,7 @@ export default class MUpload extends Vue {
     }
     if (fileList.length) {
       if (!this.autoUpload) {
-        this.copyFileList = fileList;
+        this.copyFileList = fileList.concat(this.copyFileList);
       }
       fileList.forEach((file: File) => {
         this.addFile(file).then(() => {
@@ -272,7 +272,6 @@ export default class MUpload extends Vue {
       }
       const fileList = this.fileList;
       fileList.push(newFile);
-      this.$emit("on-change", file, fileList);
       resolve();
     });
   }
@@ -330,6 +329,7 @@ export default class MUpload extends Vue {
 .m-upload {
   &__input-wrapper {
     display: inline-flex;
+    vertical-align: middle;
   }
   &__input {
     display: none;
