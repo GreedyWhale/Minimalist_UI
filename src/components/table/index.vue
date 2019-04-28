@@ -433,6 +433,7 @@ $grey: #ebebeb;
     overflow: auto;
   }
   .m-table {
+    display: table;
     border-spacing: 0;
     border-collapse: collapse;
     table-layout: fixed;
@@ -473,6 +474,7 @@ $grey: #ebebeb;
     th,
     td {
       text-align: left;
+      border: none;
       border-bottom: 1px solid $grey;
       padding: 14px;
       box-sizing: border-box;
