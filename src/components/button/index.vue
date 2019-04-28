@@ -139,6 +139,7 @@ $buttonType: "solid", "hollow";
   padding: 0.3em 1em;
   overflow: hidden;
   font-size: inherit;
+  vertical-align: middle;
   @each $type in $buttonType {
     &[data-type="#{$type}"] {
       @each $key, $value in $buttonTheme {
