@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">79.38% </span>
+        <span class="strong">72.63% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>77/97</span>
+        <span class='fraction'>69/95</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">56.52% </span>
+        <span class="strong">54.35% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>26/46</span>
+        <span class='fraction'>25/46</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">79.41% </span>
+        <span class="strong">76.47% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>27/34</span>
+        <span class='fraction'>26/34</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">80.68% </span>
+        <span class="strong">73.26% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>71/88</span>
+        <span class='fraction'>63/86</span>
       </div>
     </div>
   </div>
@@ -574,7 +574,13 @@
 529
 530
 531
-532</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+532
+533
+534
+535
+536
+537
+538</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
@@ -644,24 +650,19 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6×</span>
@@ -1105,6 +1106,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
   &lt;div :class="{ 'm-table__wrapper': true, bordered: bordered }"&gt;
     &lt;table :class="tableClass" v-if="columns.length &amp;&amp; fixedHead"&gt;
@@ -1174,28 +1186,28 @@
             &lt;/div&gt;
           &lt;/th&gt;
           &lt;th v-if="$scopedSlots.actions"&gt;&lt;/th&gt;
-        &lt;/tr&gt;
-      &lt;/thead&gt;
-    &lt;/table&gt;
-    &lt;div
-      class="m-table__wrapper-inner"
+        &lt;/tr&gt;<span class="fstat-no" title="function not covered" ></span>
+      &lt;/thead&gt;<span class="cstat-no" title="statement not covered" ></span>
+    &lt;/table&gt;<span class="cstat-no" title="statement not covered" ></span>
+    &lt;div<span class="cstat-no" title="statement not covered" ></span>
+      class=<span class="cstat-no" title="statement not covered" >"m-table__wrapper-inner"</span>
       :style="height ? `height: ${height}px` : ''"
     &gt;
-      &lt;t<span class="missing-if-branch" title="if path not taken" >I</span>able :class="tableClass"&gt;
-        &lt;col<span class="cstat-no" title="statement not covered" >group&gt;</span>
-          &lt;template v-if="extendedColumns.length"&gt;
-            &lt;col
-              v-for="extendedCol in extendedColumns"<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+      &lt;table<span class="cstat-no" title="statement not covered" > :class="tableClass"&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
+        &lt;colgroup&gt;
+<span class="cstat-no" title="statement not covered" >          &lt;template v-if="extendedColumns.length"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;col</span>
+              v-for="extendedCol in extendedColumns"
               :key="`${extendedCol.field}-extended-col`"
               :style="setCellWidth(extendedCol.width)"
             /&gt;
           &lt;/template&gt;
-          &lt;template v-if="columns.length"&gt;
+          &lt;template v-if="columns.length"&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
             &lt;col
               v-for="column in columns"
               :key="`${column.field}-col`"
               :style="setCellWidth(column.width)"
-            /&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+            /&gt;
           &lt;/template&gt;
         &lt;/colgroup&gt;
         &lt;thead v-if="columns.length &amp;&amp; !fixedHead"&gt;
@@ -1205,28 +1217,28 @@
                 &lt;td
                   :key="`${extendedCol.field}-th-checkbox`"
                   v-if="extendedCol.field === 'selection'"
-                  class="center-cell"
+        <span class="missing-if-branch" title="else path not taken" >E</span>          class="center-cell"
                 &gt;
                   &lt;input
-                    type="checkbox"
-                    ref="selectAll"
-        <span class="missing-if-branch" title="else path not taken" >E</span>            @change="selectAllItems"
+        <span class="missing-if-branch" title="else path not taken" >E</span>            type="checkbox"
+            <span class="missing-if-branch" title="if path not taken" >I</span>        ref="selectAll"
+<span class="cstat-no" title="statement not covered" >                    @change="selectAllItem</span>s"
                     :checked="areAllItemsSelected"
-                  /&gt;
-        <span class="missing-if-branch" title="else path not taken" >E</span>        &lt;/td&gt;
-            <span class="missing-if-branch" title="if path not taken" >I</span>    &lt;td
-<span class="cstat-no" title="statement not covered" >                  :key="`${extendedCol.fie</span>ld}-th-index`"
-                  v-if="extendedCol.field === 'index'"
-                 <span class="missing-if-branch" title="else path not taken" >E</span> class="center-cell"
+                 <span class="missing-if-branch" title="else path not taken" >E</span> /&gt;
+                &lt;/td&gt;
+                &lt;td
+<span class="cstat-no" title="statement not covered" >                  :key="`${extendedCol.field}-th-index`"</span>
+<span class="cstat-no" title="statement not covered" >                  v-if="extendedCol.field</span> === 'index'"
+                  class="center-cell"
                 &gt;
-                  &lt;span&gt;#&lt;/span&gt;
-                &lt;<span class="cstat-no" title="statement not covered" >/td&gt;</span>
-<span class="cstat-no" title="statement not covered" >                &lt;td</span>
+<span class="cstat-no" title="statement not covered" >                  &lt;span&gt;#&lt;/span&gt;</span>
+                &lt;/td&gt;
+            <span class="missing-if-branch" title="else path not taken" >E</span>    &lt;td
                   :key="`${extendedCol.field}-th-expend`"
                   v-if="extendedCol.field === 'expend'"
-<span class="cstat-no" title="statement not covered" >                  class="center-cell"</span>
+                  class="center-cell"
                 &gt;&lt;/td&gt;
-            <span class="missing-if-branch" title="else path not taken" >E</span>  &lt;/template&gt;
+              &lt;/template&gt;
             &lt;/template&gt;
             &lt;th v-for="col in columns" :key="col.field"&gt;
               &lt;div class="table-header__cell"&gt;
@@ -1247,24 +1259,24 @@
                 &lt;/span&gt;
               &lt;/div&gt;
             &lt;/th&gt;
-            &lt;th v-if="$scopedSlots.actions"&gt;&lt;/th&gt;
-          &lt;/tr&gt;
+        <span class="missing-if-branch" title="if path not taken" >I</span>    &lt;th v-if="$scopedSlots.actions"&gt;&lt;/th&gt;
+          &lt;/<span class="cstat-no" title="statement not covered" >tr&gt;</span>
         &lt;/thead&gt;
         &lt;tbody&gt;
           &lt;template v-for="(item, index) in dataSource"&gt;
-        <span class="missing-if-branch" title="if path not taken" >I</span>    &lt;tr :key="item.key"&gt;
-<span class="cstat-no" title="statement not covered" >              &lt;template v-if="extendedColumns.length"&gt;</span>
+            &lt;tr :key="item.key"&gt;
+              &lt;template v-if="extendedColumns.length"&gt;
                 &lt;template v-for="extendedCol in extendedColumns"&gt;
                   &lt;td
                     :key="`${extendedCol.field}-td-checkbox`"
                     v-if="extendedCol.field === 'selection'"
-                    class="center-cell"
-                  &gt;
+<span class="fstat-no" title="function not covered" >                    class="center-cell"</span>
+<span class="cstat-no" title="statement not covered" >                  &gt;</span>
                     &lt;input
                       type="checkbox"
                       :checked="inSelectedItems(item.key)"
-<span class="fstat-no" title="function not covered" >                      @change="selectItem($event, item, index)"</span>
-<span class="cstat-no" title="statement not covered" >                    /&gt;</span>
+                      @change="selectItem($event, item, index)"
+                    /&gt;
                   &lt;/td&gt;
                   &lt;td
                     :key="`${extendedCol.field}-td-index`"
@@ -1275,13 +1287,13 @@
                   &lt;/td&gt;
                   &lt;td
                     :key="`${extendedCol.field}-td-expend`"
-                    v-if="extendedCol.field === 'expend'"
-                    class="expend-icon center-cell"
+<span class="fstat-no" title="function not covered" >                    v-if="extendedCol.field === 'expend'"</span>
+<span class="cstat-no" title="statement not covered" >                    cla</span>ss="expend-icon center-cell"
                     :data-unfold="item[expendField] &amp;&amp; inExpendedKeys(item.key)"
                     @click="toggleExpend(item.key)"
                   &gt;
-<span class="fstat-no" title="function not covered" >                    &lt;m-icon icon="right" v-if="item[expendField]"&gt;&lt;/m-icon&gt;</span>
-<span class="cstat-no" title="statement not covered" >                  &lt;/td&gt;</span>
+                    &lt;m-icon icon="right" v-if="item[expendField]"&gt;&lt;/m-icon&gt;
+                  &lt;/td&gt;
                 &lt;/template&gt;
               &lt;/template&gt;
               &lt;td v-for="col in columns" :key="`${item.key}-${col.field}`"&gt;
@@ -1422,11 +1434,7 @@ export default class MTable extends Vue {
     const checked = (event.target as HTMLInputElement).checked;
     const selectedItems: any[] = checked ? this.dataSource : [];
     this.$emit("update:selectedItems", selectedItems);
-    this.$emit("on-select-all", {
-      selectedAll: checked,
-      selectedItems
-    });
-    this.$emit("on-change", { selectedItems });
+    this.$emit("on-change", { selected: checked, selectedItems });
   }
   selectItem(event: Event, item: any, index: number): void {
     const checked = (event.target as HTMLInputElement).checked;
@@ -1439,11 +1447,10 @@ export default class MTable extends Vue {
       );
     }
     this.$emit("update:selectedItems", selectedItems);
-    this.$emit("on-select", {
+    this.$emit("on-change", {
       selected: checked,
-      item: item
+      selectedItems: [selectedItems]
     });
-    this.$emit("on-change", { selectedItems });
   }
   inSelectedItems(key: any): boolean {
     return this.selectedItems.some((item: any) =&gt; item.key === key);
@@ -1540,11 +1547,13 @@ $grey: #ebebeb;
     overflow: auto;
   }
   .m-table {
+    display: table;
     border-spacing: 0;
     border-collapse: collapse;
     table-layout: fixed;
     width: 100%;
     box-sizing: border-box;
+    margin: 0;
     thead {
       tr {
         background: #fafafa;
@@ -1580,12 +1589,21 @@ $grey: #ebebeb;
     th,
     td {
       text-align: left;
+      border: none;
       border-bottom: 1px solid $grey;
       padding: 14px;
       box-sizing: border-box;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+    }
+    tr {
+      border: none;
+    }
+    tbody {
+      tr {
+        background: #fff;
+      }
     }
     .expend-icon {
       cursor: pointer;
@@ -1642,7 +1660,7 @@ $grey: #ebebeb;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Apr 28 2019 01:24:00 GMT+0800 (China Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Apr 29 2019 00:28:50 GMT+0800 (China Standard Time)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

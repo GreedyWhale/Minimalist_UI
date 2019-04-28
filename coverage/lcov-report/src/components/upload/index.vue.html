@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">66.45% </span>
+        <span class="strong">66.23% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>103/155</span>
+        <span class='fraction'>102/154</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">39.47% </span>
+        <span class="strong">40.79% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>30/76</span>
+        <span class='fraction'>31/76</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">63.89% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>23/36</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">66.88% </span>
+        <span class="strong">66.67% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>103/154</span>
+        <span class='fraction'>102/153</span>
       </div>
     </div>
   </div>
@@ -582,7 +582,6 @@
 <span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -692,6 +691,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -794,7 +794,7 @@ export default class MUpload extends Vue {
       return<span class="missing-if-branch" title="else path not taken" >E</span> [];
     }
   })
-  private de<span class="missing-if-branch" title="if path not taken" >I</span>faultFileList!: any[];<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+  private de<span class="missing-if-branch" title="if path not taken" >I</span>faultFileList!: any[];
   @Prop({ type: Function }) private beforeRe<span class="cstat-no" title="statement not covered" >move!: (</span>
     file: any,<span class="cstat-no" title="statement not covered" ></span>
     fileList: any[]<span class="cstat-no" title="statement not covered" ></span>
@@ -832,7 +832,7 @@ export default class MUpload extends Vue {
   tempIn<span class="missing-if-branch" title="else path not taken" >E</span>dex: number = 1;
   showProgre<span class="missing-if-branch" title="if path not taken" >I</span>ssTimer: any;
   emptyFn: Funct<span class="cstat-no" title="statement not covered" >ion = () =&gt; {};</span>
-  copyFileList: File[] | null = null;
+  copyFileList: File[] = [];
   compareLength: number = 0;
   // methods
   onDrop(e: DragEvent): void {
@@ -910,7 +910,7 @@ export default class MUpload extends Vue {
     }
     if (fileList.length) {
       if (!this.autoUpload) {
-        this.copyFileList = fileList;
+        this.copyFileList = fileList.concat(this.copyFileList);
       }
       fileList.forEach((file: File) =&gt; {
         this.addFile(file).then(() =&gt; {
@@ -937,18 +937,18 @@ export default class MUpload extends Vue {
           }
         });
       } else if (before !== false) {
-        this.doUpload(file);
-      }<span class="missing-if-branch" title="else path not taken" >E</span>
+        <span class="missing-if-branch" title="else path not taken" >E</span>this.doUpload(file);
+      }
     } else {
       this.doUpload(file);
     }
   }
-  doUpload(file: File): void {
-    const options: requestOp<span class="fstat-no" title="function not covered" >tions = {</span>
-      name: this.name,<span class="cstat-no" title="statement not covered" ></span>
-      ac<span class="cstat-no" title="statement not covered" >tion: this.action,</span>
+  doUpload(file: File): void<span class="fstat-no" title="function not covered" > {</span>
+    const options: reque<span class="cstat-no" title="statement not covered" >stOptions = {</span>
+      na<span class="cstat-no" title="statement not covered" >me: this.name,</span>
+      action<span class="cstat-no" title="statement not covered" >: this.action,</span>
       method<span class="cstat-no" title="statement not covered" >: this.method,</span>
-      header<span class="cstat-no" title="statement not covered" >s: this.headers,</span>
+      headers: this.headers,
       withCredentials: this.withCredentials,
       file,
       onProgress: e =&gt; this.handleProgress(e, file)
@@ -959,20 +959,20 @@ export default class MUpload extends Vue {
         this.handleSuccess(res, file);
       })
       .catch(err =&gt; {
-        this.handleError(err, file);
-      });<span class="fstat-no" title="function not covered" ></span>
+        this.handl<span class="fstat-no" title="function not covered" >eError(err, file);</span>
+      })<span class="cstat-no" title="statement not covered" >;</span>
   }<span class="cstat-no" title="statement not covered" ></span>
-  canUpload(<span class="cstat-no" title="statement not covered" >file: File): boolean {</span>
-    const { size } = file;<span class="cstat-no" title="statement not covered" ></span>
-    if (this.siz<span class="cstat-no" title="statement not covered" >e) {</span>
-      if (size &gt; thi<span class="cstat-no" title="statement not covered" >s.size * 1024) {</span>
+  canUpload(file: File): bool<span class="cstat-no" title="statement not covered" >ean {</span>
+    const { size<span class="cstat-no" title="statement not covered" > } = file;</span>
+    if (this.size) {<span class="cstat-no" title="statement not covered" ></span>
+      if (size &gt; this.size * 1024) {
         this.$emit("on-exceeded-size", file, this.fileList);
         const err: any = new Error(
           `上传文件大小：${size / 1024} kb，超出指定大小：${this.size} kb`
         );
-        this.handleError(err, file);
-        return false;<span class="fstat-no" title="function not covered" ></span>
-      }<span class="cstat-no" title="statement not covered" ></span>
+        this.handleError(err, file);<span class="fstat-no" title="function not covered" ></span>
+        retu<span class="cstat-no" title="statement not covered" >rn false;</span>
+      }
     }
     const compareLength = this.compareLength + 1;
     this.compareLength = compareLength;
@@ -1003,7 +1003,6 @@ export default class MUpload extends Vue {
       }
       const fileList = this.fileList;
       fileList.push(newFile);
-      this.$emit("on-change", file, fileList);
       resolve();
     });
   }
@@ -1061,6 +1060,7 @@ export default class MUpload extends Vue {
 .m-upload {
   &amp;__input-wrapper {
     display: inline-flex;
+    vertical-align: middle;
   }
   &amp;__input {
     display: none;
@@ -1078,7 +1078,7 @@ export default class MUpload extends Vue {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Apr 28 2019 01:24:00 GMT+0800 (China Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Apr 29 2019 00:28:50 GMT+0800 (China Standard Time)
 </div>
 </div>
 <script src="../../../prettify.js"></script>
