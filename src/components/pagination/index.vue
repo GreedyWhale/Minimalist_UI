@@ -42,7 +42,7 @@ import MIcon from "@/components/icon/index.vue";
 export default class MPagination extends Vue {
   @Prop({ type: Number, required: true }) private total!: number;
   @Prop({ type: Number, default: 1 }) private defaultPage!: number;
-  @Prop({ type: Number, default: 7 }) private defaultPageSize!: number;
+  @Prop({ type: Number, default: 7 }) private pageSize!: number;
   @Prop({ type: Number, default: 5 }) private step!: number;
   @Watch("defaultPage")
   onDefaultPageChanged(newValue: number) {
@@ -90,10 +90,17 @@ export default class MPagination extends Vue {
   }
   // methods
   setTotalListWithoutFirstAndLast(): number[] {
-    let length = this.defaultPageSize - 2;
+    let length = this.pageSize - 2;
+    /*
+      获取当前选中的页码前后需要添加的数字数量。比如当前页码是5，
+      那么前后需要添加各两个数字。
+    */
     let median = Math.round((length - 1) / 2);
     let totalList: number[] = [];
-    let minValue = this.currentPage - median;
+    let minValue = 2;
+    if (this.total > this.pageSize) {
+      minValue = this.currentPage - median;
+    }
     for (let i = 0; i < length; i++) {
       if (minValue + i < 1 || minValue + i > this.total) {
         continue;
@@ -170,6 +177,8 @@ $disable-grey: #d9d9d9;
   }
   .pager-list {
     @extend .flex-align-center;
+    padding: 0;
+    margin: 0;
     > li {
       font-size: 14px;
       @extend .flex-align-center;

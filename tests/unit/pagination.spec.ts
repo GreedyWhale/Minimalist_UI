@@ -25,11 +25,11 @@ describe("pagination.vue", () => {
     const item = wrapper.find(".pager-list li.active");
     expect(item.text()).to.equal("10");
   });
-  it("MPagination组件接受defaultPageSize", () => {
+  it("MPagination组件接受pageSize", () => {
     const wrapper = shallowMount(MPagination, {
       propsData: {
         total: 100,
-        defaultPageSize: 10
+        pageSize: 10
       }
     });
     const items = wrapper.findAll(".pager-list li");
