@@ -315,11 +315,7 @@ export default class MTable extends Vue {
     const checked = (event.target as HTMLInputElement).checked;
     const selectedItems: any[] = checked ? this.dataSource : [];
     this.$emit("update:selectedItems", selectedItems);
-    this.$emit("on-select-all", {
-      selectedAll: checked,
-      selectedItems
-    });
-    this.$emit("on-change", { selectedItems });
+    this.$emit("on-change", { selected: checked, selectedItems });
   }
   selectItem(event: Event, item: any, index: number): void {
     const checked = (event.target as HTMLInputElement).checked;
@@ -332,11 +328,10 @@ export default class MTable extends Vue {
       );
     }
     this.$emit("update:selectedItems", selectedItems);
-    this.$emit("on-select", {
+    this.$emit("on-change", {
       selected: checked,
-      item: item
+      selectedItems: [selectedItems]
     });
-    this.$emit("on-change", { selectedItems });
   }
   inSelectedItems(key: any): boolean {
     return this.selectedItems.some((item: any) => item.key === key);
@@ -439,6 +434,7 @@ $grey: #ebebeb;
     table-layout: fixed;
     width: 100%;
     box-sizing: border-box;
+    margin: 0;
     thead {
       tr {
         background: #fafafa;
@@ -481,6 +477,14 @@ $grey: #ebebeb;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+    }
+    tr {
+      border: none;
+    }
+    tbody {
+      tr {
+        background: #fff;
+      }
     }
     .expend-icon {
       cursor: pointer;

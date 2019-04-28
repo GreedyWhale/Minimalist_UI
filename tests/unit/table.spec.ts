@@ -59,16 +59,9 @@ describe("m-table.vue", () => {
     });
     const checkbox = wrapper.findAll('input[type="checkbox"]');
     expect(checkbox.exists()).to.be.true;
-    const spySelectAll = sinon.spy();
-    const spySelect = sinon.spy();
     const spyChange = sinon.spy();
-    wrapper.vm.$on("on-select-all", spySelectAll);
-    wrapper.vm.$on("on-select", spySelect);
     wrapper.vm.$on("on-change", spyChange);
     checkbox.at(0).trigger("change");
-    checkbox.at(1).trigger("change");
-    expect(spySelectAll.called).to.be.true;
-    expect(spySelect.called).to.be.true;
     expect(spyChange.called).to.be.true;
   });
   it("MTable组件接受loading", () => {
