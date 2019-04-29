@@ -5,7 +5,7 @@
       <div class="m-dialog__header">
         <template v-if="title">
           <p>{{ title }}</p>
-          <m-icon icon="close" @on-click="onClick('on-close')"></m-icon>
+          <m-icon icon="close" @on-click="onClick($event, 'on-close')"></m-icon>
         </template>
         <slot name="header"></slot>
       </div>
@@ -16,13 +16,13 @@
         <div class="m-dialog__footer-btns" v-if="visibleFooter">
           <m-button
             :options="{ shape: 'rounded' }"
-            @click="onClick('on-cancel')"
+            @click="onClick($event, 'on-cancel')"
           >
             {{ cancelButtonText }}
           </m-button>
           <m-button
             :options="{ shape: 'rounded' }"
-            @click="onClick('on-confirm')"
+            @click="onClick($event, 'on-confirm')"
           >
             {{ confirmButtonText }}
           </m-button>
@@ -55,11 +55,11 @@ export default class MDialog extends Vue {
   @Model("update:visibleDialog", { type: Boolean })
   readonly visibleDialog!: boolean;
   // methods
-  onClick(eventName: string) {
+  onClick(event: Event, eventName: string) {
     if (!this.async) {
       this.$emit("update:visibleDialog", false);
     }
-    this.$emit(eventName, eventName);
+    this.$emit(eventName, event);
   }
 }
 </script>
