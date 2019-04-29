@@ -19,11 +19,13 @@ export default class MSticky extends Vue {
   wrapperStyle: Object = {};
   height: string | null = null;
   sticky: boolean = false;
+  scrollY: number = 0;
   mounted() {
     this.addScrollListener();
   }
   beforeDestroy() {
     this.targetElem.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("scroll", this.fixedStickyElem);
   }
   // methods
   addScrollListener(): void {
@@ -31,10 +33,22 @@ export default class MSticky extends Vue {
       this.targetElem = document.querySelector(`#${this.tagId}`) || window;
     }
     this.targetElem.addEventListener("scroll", this.onScroll);
+    window.addEventListener("scroll", this.fixedStickyElem);
+  }
+  fixedStickyElem() {
+    if (this.tagId && this.sticky) {
+      this.wrapperStyle = Object.assign({}, this.wrapperStyle, {
+        position: "absolute",
+        top: `${this.scrollY + this.distance}px`,
+        left: "0px"
+      });
+      this.sticky = false;
+    }
   }
   onScroll(e: Event): void {
     const scrollY = (e.target as HTMLElement).scrollTop || window.scrollY;
     const wrapperTop = this.getWrpperTop(scrollY);
+    this.scrollY = scrollY;
     if (wrapperTop - this.distance < scrollY && !this.sticky) {
       const { width, left, height } = (this.$refs
         .wrapper as Element).getBoundingClientRect();
@@ -42,7 +56,8 @@ export default class MSticky extends Vue {
       this.wrapperStyle = {
         width: `${width}px`,
         left: `${left}px`,
-        top: `${this.distance}px`
+        top: `${this.getStickyTop()}px`,
+        position: "fixed"
       };
       this.sticky = true;
     } else if (wrapperTop - this.distance >= scrollY && this.sticky) {
@@ -52,9 +67,19 @@ export default class MSticky extends Vue {
     }
   }
   getWrpperTop(scrollY: number): number {
-    return (
-      (this.$refs.wrapper as Element).getBoundingClientRect().top + scrollY
-    );
+    let { top } = (this.$refs.wrapper as Element).getBoundingClientRect();
+    if (this.tagId) {
+      top = top - (this.targetElem as Element).getBoundingClientRect().top;
+    }
+    return top + scrollY;
+  }
+  getStickyTop(): number {
+    if (this.tagId) {
+      return (
+        (this.targetElem as Element).getBoundingClientRect().top + this.distance
+      );
+    }
+    return this.distance;
   }
 }
 </script>

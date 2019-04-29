@@ -63,6 +63,7 @@
                 :value="value"
                 :start-date="startDate"
                 :end-date="endDate"
+                :disabled-date="disabledDate"
                 @on-click-date="onClickDate"
               ></m-date-picker-date-panel>
             </div>
@@ -143,15 +144,14 @@ import {
   }
 })
 export default class MDatePicker extends Vue {
-  @Prop({ type: Number }) private year!: number;
-  @Prop({ type: Number }) private month!: number;
   @Prop({ type: String, default: "cnWeekShort" }) private weekType!: string;
   @Prop({ type: String, default: "YYYY-MM-DD" })
   private format!: string;
   @Prop({ type: String, default: "YYYY/MM/DD" }) private valueFormat!: string;
-  @Prop({ type: String, default: "" }) private placeholder!: string;
+  @Prop({ type: String, default: "选择日期" }) private placeholder!: string;
   // single单选 multiple 多选
   @Prop({ type: String, default: "single" }) private type!: string;
+  @Prop({ type: Function, default: () => {} }) private disabledDate!: Function;
   @Model("update:date", { type: [String, Array] }) readonly value!:
     | string
     | string[];
@@ -193,8 +193,10 @@ export default class MDatePicker extends Vue {
   startDate: any = null;
   endDate: any = null;
   mounted() {
-    this.dateList = this.calender.getDateList(this.year, this.month);
-    this.currentDate = this.calender.getCurrentDate();
+    const { year, month, date, dataStamp } = this.getDefaultDate();
+    this.dateList = this.calender.getDateList(year, month);
+    this.setDefaultSratrDateAndEndDate(year, month, date);
+    this.currentDate = this.calender.getCurrentDate(dataStamp);
   }
   beforeDestroy() {
     clearTimeout(this.updateDateListTimer);
@@ -215,6 +217,54 @@ export default class MDatePicker extends Vue {
     return btns[this.currentPanel];
   }
   // methods
+  getDefaultDate(): any {
+    let defaultDate = "";
+    if (Array.isArray(this.value)) {
+      defaultDate = this.value[1] || "";
+    } else {
+      defaultDate = this.value;
+    }
+    defaultDate = this.calender.dateFormat("YYYY/MM/DD", defaultDate);
+    const [year, month, date] = defaultDate.split("/");
+    return {
+      year: year ? parseInt(year, 10) : undefined,
+      month: month ? parseInt(month, 10) : undefined,
+      date: date ? parseInt(date, 10) : undefined,
+      dataStamp: defaultDate
+    };
+  }
+  setDefaultSratrDateAndEndDate(
+    year: number,
+    month: number,
+    date: number
+  ): void {
+    if (
+      this.type === "multiple" &&
+      Array.isArray(this.value) &&
+      this.value.length === 2
+    ) {
+      const defaultStartDate = this.calender.dateFormat(
+        "YYYY/MM/DD",
+        this.value[0]
+      );
+      const defaultEndDate = this.calender.dateFormat(
+        "YYYY/MM/DD",
+        this.value[1]
+      );
+      this.startDate = this.calender.getSpecifiedDate(
+        year,
+        month,
+        date,
+        defaultStartDate
+      );
+      this.endDate = this.calender.getSpecifiedDate(
+        year,
+        month,
+        date,
+        defaultEndDate
+      );
+    }
+  }
   onClear(): void {
     this.currentDate = this.calender.getCurrentDate();
     this.$emit("update:date", "");
@@ -360,7 +410,7 @@ export default class MDatePicker extends Vue {
       this.$set(this.currentDate, "month", currentDate.month);
       return;
     }
-    const today: DateItem = this.calender.getToady(year, month);
+    const today: DateItem = this.calender.getSpecifiedDate(year, month);
     this.singleSelectHandler(today);
   }
   getDisplayYear(): string {

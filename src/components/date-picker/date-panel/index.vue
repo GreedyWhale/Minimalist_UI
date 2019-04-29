@@ -20,9 +20,10 @@
         :data-selected="isSelected(subDateItem.dateStamp)"
         :data-not-current="subDateItem.needUpdate"
         :data-less-then-end-date="isLessThenEndDate(subDateItem.dateStamp)"
+        :data-disabled="isDisable(subDateItem)"
         v-for="subDateItem in dateItem.value"
         :key="subDateItem.dateStamp"
-        @click="onClick(subDateItem)"
+        @click="onClick(subDateItem, isDisable(subDateItem))"
       >
         {{ subDateItem.date }}
       </div>
@@ -59,6 +60,7 @@ export default class MDatePickerDatePanel extends Vue {
     }
   })
   private endDate!: DateItem;
+  @Prop({ type: Function, default: () => {} }) private disabledDate!: Function;
   @Inject() readonly calender!: Calender;
   // methods
   isSelected(dateStamp: string): boolean {
@@ -74,7 +76,10 @@ export default class MDatePickerDatePanel extends Vue {
     }
     return currentDate === this.value;
   }
-  onClick(date: DateItem): void {
+  onClick(date: DateItem, disabled: boolean): void {
+    if (disabled) {
+      return;
+    }
     this.$emit("on-click-date", date);
   }
   isLessThenEndDate(dateStamp: string): boolean {
@@ -85,6 +90,12 @@ export default class MDatePickerDatePanel extends Vue {
         this.calender.parseDateStamp(dateStamp) <
           this.calender.parseDateStamp(this.endDate.dateStamp)
       );
+    }
+    return false;
+  }
+  isDisable(dateItem: DateItem): boolean {
+    if (this.disabledDate) {
+      return this.disabledDate(new Date(dateItem.dateStamp));
     }
     return false;
   }

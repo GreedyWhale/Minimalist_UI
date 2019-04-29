@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">86.36% </span>
+        <span class="strong">82.14% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>19/22</span>
+        <span class='fraction'>23/28</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">88.89% </span>
+        <span class="strong">81.82% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>16/18</span>
+        <span class='fraction'>18/22</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">60% </span>
+        <span class="strong">57.14% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>3/5</span>
+        <span class='fraction'>4/7</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">86.36% </span>
+        <span class="strong">82.14% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>19/22</span>
+        <span class='fraction'>23/28</span>
       </div>
     </div>
   </div>
@@ -161,32 +161,52 @@
 116
 117
 118
-119</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">420×</span>
-<span class="cline-any cline-yes">420×</span>
+<span class="cline-any cline-yes">462×</span>
+<span class="cline-any cline-yes">462×</span>
 <span class="cline-any cline-yes">84×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">336×</span>
+<span class="cline-any cline-yes">378×</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">336×</span>
+<span class="cline-any cline-yes">378×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">420×</span>
+<span class="cline-any cline-yes">462×</span>
 <span class="cline-any cline-yes">42×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">378×</span>
+<span class="cline-any cline-yes">420×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">467×</span>
+<span class="cline-any cline-yes">467×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
@@ -225,6 +245,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -295,24 +317,25 @@
       v-for="dateItem in formattedDate"
       :key="dateItem.id"
     &gt;
-      &lt;div
-        class="m-datepicker__date-content"
+      &lt;d<span class="missing-if-branch" title="if path not taken" >I</span>iv
+        clas<span class="cstat-no" title="statement not covered" >s="m-dat</span>epicker__date-content"
         :data-is-current="subDateItem.isToday"
         :data-selected="isSelected(subDateItem.dateStamp)"
         :data-not-current="subDateItem.needUpdate"
         :data-less-then-end-date="isLessThenEndDate(subDateItem.dateStamp)"
+        :data-disabled="isDisable(subDateItem)"
         v-for="subDateItem in dateItem.value"
         :key="subDateItem.dateStamp"
-        @click="onClick(subDateItem)"
+        @click="onClick(subDateItem, isDisable(subDateItem))"
       &gt;
         {{ subDateItem.date }}
       &lt;/div&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/template&gt;
+&lt;/templa<span class="missing-if-branch" title="else path not taken" >E</span>te&gt;
 &nbsp;
 &lt;script lang="ts"&gt;
-import { Vue, Component, Prop, Inject } from "vue-property-decorator";
+import {<span class="cstat-no" title="statement not covered" > Vue, Componen</span>t, Prop, Inject } from "vue-property-decorator";
 import { DateTable, DateItem } from "@/utils/calender/calendar.d";
 import Calender from "@/utils/calender/calendar";
 @Component({
@@ -325,8 +348,8 @@ export default class MDatePickerDatePanel extends Vue {
   @Prop({ type: String, default: "YYYY/MM/DD" }) private valueFormat!: string;
   @Prop({ type: [String, Array], default: "" }) private value!:
     | string
-    | string[];<span class="fstat-no" title="function not covered" ></span>
-  @Prop({<span class="cstat-no" title="statement not covered" ></span>
+    | string[];
+  @Prop({
     type: Object,
     default() {
       return null;
@@ -340,13 +363,14 @@ export default class MDatePickerDatePanel extends Vue {
     }
   })
   private endDate!: DateItem;
-  @Inject() readonly calender!: Calender;
-  // methods
+  @Prop({ type: Function, default: () =&gt; {} }) private disabledDate!: Function;
+  @Inject() readon<span class="fstat-no" title="function not covered" >ly calender!: Calender;</span>
+  // methods<span class="cstat-no" title="statement not covered" ></span>
   isSelected(dateStamp: string): boolean {
     const currentDate = this.calender.dateFormat(this.valueFormat, dateStamp);
     if (this.startDate || this.endDate) {
       return (
-        dateStamp === (this.startDate || {}).dateStamp ||
+        dateStamp === (this.startDate || {<span class="fstat-no" title="function not covered" >}).d</span>ateStamp ||
         dateStamp === (this.endDate || {}).dateStamp
       );
     }
@@ -355,7 +379,10 @@ export default class MDatePickerDatePanel extends Vue {
     }
     return currentDate === this.value;
   }
-  onClick(date: DateItem): void {
+  onClick(date: DateItem, disabled: boolean): void {
+    if (disabled) {
+      return;
+    }
     this.$emit("on-click-date", date);
   }
   isLessThenEndDate(dateStamp: string): boolean {
@@ -366,6 +393,12 @@ export default class MDatePickerDatePanel extends Vue {
         this.calender.parseDateStamp(dateStamp) &lt;
           this.calender.parseDateStamp(this.endDate.dateStamp)
       );
+    }
+    return false;
+  }
+  isDisable(dateItem: DateItem): boolean {
+    if (this.disabledDate) {
+      return this.disabledDate(new Date(dateItem.dateStamp));
     }
     return false;
   }
@@ -403,7 +436,7 @@ export default class MDatePickerDatePanel extends Vue {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Apr 29 2019 00:28:50 GMT+0800 (China Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Apr 29 2019 19:13:07 GMT+0800 (China Standard Time)
 </div>
 </div>
 <script src="../../../../prettify.js"></script>

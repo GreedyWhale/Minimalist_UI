@@ -195,24 +195,35 @@ class Calender {
     }
     return { year, month: month - 1 };
   }
-  getToady(year: number, month: number): DateItem {
+  getSpecifiedDate(
+    year: number,
+    month: number,
+    date: number = new Date().getDate(),
+    dateStr: string = ""
+  ): DateItem {
     const {
       year: currentYear,
       month: currentMonth,
-      date
-    } = this.getCurrentDate();
-    const dateTableIndex = this.getDayOfWeek(currentYear, currentMonth, date);
+      date: currentDate
+    } = this.getCurrentDate(dateStr);
+    const dateTableIndex = this.getDayOfWeek(
+      currentYear,
+      currentMonth,
+      currentDate
+    );
     return {
-      dateStamp: `${currentYear}/${currentMonth}/${date}`,
+      dateStamp: `${currentYear}/${this.zeroize(currentMonth)}/${this.zeroize(
+        currentDate
+      )}`,
       year: currentYear,
       month: currentMonth,
-      date,
+      date: currentDate,
       cnWeek: this.dateTable.cnWeek[dateTableIndex],
       cnWeekShort: this.dateTable.cnWeekShort[dateTableIndex],
       enWeek: this.dateTable.enWeek[dateTableIndex],
       enMonth: this.dateTable.enMonth[currentMonth - 1],
       needUpdate: currentYear !== year || currentMonth !== month,
-      isToday: true
+      isToday: currentDate === date
     };
   }
   parseDateStamp(dateStamp: string): number {

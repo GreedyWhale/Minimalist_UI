@@ -8,9 +8,7 @@ describe("MDatePiacker.vue", () => {
   it("MDatePiacker组件支持单选日期", done => {
     const wrapper = mount(MDatePicker, {
       propsData: {
-        value: "",
-        year: 2019,
-        month: 4
+        value: "2019/04/01"
       }
     });
     wrapper.vm.$on("on-change", (date: string) => {
@@ -29,9 +27,7 @@ describe("MDatePiacker.vue", () => {
   it("MDatePiacker组件支持多选日期", done => {
     const wrapper = mount(MDatePicker, {
       propsData: {
-        value: "",
-        year: 2019,
-        month: 4,
+        value: "2019/04/01",
         type: "multiple"
       }
     });
@@ -61,9 +57,7 @@ describe("MDatePiacker.vue", () => {
   it("MDatePiacker组件支持选择年", done => {
     const wrapper = mount(MDatePicker, {
       propsData: {
-        value: "",
-        year: 2019,
-        month: 4,
+        value: "2019/04/01",
         type: "multiple"
       }
     });
@@ -84,9 +78,7 @@ describe("MDatePiacker.vue", () => {
   it("MDatePiacker组件支持选择月", done => {
     const wrapper = mount(MDatePicker, {
       propsData: {
-        value: "",
-        year: 2019,
-        month: 4,
+        value: "2019/04/01",
         type: "multiple"
       }
     });
@@ -154,8 +146,6 @@ describe("MDatePiacker.vue", () => {
     const wrapper = mount(MDatePicker, {
       propsData: {
         value: "2019/04/21",
-        year: 2019,
-        month: 4,
         format: "YYYY年MM月DD日"
       }
     });
@@ -181,9 +171,7 @@ describe("MDatePiacker.vue", () => {
   it("MDatePiacker组件支持返回今天", done => {
     const wrapper = mount(MDatePicker, {
       propsData: {
-        value: "",
-        year: 2019,
-        month: 4
+        value: "2019/04/01"
       }
     });
     const input = wrapper.find("input");
@@ -198,9 +186,7 @@ describe("MDatePiacker.vue", () => {
   it("MDatePiacker组件支持返回今月", done => {
     const wrapper = mount(MDatePicker, {
       propsData: {
-        value: "",
-        year: 2019,
-        month: 5
+        value: "2019/05/01"
       }
     });
     wrapper.setData({
@@ -220,9 +206,7 @@ describe("MDatePiacker.vue", () => {
   it("MDatePiacker组件支持返回今年", done => {
     const wrapper = mount(MDatePicker, {
       propsData: {
-        value: "",
-        year: 2019,
-        month: 5
+        value: "2017/04/01"
       }
     });
     wrapper.setData({
@@ -242,9 +226,7 @@ describe("MDatePiacker.vue", () => {
   it("MDatePiacker组件支输入选择日期", () => {
     const wrapper = mount(MDatePicker, {
       propsData: {
-        value: "",
-        year: 2019,
-        month: 4
+        value: "2019/04/01"
       }
     });
     const input = wrapper.find("input");
@@ -253,5 +235,46 @@ describe("MDatePiacker.vue", () => {
     expect(wrapper.vm.$data.currentDate.year).to.equal(2019);
     expect(wrapper.vm.$data.currentDate.month).to.equal(10);
     expect(wrapper.vm.$data.currentDate.date).to.equal(1);
+  });
+  it("MDatePiacker组件支默认选中一个日期", () => {
+    const wrapper = mount(MDatePicker, {
+      propsData: {
+        value: "2019/04/01"
+      }
+    });
+    expect(wrapper.vm.$data.currentDate.year).to.equal(2019);
+    expect(wrapper.vm.$data.currentDate.month).to.equal(4);
+    expect(wrapper.vm.$data.currentDate.date).to.equal(1);
+  });
+  it("MDatePiacker组件支默认选中多个日期", () => {
+    const wrapper = mount(MDatePicker, {
+      propsData: {
+        value: ["2019/04/01", "2019/05/01"],
+        type: "multiple"
+      }
+    });
+    expect(wrapper.vm.$data.startDate.dateStamp).to.equal("2019/04/01");
+    expect(wrapper.vm.$data.endDate.dateStamp).to.equal("2019/05/01");
+  });
+  it("MDatePiacker组件支默认禁用日期", done => {
+    const wrapper = mount(MDatePicker, {
+      propsData: {
+        value: "2019/04/01",
+        disabledDate: (date: Date) => {
+          const disable = `${date.getFullYear()}/${date.getMonth() +
+            1}/${date.getDate()}`;
+          return disable === "2019/4/2";
+        }
+      }
+    });
+    const input = wrapper.find("input");
+    input.trigger("click");
+    setTimeout(() => {
+      const datelist = wrapper.find(".m-datepicker__date");
+      const dateItem = datelist.findAll(".m-datepicker__date-item").at(1);
+      const item = dateItem.findAll(".m-datepicker__date-content").at(2);
+      expect(item.attributes("data-disabled")).to.equal("true");
+      done();
+    }, 0);
   });
 });

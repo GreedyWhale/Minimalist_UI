@@ -14,6 +14,7 @@ $itemMinWidth: 294px;
   cursor: pointer;
   position: relative;
   z-index: 1;
+  user-select: none;
   &[data-not-current="true"] {
     color: #a3a2a2;
   }
@@ -37,5 +38,10 @@ $itemMinWidth: 294px;
       z-index: -1;
       border-radius: $borderRadius;
     }
+  }
+  &[data-disabled="true"] {
+    color: #c5c8ce;
+    background: #f7f7f7;
+    cursor: not-allowed;
   }
 }
