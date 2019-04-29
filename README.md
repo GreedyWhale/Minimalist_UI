@@ -38,9 +38,9 @@
     ```
 
 ## 文档
-
+[官方文档](https://greedywhale.github.io/Minimalist_UI_Document/)
 ## 联系方式
-- email: madaocai@gmail.com
+email: madaocai@gmail.com
 
 ## LICENSE
 [MIT](https://github.com/GreedyWhale/Minimalist_UI/blob/master/LICENSE)
