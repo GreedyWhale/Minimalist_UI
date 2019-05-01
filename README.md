@@ -39,6 +39,11 @@
 
 ## 文档
 [官方文档](https://greedywhale.github.io/Minimalist_UI_Document/)
+
+## 变更记录
+- 2019年05月02日  --- v1.0.4 
+  修复MDatePicker多选模式下，选中非当前月date面板不更新问题。
+
 ## 联系方式
 email: madaocai@gmail.com
 

@@ -100,10 +100,10 @@ describe("MDatePiacker.vue", () => {
     const component = {
       name: "test",
       template: `
-        <m-date-picker v-model="value" :year="2019" :month="4"></m-date-picker>
+        <m-date-picker v-model="value"></m-date-picker>
       `,
       data() {
-        return { value: "" };
+        return { value: "2019/04/01" };
       }
     };
     const wrapper = mount(component);
@@ -123,10 +123,10 @@ describe("MDatePiacker.vue", () => {
     const component = {
       name: "test",
       template: `
-        <m-date-picker v-model="value" :year="2019" :month="4" valueFormat="YYYY-MM-DD"></m-date-picker>
+        <m-date-picker v-model="value" valueFormat="YYYY-MM-DD"></m-date-picker>
       `,
       data() {
-        return { value: "" };
+        return { value: "2019/04/01" };
       }
     };
     const wrapper = mount(component);
@@ -155,7 +155,7 @@ describe("MDatePiacker.vue", () => {
     const component = {
       name: "test",
       template: `
-        <m-date-picker v-model="value" :year="2019" :month="4"></m-date-picker>
+        <m-date-picker v-model="value"></m-date-picker>
       `,
       data() {
         return { value: "2019/05/15" };
