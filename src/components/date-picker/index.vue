@@ -340,6 +340,11 @@ export default class MDatePicker extends Vue {
       month: date.month,
       date: date.date
     };
+    if (date.needUpdate) {
+      this.updateDateListTimer = setTimeout(() => {
+        this.dateList = this.calender.getDateList(date.year, date.month);
+      }, 0);
+    }
     if (!this.startDate) {
       this.startDate = date;
       return;
