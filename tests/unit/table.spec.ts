@@ -191,4 +191,27 @@ describe("m-table.vue", () => {
     iconWrapper.trigger("click");
     expect(spy.called).to.be.true;
   });
+  it("MTable组件可以根据columns中的的宽度改变列宽", () => {
+    const wrapper = shallowMount(MTable, {
+      propsData: {
+        columns: [
+          { title: "姓名", field: "name", width: 50 },
+          { title: "年龄", field: "age", width: 100 },
+          { title: "分数", field: "score" },
+          { title: "年级", field: "grade" }
+        ],
+        dataSource: [
+          { key: 1, name: "宇智波鼬", age: 17, score: 100, grade: "二" },
+          { key: 2, name: "自来也", age: 27, score: 200, grade: "三" },
+          { key: 3, name: "佩恩", age: 15, score: 120, grade: "一" },
+          { key: 4, name: "雏田", age: 12, score: 300, grade: "一" }
+        ]
+      }
+    });
+    const col = wrapper.findAll("table colgroup col");
+    expect(col.length).to.equals(4);
+    expect(col.at(0).attributes("style")).to.equals(
+      "width: 50px; min-width: 50px;"
+    );
+  });
 });

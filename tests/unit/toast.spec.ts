@@ -65,7 +65,9 @@ describe("m-toast.vue", () => {
         showCloseButton: true
       }
     });
-    wrapper.find(".close-button").trigger("click");
+    const closeButton = wrapper.find(".close-button");
+    expect(closeButton.exists()).to.be.true;
+    closeButton.trigger("click");
     expect(spy.called).to.be.true;
   });
 });
